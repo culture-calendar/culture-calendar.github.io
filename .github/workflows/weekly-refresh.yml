@@ -1,0 +1,59 @@
+name: Weekly calendar refresh
+
+# Server-side, machine-agnostic refresh. Runs on GitHub's runners on a weekly cron
+# (and on-demand), regenerates the calendar, and publishes it to GitHub Pages so it can
+# be viewed from any device. NOTE: GitHub cron is always UTC.
+on:
+  schedule:
+    - cron: "37 10 * * 1"   # Mondays ~10:37 UTC (~6:37am ET); off-minute to avoid fleet pileup
+  workflow_dispatch: {}      # lets you trigger a run manually from the Actions tab
+
+# Pages deployment needs these; contents stays read-only (nothing is committed back).
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: calendar-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install runtime dependency
+        run: python -m pip install --quiet requests
+
+      - name: Run tests (fail fast if the engine is broken)
+        run: python -m pip install --quiet pytest && python -m pytest -q
+
+      - name: Refresh the calendar
+        # Per-source failures are isolated by the run loop, so a single flaky site won't
+        # fail the build; the health-range warnings are printed to the log. TMDb is skipped
+        # automatically if the secret isn't set. MoMA/Frick use their committed fixtures
+        # (bot-protected; can't fetch live in CI) until refreshed by hand via Claude-in-Chrome.
+        env:
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
+        run: python -m cultural_calendar
+
+      - name: Stage the generated calendar for Pages
+        run: |
+          mkdir -p _site
+          cp data/toy-calendar.html _site/index.html
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deploy
+        uses: actions/deploy-pages@v4
