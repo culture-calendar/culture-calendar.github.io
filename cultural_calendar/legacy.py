@@ -2493,7 +2493,7 @@ def render_html(conn: sqlite3.Connection) -> None:
       border-left: 1px solid #e6e2d8; border-right: 1px solid #e6e2d8;
       background: radial-gradient(circle at 20% 6%, rgba(252,251,247,.45), transparent 55%),
         radial-gradient(circle at 85% 96%, rgba(223,219,208,.1), transparent 55%), #f6f4ee; }}
-    h1 {{ font-size: 30px; font-weight: 400; color: #2a2722; margin: 0 0 2px; }}
+    h1 {{ font-size: 42px; font-weight: 400; letter-spacing: -.01em; color: #2a2722; margin: 0 0 4px; }}
     h2 {{ font-size: 23px; font-weight: 400; color: #2a2722; margin: 40px 0 4px; padding-bottom: 5px; border-bottom: 1px solid rgba(90,84,66,.3); }}
     h3 {{ font-size: 12px; font-weight: 400; text-transform: uppercase; letter-spacing: .14em; color: #9a7c44; margin: 22px 0 2px; }}
     .sub {{ color: #8c8675; font-weight: 400; font-size: 14px; }}
