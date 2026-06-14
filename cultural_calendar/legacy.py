@@ -30,7 +30,7 @@ import requests
 # Migrated to the cultural_calendar package (behavior-preserving re-org); re-exported here
 # so this module stays runnable during the migration.
 from cultural_calendar.core.config import *  # noqa: F401,F403
-from cultural_calendar.core.config import ROOT, DATA_DIR, RAW_DIR, DETAIL_DIR, DB_PATH, SOURCES_PATH, HTML_PATH, MOMA_CAPTURE_LINKS, CARNEGIE_CAPTURE, FRICK_CAPTURE, MONTH_PATTERN, MONTH_RE, MONTH_NUMBERS, Source, today, end_date, load_sources
+from cultural_calendar.core.config import ROOT, DATA_DIR, RAW_DIR, DETAIL_DIR, DB_PATH, SOURCES_PATH, HTML_PATH, MOMA_CAPTURE_LINKS, MET_CAPTURE, CARNEGIE_CAPTURE, FRICK_CAPTURE, MONTH_PATTERN, MONTH_RE, MONTH_NUMBERS, Source, today, end_date, load_sources
 from cultural_calendar.core.html import normalize_space, strip_tags, LinkTextParser, ArticleParser, MetaParser  # noqa: F401
 
 
@@ -2210,6 +2210,33 @@ def import_tmdb(conn: sqlite3.Connection, source: Source) -> int:
     return count
 
 
+def save_met_capture(items: list[dict[str, Any]]) -> None:
+    """Cache the Met's parsed exhibitions so a 429-blocked CI run can still show them."""
+    MET_CAPTURE.parent.mkdir(exist_ok=True)
+    MET_CAPTURE.write_text(json.dumps(
+        {"capturedAt": today().isoformat(), "items": items}, indent=2, ensure_ascii=False))
+
+
+def load_met_capture() -> list[dict[str, Any]]:
+    """Fall back to the committed Met fixture, keeping only still-future exhibitions."""
+    if not MET_CAPTURE.exists():
+        return []
+    keep: list[dict[str, Any]] = []
+    for item in json.loads(MET_CAPTURE.read_text()).get("items", []):
+        start = item.get("date_start")
+        if not start:
+            keep.append(item)
+            continue
+        try:
+            day = dt.date.fromisoformat(start)
+        except ValueError:
+            keep.append(item)
+            continue
+        if today() <= day <= end_date():
+            keep.append(item)
+    return keep
+
+
 def import_html_source(conn: sqlite3.Connection, source: Source) -> int:
     # Capture-only sources: the live page is bot-protected with no fetchable data, so we
     # parse a browser-captured fixture (refreshed via Claude-in-Chrome) instead of the network.
@@ -2225,7 +2252,9 @@ def import_html_source(conn: sqlite3.Connection, source: Source) -> int:
         text = fetch_text(source.url)
         raw_path = save_raw(source, text)
     except requests.HTTPError:
-        if source.id != "moma_exhibitions":
+        # MoMA (bot shell) and the Met (metmuseum.org 429s datacenter/CI IPs) tolerate a
+        # failed fetch and fall back to their committed fixture below.
+        if source.id not in {"moma_exhibitions", "met_exhibitions"}:
             raise
         text = ""
     if source.id in MUSEUMS:
@@ -2258,6 +2287,13 @@ def import_html_source(conn: sqlite3.Connection, source: Source) -> int:
         # nothing; fall back to the browser-capture fixture whenever the live parse is empty.
         items = parse_moma_capture(source)
         used_moma_capture = True
+    if source.id == "met_exhibitions":
+        # The Met fetches fine from a normal IP but 429s CI/datacenter IPs. Refresh the
+        # committed fixture on a good fetch; fall back to it when the live parse is empty.
+        if items:
+            save_met_capture(items)
+        else:
+            items = load_met_capture()
     if source.id == "broadway_org":
         hydrate_broadway_org_dates(conn, source, items)
         # A show whose opening date is already past is a carried-over run (e.g. Chess

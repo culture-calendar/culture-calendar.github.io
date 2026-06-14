@@ -1,0 +1,46 @@
+{
+  "capturedAt": "2026-06-14",
+  "items": [
+    {
+      "title": "Decorative Arts in China, 1000 to the Present",
+      "date_start": "2026-07-25",
+      "date_label": "July 25th, 2026",
+      "date_precision": "exact",
+      "source_url": "https://www.metmuseum.org/exhibitions/decorative-arts-in-china-1000-to-the-present",
+      "external_id": "https://www.metmuseum.org/exhibitions/decorative-arts-in-china-1000-to-the-present",
+      "venue_or_platform": "The Met",
+      "city": "New York",
+      "description": "Source date: July 25th, 2026–Ongoing"
+    },
+    {
+      "title": "A King’s Carpet: Louis XIV and the Savonnerie",
+      "date_start": "2026-09-08",
+      "date_label": "September 8, 2026–March 5, 2028",
+      "date_precision": "exact_or_range",
+      "source_url": "https://www.metmuseum.org/exhibitions/a-kings-carpet-louis-xiv-and-the-savonnerie",
+      "external_id": "https://www.metmuseum.org/exhibitions/a-kings-carpet-louis-xiv-and-the-savonnerie",
+      "venue_or_platform": "The Met",
+      "city": "New York"
+    },
+    {
+      "title": "The Genesis Facade Commission: Liu Wei",
+      "date_start": "2026-09-17",
+      "date_label": "September 17, 2026–June 8, 2027",
+      "date_precision": "exact_or_range",
+      "source_url": "https://www.metmuseum.org/exhibitions/the-genesis-facade-commission-liu-wei",
+      "external_id": "https://www.metmuseum.org/exhibitions/the-genesis-facade-commission-liu-wei",
+      "venue_or_platform": "The Met",
+      "city": "New York"
+    },
+    {
+      "title": "Krasner and Pollock: Past Continuous",
+      "date_start": "2026-10-04",
+      "date_label": "October 4, 2026–January 31, 2027",
+      "date_precision": "exact_or_range",
+      "source_url": "https://www.metmuseum.org/exhibitions/krasner-and-pollock-past-continuous",
+      "external_id": "https://www.metmuseum.org/exhibitions/krasner-and-pollock-past-continuous",
+      "venue_or_platform": "The Met",
+      "city": "New York"
+    }
+  ]
+}
