@@ -2487,34 +2487,41 @@ def render_html(conn: sqlite3.Connection) -> None:
   <meta charset="utf-8">
   <title>Cultural Calendar</title>
   <style>
-    body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 32px; color: #1a1a1a; max-width: 1100px; }}
-    h1 {{ font-size: 28px; margin-bottom: 2px; }}
-    h2 {{ font-size: 22px; margin: 40px 0 4px; border-bottom: 2px solid #111; padding-bottom: 4px; }}
-    h3 {{ font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: #666; margin: 22px 0 0; }}
-    .sub {{ color: #888; font-weight: normal; font-size: 14px; }}
-    p {{ color: #555; }}
+    html {{ background: #efece3; }}
+    body {{ font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif; margin: 0; color: #322f29; }}
+    .sheet {{ max-width: 1080px; margin: 0 auto; padding: 40px 48px 56px; min-height: 100vh;
+      border-left: 1px solid #e6e2d8; border-right: 1px solid #e6e2d8;
+      background: radial-gradient(circle at 20% 6%, rgba(252,251,247,.45), transparent 55%),
+        radial-gradient(circle at 85% 96%, rgba(223,219,208,.1), transparent 55%), #f6f4ee; }}
+    h1 {{ font-size: 30px; font-weight: 400; color: #2a2722; margin: 0 0 2px; }}
+    h2 {{ font-size: 23px; font-weight: 400; color: #2a2722; margin: 40px 0 4px; padding-bottom: 5px; border-bottom: 1px solid rgba(90,84,66,.3); }}
+    h3 {{ font-size: 12px; font-weight: 400; text-transform: uppercase; letter-spacing: .14em; color: #9a7c44; margin: 22px 0 2px; }}
+    .sub {{ color: #8c8675; font-weight: 400; font-size: 14px; }}
+    p.lede {{ color: #6d685d; font-size: 14px; margin: 0 0 8px; }}
     table {{ border-collapse: collapse; width: 100%; margin-top: 6px; }}
-    th, td {{ border-bottom: 1px solid #ececec; padding: 7px 10px; text-align: left; vertical-align: top; font-size: 14px; }}
-    th {{ font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: #999; border-bottom: 1px solid #ccc; }}
-    td.date {{ white-space: nowrap; color: #444; width: 120px; }}
-    td.credits {{ color: #333; }}
+    th, td {{ border-bottom: 1px solid rgba(110,100,75,.12); padding: 7px 10px; text-align: left; vertical-align: top; font-size: 15px; }}
+    th {{ font-size: 11px; font-weight: 400; text-transform: uppercase; letter-spacing: .08em; color: #8c8675; border-bottom: 1px solid rgba(90,84,66,.28); }}
+    td.date {{ white-space: nowrap; color: #6d685d; font-style: italic; width: 120px; }}
+    td.credits {{ color: #4a4640; }}
     .cols2 {{ column-count: 2; column-gap: 36px; margin-top: 8px; }}
-    .cols2 .entry {{ display: flex; gap: 10px; break-inside: avoid; padding: 4px 0; font-size: 14px; border-bottom: 1px solid #f0f0f0; }}
-    .cols2 .d {{ flex: 0 0 96px; color: #999; white-space: nowrap; }}
+    .cols2 .entry {{ display: flex; gap: 10px; break-inside: avoid; padding: 5px 0; font-size: 15px; border-bottom: 1px solid rgba(110,100,75,.1); }}
+    .cols2 .d {{ flex: 0 0 104px; color: #6d685d; font-style: italic; white-space: nowrap; }}
     .cols2 .body {{ flex: 1; min-width: 0; }}
-    .cols2 .v {{ color: #999; font-size: 12px; }}
-    a {{ color: #14506e; text-decoration: none; }}
+    .cols2 .v {{ color: #8c8675; font-size: 12.5px; }}
+    a {{ color: #3a5a66; text-decoration: none; }}
     a:hover {{ text-decoration: underline; }}
-    details.runs {{ margin-top: 28px; color: #999; font-size: 12px; }}
+    details.runs {{ margin-top: 32px; color: #8c8675; font-size: 12px; }}
     details.runs li {{ list-style: none; }}
   </style>
 </head>
 <body>
+  <main class="sheet">
   <h1>Cultural Calendar</h1>
-  <p>Upcoming culturally significant releases, openings, premieres, exhibitions, and performances through 2026. Generated {dt.datetime.now().strftime("%Y-%m-%d %H:%M")}.</p>
+  <p class="lede">Significant releases, openings, premieres, exhibitions, and performances through 2026. Generated {dt.datetime.now().strftime("%Y-%m-%d %H:%M")}.</p>
   {''.join(month_sections)}
   {horizon_html}
   <details class="runs"><summary>Source runs</summary><ul>{run_html}</ul></details>
+  </main>
 </body>
 </html>
 """
