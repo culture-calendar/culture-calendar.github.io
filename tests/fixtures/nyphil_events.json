@@ -1,0 +1,20 @@
+[
+  {"ID": 1, "ShowInCalendar": true, "StartDate": "2026-09-11T15:30:00-04:00",
+   "StrippedTitle": "Sounds of Remembrance", "DateDescription": "Sep 11",
+   "Venue": "Perelman Performing Arts Center (PAC NYC)", "EventLink": "https://www.nyphil.org/a/"},
+  {"ID": 2, "ShowInCalendar": true, "StartDate": "2026-09-16T19:30:00-04:00",
+   "StrippedTitle": "Dudamel Conducts Prokofiev&rsquo;s Fifth", "DateDescription": "Sep 16–Sep 19",
+   "Venue": "Wu Tsai Theater, David Geffen Hall", "EventLink": "https://www.nyphil.org/b/"},
+  {"ID": 3, "ShowInCalendar": true, "StartDate": "2026-07-22T18:00:00-06:00",
+   "StrippedTitle": "Bravo! Vail: Elim Chan and James Ehnes", "DateDescription": "Jul 22",
+   "Venue": "Gerald R. Ford Amphitheater – Vail, CO", "EventLink": "https://www.nyphil.org/c/"},
+  {"ID": 4, "ShowInCalendar": true, "StartDate": "2027-01-16T11:00:00-05:00",
+   "StrippedTitle": "Young People’s Concert", "DateDescription": "Jan 16",
+   "Venue": "Wu Tsai Theater, David Geffen Hall", "EventLink": "https://www.nyphil.org/d/"},
+  {"ID": 5, "ShowInCalendar": false, "StartDate": "2026-10-01T19:30:00-04:00",
+   "StrippedTitle": "Hidden From Calendar", "DateDescription": "Oct 1",
+   "Venue": "Wu Tsai Theater, David Geffen Hall", "EventLink": "https://www.nyphil.org/e/"},
+  {"ID": 6, "ShowInCalendar": true, "StartDate": "2026-11-25T19:30:00-05:00",
+   "StrippedTitle": "Rouvali Conducts Schubert’s Great Symphony", "DateDescription": "Nov 25–Dec 1",
+   "Venue": "Wu Tsai Theater, David Geffen Hall", "EventLink": "https://www.nyphil.org/f/"}
+]

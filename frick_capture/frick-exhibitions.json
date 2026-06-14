@@ -1,0 +1,10 @@
+{
+  "capturedAt": "2026-06-14",
+  "source": "https://www.frick.org/exhibitions",
+  "note": "Browser-capture fixture. The Frick (Drupal) sits behind Yottaa anti-bot: every frick.org path — including /jsonapi — returns HTTP 418 to non-browser clients, so it can't be fetched by the importer. The browser passes the JS challenge and the page is server-rendered. CAPTURE METHOD: open https://www.frick.org/exhibitions in the connected browser, get_page_text, and record the entries under the UPCOMING heading (title + 'Month D, YYYY to Month D, YYYY' dates) here. parse_frick_capture keeps only future openings within the horizon, so out-of-horizon entries (e.g. 2027 openings) can be listed safely.",
+  "exhibitions": [
+    {"title": "Siena: The Art of Bronze, 1450–1500", "start": "2026-10-15", "label": "October 15, 2026 – January 18, 2027"},
+    {"title": "Kent Monkman: Officer and Laughing Girl", "start": "2026-11-12", "label": "November 12, 2026 – February 22, 2027"},
+    {"title": "Painting with Fire: Susanne de Court and the Art of Enamel", "start": "2027-04-08", "label": "April 8 – July 12, 2027"}
+  ]
+}

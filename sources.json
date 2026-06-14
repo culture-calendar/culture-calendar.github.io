@@ -1,0 +1,187 @@
+[
+  {
+    "id": "tmdb_movies",
+    "name": "TMDb Movies",
+    "category": "film",
+    "type": "api",
+    "url": "https://api.themoviedb.org/3/discover/movie",
+    "enabled": true,
+    "requires_env": "TMDB_API_KEY"
+  },
+  {
+    "id": "tvmaze_full_schedule",
+    "name": "TVmaze Full Future Schedule",
+    "category": "tv",
+    "type": "api",
+    "url": "https://api.tvmaze.com/schedule/full",
+    "enabled": true
+  },
+  {
+    "id": "broadway_org",
+    "name": "Broadway.org Shows",
+    "category": "theatre",
+    "type": "html",
+    "url": "https://www.broadway.org/shows",
+    "enabled": true
+  },
+  {
+    "id": "playbill_broadway",
+    "name": "Playbill Broadway",
+    "category": "theatre",
+    "type": "html",
+    "url": "https://playbill.com/shows/broadway",
+    "enabled": true
+  },
+  {
+    "id": "playbill_offbroadway",
+    "name": "Playbill Off-Broadway",
+    "category": "theatre",
+    "type": "html",
+    "url": "https://playbill.com/shows/offbroadway",
+    "enabled": true
+  },
+  {
+    "id": "bam_programs",
+    "name": "BAM Programs",
+    "category": "theatre",
+    "type": "html",
+    "url": "https://www.bam.org/programs",
+    "enabled": true
+  },
+  {
+    "id": "metacritic_albums",
+    "name": "Metacritic Album Calendar",
+    "category": "music",
+    "type": "html",
+    "url": "https://www.metacritic.com/browse/albums/release-date/coming-soon/date",
+    "enabled": true
+  },
+  {
+    "id": "aoty_upcoming",
+    "name": "AlbumOfTheYear Upcoming",
+    "category": "music",
+    "type": "html",
+    "url": "https://www.albumoftheyear.org/upcoming/",
+    "enabled": false
+  },
+  {
+    "id": "nyphil_concerts",
+    "name": "New York Philharmonic",
+    "category": "music",
+    "type": "html",
+    "url": "https://www.nyphil.org/concerts-tickets/calendar/",
+    "enabled": true
+  },
+  {
+    "id": "carnegie_hall",
+    "name": "Carnegie Hall",
+    "category": "music",
+    "type": "html",
+    "url": "https://www.carnegiehall.org/events",
+    "enabled": true
+  },
+  {
+    "id": "met_exhibitions",
+    "name": "The Met Exhibitions",
+    "category": "art",
+    "type": "html",
+    "url": "https://www.metmuseum.org/exhibitions",
+    "enabled": true
+  },
+  {
+    "id": "moma_exhibitions",
+    "name": "MoMA Exhibitions",
+    "category": "art",
+    "type": "html",
+    "url": "https://www.moma.org/calendar/exhibitions",
+    "enabled": true
+  },
+  {
+    "id": "whitney",
+    "name": "Whitney Museum",
+    "category": "art",
+    "type": "html",
+    "url": "https://whitney.org/exhibitions/upcoming",
+    "enabled": true
+  },
+  {
+    "id": "brooklyn_museum",
+    "name": "Brooklyn Museum",
+    "category": "art",
+    "type": "html",
+    "url": "https://www.brooklynmuseum.org/exhibitions/upcoming",
+    "enabled": true
+  },
+  {
+    "id": "moca_la",
+    "name": "MOCA Los Angeles",
+    "category": "art",
+    "type": "html",
+    "url": "https://www.moca.org/exhibitions",
+    "enabled": true
+  },
+  {
+    "id": "lacma",
+    "name": "LACMA",
+    "category": "art",
+    "type": "html",
+    "url": "https://www.lacma.org/exhibitions",
+    "enabled": true
+  },
+  {
+    "id": "pace_gallery",
+    "name": "Pace Gallery",
+    "category": "art",
+    "type": "html",
+    "url": "https://www.pacegallery.com/exhibitions/",
+    "enabled": true
+  },
+  {
+    "id": "gagosian",
+    "name": "Gagosian",
+    "category": "art",
+    "type": "html",
+    "url": "https://gagosian.com/exhibitions/upcoming/",
+    "enabled": true
+  },
+  {
+    "id": "guggenheim",
+    "name": "Guggenheim",
+    "category": "art",
+    "type": "html",
+    "url": "https://www.guggenheim.org/exhibitions",
+    "enabled": true
+  },
+  {
+    "id": "frick",
+    "name": "Frick Collection",
+    "category": "art",
+    "type": "html",
+    "url": "https://www.frick.org/exhibitions",
+    "enabled": true
+  },
+  {
+    "id": "new_museum",
+    "name": "New Museum",
+    "category": "art",
+    "type": "html",
+    "url": "https://www.newmuseum.org/upcoming-exhibitions/",
+    "enabled": true
+  },
+  {
+    "id": "met_opera_2026_27",
+    "name": "Met Opera 2026-27",
+    "category": "opera",
+    "type": "html",
+    "url": "https://www.metopera.org/season/2026-27-season/",
+    "enabled": true
+  },
+  {
+    "id": "nycb_seasons",
+    "name": "New York City Ballet Seasons",
+    "category": "ballet",
+    "type": "html",
+    "url": "https://www.nycballet.com/season-and-tickets/seasons",
+    "enabled": true
+  }
+]
