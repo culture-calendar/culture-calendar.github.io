@@ -2656,6 +2656,7 @@ def render_html(conn: sqlite3.Connection) -> None:
 <head>
   <meta charset="utf-8">
   <title>Cultural Calendar</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%232a2722'/><rect x='6' y='9' width='20' height='17' rx='2' fill='%23f6f4ee'/><rect x='6' y='9' width='20' height='5' fill='%233a5a66'/><rect x='10' y='6' width='2.4' height='5' rx='1' fill='%23f6f4ee'/><rect x='19.6' y='6' width='2.4' height='5' rx='1' fill='%23f6f4ee'/><g fill='%232a2722'><rect x='9' y='17' width='3' height='3' rx='.6'/><rect x='14.5' y='17' width='3' height='3' rx='.6'/><rect x='20' y='17' width='3' height='3' rx='.6'/><rect x='9' y='22' width='3' height='3' rx='.6'/><rect x='14.5' y='22' width='3' height='3' rx='.6'/></g></svg>">
   <style>
     html {{ background: #efece3; }}
     body {{ font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif; margin: 0; color: #322f29; }}
