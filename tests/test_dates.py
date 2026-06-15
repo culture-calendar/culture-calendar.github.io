@@ -51,6 +51,26 @@ def test_pac_opening_date(monkeypatch):
     assert L.extract_pac_date("Tickets on sale soon")[0] is None
 
 
+def test_met_opera_credits():
+    # Director ("Production", any case, in either creative-markup variant), conductor, and the
+    # two top-billed singers (alternate casts of the same role deduped).
+    page = (
+        '<p>PRODUCTION</p><p class="creator-artist-info-name">David McVicar</p>'
+        '<p class="creator-list-role">Movement Director</p>'
+        '<p class="creator-list-detail-name">Jo Meredith</p>'
+        '{"name":"Carlo Rizzi","numberlessRole":"Conductor","performingAllDates":true}'
+        '{"name":"Sonya Yoncheva","numberlessRole":"Medea","performingAllDates":false}'
+        '{"name":"Chiara Isotton","numberlessRole":"Medea","performingAllDates":false}'
+        '{"name":"Michael Spyres","numberlessRole":"Giasone","performingAllDates":true}'
+    )
+    people = L.extract_met_opera_credits(page)
+    roles = [(p["role"], p["name"]) for p in people]
+    assert ("Director", "David McVicar") in roles
+    assert ("Conductor", "Carlo Rizzi") in roles
+    assert [n for r, n in roles if r == "Cast"] == ["Sonya Yoncheva", "Michael Spyres"]
+    assert all(n != "Jo Meredith" for _, n in roles)  # movement director is not the director
+
+
 def test_metacritic_date_variants():
     assert L.parse_metacritic_date("12 June 2026")[0] == "2026-06-12"
     assert L.parse_metacritic_date("Dec 2026")[2] == "month"

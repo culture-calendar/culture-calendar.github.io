@@ -1496,6 +1496,79 @@ def parse_met_opera(source: Source, text: str, limit: int = 80) -> list[dict[str
     return items
 
 
+# Creative roles (lowercased) that are NOT the stage director, so we don't mistake one for it.
+MET_OPERA_NON_DIRECTOR = {
+    "movement director", "chorus director", "music director", "associate director",
+    "assistant director", "revival stage director", "fight director", "children's chorus director",
+}
+
+
+def extract_met_opera_credits(html_text: str) -> list[dict[str, str]]:
+    """Director, conductor, and the two top-billed principal singers from a Met production page.
+
+    The Met labels the stage director "Production" in its creator list; the conductor and
+    singers come from the page's entity-encoded cast JSON (each carries a name + a
+    numberlessRole — "Conductor" or the character a singer performs). We keep the first two
+    distinct character roles (deduping alternate casts) as the leads.
+    """
+    people: list[dict[str, str]] = []
+    # Two markup variants: role in a "...role" <p> then a creator-list-detail-name <p>
+    # (e.g. Medea), or a plain role <p> then a creator-artist-info-name <p> (e.g. Macbeth).
+    creative = re.findall(
+        r'>\s*([^<>]+?)\s*</p>\s*<p class="creator-(?:list-detail|artist-info)-name">\s*([^<]+?)\s*</p>',
+        html_text,
+    )
+    director = None
+    for role, name in creative:
+        role, name = normalize_space(html.unescape(role)), normalize_space(html.unescape(name))
+        role_l = role.lower()  # the Met uses both "Production" and "PRODUCTION"
+        if not name or role_l in MET_OPERA_NON_DIRECTOR:
+            continue
+        if role_l == "production":  # the Met's term for the stage director
+            director = name
+            break
+        if director is None and (role_l == "director" or role_l.endswith("stage director")):
+            director = name
+    if director:
+        people.append({"name": director, "role": "Director"})
+    members = re.findall(
+        r'"name":"([^"]+)"(?:(?!"name":).)*?"numberlessRole":"([^"]+)"',
+        html.unescape(html_text), re.S,
+    )
+    conductor_done = False
+    leads: list[str] = []
+    seen_roles: set[str] = set()
+    for name, role in members:
+        name, role = normalize_space(name), normalize_space(role)
+        if role == "Conductor":
+            if not conductor_done and name:
+                people.append({"name": name, "role": "Conductor"})
+                conductor_done = True
+            continue
+        if role in seen_roles or not name:
+            continue
+        seen_roles.add(role)  # dedupe alternate casts of the same character
+        if len(leads) < 2:
+            leads.append(name)
+    people.extend({"name": n, "role": "Cast"} for n in leads)
+    return people
+
+
+def hydrate_met_opera_credits(source: Source, items: list[dict[str, Any]]) -> None:
+    """Follow each in-horizon production page for its director/conductor/lead-singer credits.
+    Runs before the capture fixture is written, so the CI fallback carries credits too."""
+    for item in items:
+        if not item.get("date_start"):
+            continue  # only the productions that actually render are worth hydrating
+        try:
+            page = fetch_text(item["source_url"])
+        except Exception:
+            continue
+        people = extract_met_opera_credits(page)
+        if people:
+            item["people"] = people
+
+
 def parse_nycb(source: Source, text: str, limit: int = 120) -> list[dict[str, Any]]:
     parser = LinkTextParser(source.url)
     parser.feed(text)
@@ -2404,6 +2477,7 @@ def import_html_source(conn: sqlite3.Connection, source: Source) -> int:
         # page lost the whole season. Same treatment as the Met museum: refresh the committed
         # fixture on a good fetch, fall back to it when the live parse is empty.
         if items:
+            hydrate_met_opera_credits(source, items)  # director/conductor/lead singers
             save_capture_fixture(MET_OPERA_CAPTURE, items)
         else:
             items = load_capture_fixture(MET_OPERA_CAPTURE)
@@ -2505,19 +2579,6 @@ def extract_theatre_principals(html_text: str) -> list[dict[str, str]]:
     return people[:8]
 
 
-def extract_opera_principals(html_text: str) -> list[dict[str, str]]:
-    """Composer, production director, and conductor from a Met Opera production page."""
-    text = strip_tags(html_text)
-    people: list[dict[str, str]] = []
-    seen: set[str] = set()
-    for label, role in (("Composer", "Composer"), ("Production", "Director"), ("Conductor", "Conductor")):
-        name = capture_name_after(text, label)
-        if name and name not in seen:
-            people.append({"name": name, "role": role})
-            seen.add(name)
-    return people
-
-
 def hydrate_broadway_org_dates(conn: sqlite3.Connection, source: Source, items: list[dict[str, Any]]) -> None:
     for item in items:
         url = item.get("source_url")
@@ -2557,11 +2618,11 @@ def enrich_detail_pages(conn: sqlite3.Connection, source: Source, items: list[di
             upsert_detail(conn, source, item, html_text, raw_path)
         except Exception:
             continue
-        # Pull principals from the detail page and update the already-inserted row.
+        # Pull principals from the detail page and update the already-inserted row. Met Opera
+        # credits are set up-front by hydrate_met_opera_credits (so the capture fixture carries
+        # them and CI doesn't need a live fetch); here we only refresh the stored detail text.
         if source.id == "playbill_offbroadway":
             principals = extract_theatre_principals(html_text)
-        elif source.id == "met_opera_2026_27":
-            principals = extract_opera_principals(html_text)
         else:
             principals = []
         if principals:

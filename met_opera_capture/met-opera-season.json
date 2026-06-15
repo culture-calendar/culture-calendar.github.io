@@ -35,7 +35,25 @@
       "source_url": "https://www.metopera.org/season/2026-27-season/la-boheme/",
       "external_id": "https://www.metopera.org/season/2026-27-season/la-boheme/",
       "description": null,
-      "importance_score": 5
+      "importance_score": 5,
+      "people": [
+        {
+          "name": "Franco Zeffirelli",
+          "role": "Director"
+        },
+        {
+          "name": "Ramón Tebar",
+          "role": "Conductor"
+        },
+        {
+          "name": "Juliana Grigoryan",
+          "role": "Cast"
+        },
+        {
+          "name": "Rosa Feola",
+          "role": "Cast"
+        }
+      ]
     },
     {
       "title": "Così fan tutte",
@@ -47,7 +65,25 @@
       "source_url": "https://www.metopera.org/season/2026-27-season/cosi-fan-tutte/",
       "external_id": "https://www.metopera.org/season/2026-27-season/cosi-fan-tutte/",
       "description": null,
-      "importance_score": 5
+      "importance_score": 5,
+      "people": [
+        {
+          "name": "Phelim McDermott",
+          "role": "Director"
+        },
+        {
+          "name": "Nimrod David Pfeffer",
+          "role": "Conductor"
+        },
+        {
+          "name": "Federica Lombardi",
+          "role": "Cast"
+        },
+        {
+          "name": "Samantha Hankey",
+          "role": "Cast"
+        }
+      ]
     },
     {
       "title": "Diamond Jubilee: 60 Years at Lincoln Center",
@@ -71,7 +107,25 @@
       "source_url": "https://www.metopera.org/season/2026-27-season/la-fanciulla-del-west/",
       "external_id": "https://www.metopera.org/season/2026-27-season/la-fanciulla-del-west/",
       "description": "New Production",
-      "importance_score": 15
+      "importance_score": 15,
+      "people": [
+        {
+          "name": "Richard Jones",
+          "role": "Director"
+        },
+        {
+          "name": "Keri-Lynn Wilson",
+          "role": "Conductor"
+        },
+        {
+          "name": "Vida Miknevičiūtė",
+          "role": "Cast"
+        },
+        {
+          "name": "SeokJong Baek",
+          "role": "Cast"
+        }
+      ]
     },
     {
       "title": "Jenůfa",
@@ -83,7 +137,25 @@
       "source_url": "https://www.metopera.org/season/2026-27-season/jenufa/",
       "external_id": "https://www.metopera.org/season/2026-27-season/jenufa/",
       "description": "New Production",
-      "importance_score": 15
+      "importance_score": 15,
+      "people": [
+        {
+          "name": "Claus Guth",
+          "role": "Director"
+        },
+        {
+          "name": "Tomáš Hanus",
+          "role": "Conductor"
+        },
+        {
+          "name": "Asmik Grigorian",
+          "role": "Cast"
+        },
+        {
+          "name": "Nina Stemme",
+          "role": "Cast"
+        }
+      ]
     },
     {
       "title": "Laffont Grand Finals Concert",
@@ -107,7 +179,25 @@
       "source_url": "https://www.metopera.org/season/2026-27-season/lincoln-in-the-bardo/",
       "external_id": "https://www.metopera.org/season/2026-27-season/lincoln-in-the-bardo/",
       "description": "New Production",
-      "importance_score": 15
+      "importance_score": 15,
+      "people": [
+        {
+          "name": "Lileana Blain-Cruz",
+          "role": "Director"
+        },
+        {
+          "name": "Yannick Nézet-Séguin",
+          "role": "Conductor"
+        },
+        {
+          "name": "Christine Goerke",
+          "role": "Cast"
+        },
+        {
+          "name": "Janai Brugger",
+          "role": "Cast"
+        }
+      ]
     },
     {
       "title": "Macbeth",
@@ -119,7 +209,25 @@
       "source_url": "https://www.metopera.org/season/2026-27-season/macbeth/",
       "external_id": "https://www.metopera.org/season/2026-27-season/macbeth/",
       "description": "New Production",
-      "importance_score": 15
+      "importance_score": 15,
+      "people": [
+        {
+          "name": "Louisa Proske",
+          "role": "Director"
+        },
+        {
+          "name": "Yannick Nézet-Séguin",
+          "role": "Conductor"
+        },
+        {
+          "name": "Lise Davidsen",
+          "role": "Cast"
+        },
+        {
+          "name": "Freddie De Tommaso",
+          "role": "Cast"
+        }
+      ]
     },
     {
       "title": "The Magic Flute—Holiday Presentation",
@@ -131,7 +239,25 @@
       "source_url": "https://www.metopera.org/season/2026-27-season/the-magic-flute/",
       "external_id": "https://www.metopera.org/season/2026-27-season/the-magic-flute/",
       "description": null,
-      "importance_score": 5
+      "importance_score": 5,
+      "people": [
+        {
+          "name": "Julie Taymor",
+          "role": "Director"
+        },
+        {
+          "name": "Nicholas Carter",
+          "role": "Conductor"
+        },
+        {
+          "name": "Emily Pogorelc",
+          "role": "Cast"
+        },
+        {
+          "name": "Olga Pudova",
+          "role": "Cast"
+        }
+      ]
     },
     {
       "title": "Mahler: Symphony No. 8",
@@ -167,7 +293,25 @@
       "source_url": "https://www.metopera.org/season/2026-27-season/maria-stuarda/",
       "external_id": "https://www.metopera.org/season/2026-27-season/maria-stuarda/",
       "description": null,
-      "importance_score": 5
+      "importance_score": 5,
+      "people": [
+        {
+          "name": "David McVicar",
+          "role": "Director"
+        },
+        {
+          "name": "Enrique Mazzola",
+          "role": "Conductor"
+        },
+        {
+          "name": "Lisette Oropesa",
+          "role": "Cast"
+        },
+        {
+          "name": "Angela Meade",
+          "role": "Cast"
+        }
+      ]
     },
     {
       "title": "Medea",
@@ -179,7 +323,25 @@
       "source_url": "https://www.metopera.org/season/2026-27-season/medea/",
       "external_id": "https://www.metopera.org/season/2026-27-season/medea/",
       "description": null,
-      "importance_score": 5
+      "importance_score": 5,
+      "people": [
+        {
+          "name": "David McVicar",
+          "role": "Director"
+        },
+        {
+          "name": "Carlo Rizzi",
+          "role": "Conductor"
+        },
+        {
+          "name": "Sonya Yoncheva",
+          "role": "Cast"
+        },
+        {
+          "name": "Elena Villalón",
+          "role": "Cast"
+        }
+      ]
     },
     {
       "title": "Otello",
@@ -227,7 +389,25 @@
       "source_url": "https://www.metopera.org/season/2026-27-season/samson-et-dalila/",
       "external_id": "https://www.metopera.org/season/2026-27-season/samson-et-dalila/",
       "description": null,
-      "importance_score": 5
+      "importance_score": 5,
+      "people": [
+        {
+          "name": "Darko Tresnjak",
+          "role": "Director"
+        },
+        {
+          "name": "Giacomo Sagripanti",
+          "role": "Conductor"
+        },
+        {
+          "name": "Aigul Akhmetshina",
+          "role": "Cast"
+        },
+        {
+          "name": "Clay Hilley",
+          "role": "Cast"
+        }
+      ]
     },
     {
       "title": "Silent Night",
@@ -251,7 +431,25 @@
       "source_url": "https://www.metopera.org/season/2026-27-season/tosca/",
       "external_id": "https://www.metopera.org/season/2026-27-season/tosca/",
       "description": null,
-      "importance_score": 5
+      "importance_score": 5,
+      "people": [
+        {
+          "name": "David McVicar",
+          "role": "Director"
+        },
+        {
+          "name": "Oksana Lyniv",
+          "role": "Conductor"
+        },
+        {
+          "name": "Saioa Hernández",
+          "role": "Cast"
+        },
+        {
+          "name": "SeokJong Baek",
+          "role": "Cast"
+        }
+      ]
     },
     {
       "title": "Your Privacy Choices",
