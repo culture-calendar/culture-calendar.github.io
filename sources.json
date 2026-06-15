@@ -185,6 +185,14 @@
     "enabled": true
   },
   {
+    "id": "pac_nyc",
+    "name": "Perelman PAC (PAC NYC)",
+    "category": "theatre",
+    "type": "html",
+    "url": "https://pacnyc.org/whats-on-all/",
+    "enabled": true
+  },
+  {
     "id": "nycb_seasons",
     "name": "New York City Ballet Seasons",
     "category": "ballet",

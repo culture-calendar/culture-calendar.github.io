@@ -1348,6 +1348,105 @@ def hydrate_museum_dates(conn: sqlite3.Connection, source: Source, items: list[d
     return kept
 
 
+# Perelman Performing Arts Center (PAC NYC) is multidisciplinary; map its genre tag to the
+# calendar's category so operas land in Opera, concerts in Music, plays in Theatre, etc.
+PAC_GENRE_CATEGORY = {
+    "opera": "opera",
+    "music": "music",
+    "dance": "ballet",
+    "film": "film",
+    "theater": "theatre",
+    "musical-theater": "theatre",
+    "multi-disciplinary": "theatre",
+    "conversation": "theatre",
+}
+
+
+def extract_pac_date(text: str) -> tuple[dt.date | None, str | None]:
+    """Resolve a PAC event's opening date from its date-range element text.
+
+    PAC writes the date several ways: "Sep 13, 2026"; a run "Jun 28—Jul 26, 2026" (the
+    trailing year governs the opening); year-less "June 20 at 7pm" / "Begins July 11, ...";
+    and a cross-year run "Nov 20, 2026—Jan 3, 2027". The opening is the first month/day in
+    the text, taking the first explicit year present or, when none, the next future year.
+    Horizon/already-running filtering is the caller's job — a run whose opening is in the
+    past is currently running, not upcoming.
+    """
+    flat = normalize_space(text)
+    day_match = re.search(rf"({MONTH_RE})\.?\s+(\d{{1,2}})", flat, re.I)
+    if not day_match:
+        return None, None
+    month, day = day_match.group(1), day_match.group(2)
+    year_match = re.search(r"\b(20\d{2})\b", flat)
+    if year_match:
+        opening = parse_us_date(f"{month} {day}, {year_match.group(1)}")
+    else:
+        opening = next(
+            (d for y in (today().year, today().year + 1)
+             if (d := parse_us_date(f"{month} {day}, {y}")) and d >= today()),
+            None,
+        )
+    if not opening:
+        return None, None
+    return opening, format_us_date(opening)
+
+
+def import_pac(conn: sqlite3.Connection, source: Source, limit: int = 40) -> int:
+    """Perelman Performing Arts Center (PAC NYC) — the multidisciplinary World Trade Center
+    venue. The What's On listing exposes /whats-on/<slug>/ event links; each detail page
+    carries the discipline (a /whats-on/genres/<genre>/ link) and the performance date. We
+    hydrate each detail page, map genre -> category, and keep future-opening events only.
+    NYC by definition."""
+    text = fetch_text(source.url)
+    raw_path = save_raw(source, text)
+    urls: list[str] = []
+    seen: set[str] = set()
+    for href in re.findall(r'href="(https://pacnyc\.org/whats-on/[^"#?]+)"', text):
+        url = href.split("?")[0].rstrip("/")
+        if "/genres/" in url or url.rsplit("/", 1)[-1] in {"whats-on", ""} or url in seen:
+            continue
+        seen.add(url)
+        urls.append(url)
+    count = 0
+    for url in urls[:limit]:
+        try:
+            detail = fetch_text(url + "/")
+            save_detail(source, url, detail)
+        except Exception:
+            continue
+        # Scope to the canonical date element; the whole page repeats other shows' dates
+        # (sidebars/related events). If PAC ever drops it, skip rather than mis-date.
+        daterange = re.search(r'c-event-details__daterange"[^>]*>\s*([^<]+)', detail)
+        start, label = extract_pac_date(daterange.group(1) if daterange else "")
+        if not start or start < today() or start > end_date():
+            continue  # undated, already running, or beyond the 2026 horizon
+        genres = re.findall(r"/whats-on/genres/([a-z-]+)/", detail)
+        genre = next((g for g in genres if g in PAC_GENRE_CATEGORY), genres[0] if genres else "")
+        meta = MetaParser()
+        meta.feed(detail)
+        title = normalize_space(re.split(r"\s*\|\s*", meta.meta.get("og:title") or meta.title or "")[0])
+        if not title or len(title) < 3:
+            continue
+        item = {
+            "title": title,
+            "category": PAC_GENRE_CATEGORY.get(genre, "theatre"),
+            "date_start": start.isoformat(),
+            "date_label": label,
+            "date_precision": "exact",
+            "venue_or_platform": "Perelman Performing Arts Center",
+            "city": "New York",
+            "source_url": url,
+            "external_id": url,
+            "description": f"PAC NYC, {genre.replace('-', ' ') or 'performance'}",
+            "importance_score": 12,
+        }
+        upsert_item(conn, source, item)
+        ensure_model_enrichment_placeholder(conn, source, item)
+        count += 1
+    record_run(conn, source, "ok", f"imported {count} upcoming events", raw_path)
+    return count
+
+
 def parse_met_opera(source: Source, text: str, limit: int = 80) -> list[dict[str, Any]]:
     parser = LinkTextParser(source.url)
     parser.feed(text)
@@ -2527,7 +2626,8 @@ CATEGORY_DISPLAY = {
 }
 CATEGORY_DISPLAY_ORDER = ["film", "tv", "theatre", "art", "music", "opera", "ballet"]
 # Music splits into two editorial lanes in the render: live concerts vs. album releases.
-CONCERT_MUSIC_SOURCES = {"nyphil_concerts", "carnegie_hall"}
+# PAC's music-genre events are live concerts, so they render in the Concerts lane too.
+CONCERT_MUSIC_SOURCES = {"nyphil_concerts", "carnegie_hall", "pac_nyc"}
 
 
 def render_html(conn: sqlite3.Connection) -> None:

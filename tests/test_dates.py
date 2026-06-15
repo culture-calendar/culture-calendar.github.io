@@ -36,6 +36,21 @@ def test_met_opera_season_year_context():
     assert L.met_opera_opening_date("Feb 3 - Mar 1") == dt.date(2027, 2, 3)
 
 
+def test_pac_opening_date(monkeypatch):
+    # PAC's date-range element comes in several shapes; the opening is the first month/day,
+    # with the trailing year governing a run. Horizon/already-running filtering is the caller's.
+    monkeypatch.setattr(L, "today", lambda: dt.date(2026, 6, 15))
+    assert L.extract_pac_date("Sep 13, 2026")[0] == dt.date(2026, 9, 13)
+    assert L.extract_pac_date("Jun 28—Jul 26, 2026")[0] == dt.date(2026, 6, 28)
+    assert L.extract_pac_date("Nov 20, 2026—Jan 3, 2027")[0] == dt.date(2026, 11, 20)
+    assert L.extract_pac_date("June 20 at 7pm")[0] == dt.date(2026, 6, 20)
+    assert L.extract_pac_date("Begins July 11, 11:00am—1:00pm")[0] == dt.date(2026, 7, 11)
+    # A run that opened before today resolves to its (past) opening, so the caller drops it
+    # as already-running rather than treating the range's end as a new opening.
+    assert L.extract_pac_date("Jun 12—Jul 19, 2026")[0] == dt.date(2026, 6, 12)
+    assert L.extract_pac_date("Tickets on sale soon")[0] is None
+
+
 def test_metacritic_date_variants():
     assert L.parse_metacritic_date("12 June 2026")[0] == "2026-06-12"
     assert L.parse_metacritic_date("Dec 2026")[2] == "month"

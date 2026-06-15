@@ -23,6 +23,7 @@ _DEDICATED: dict[str, tuple[str, object, bool]] = {
     "gagosian": ("embedded_json", legacy.import_gallery_nextdata, False),
     "guggenheim": ("embedded_json", legacy.import_guggenheim, False),
     "lacma": ("html", legacy.import_lacma, False),
+    "pac_nyc": ("html", legacy.import_pac, False),
 }
 
 # Tactic label for the html-catch-all sources (for docs/health/tests clarity).
@@ -43,6 +44,7 @@ EXPECTED_ROWS: dict[str, tuple[int, int]] = {
     "pace_gallery": (0, 20), "gagosian": (0, 20), "guggenheim": (0, 20), "frick": (0, 20),
     "new_museum": (0, 20), "met_opera_2026_27": (5, 40), "nycb_seasons": (5, 50),
     "nyphil_concerts": (5, 120), "aoty_upcoming": (0, 60), "ibdb": (0, 25),
+    "pac_nyc": (1, 25),
 }
 
 
