@@ -1,0 +1,45 @@
+{
+  "capturedAt": "2026-06-16",
+  "note": "Musée d'Art Moderne de Paris (MAM). Hand-maintained capture fixture (French-language site). Refresh each season from mam.paris.fr. Future-opening only.",
+  "items": [
+    {
+      "title": "Florian Krewer: woven thin",
+      "category": "art",
+      "date_start": "2026-06-19",
+      "date_label": "Jun 19, 2026 – Jan 4, 2027",
+      "date_precision": "exact",
+      "venue_or_platform": "Musée d'Art Moderne de Paris",
+      "city": "Paris",
+      "source_url": "https://www.mam.paris.fr/en/expositions",
+      "external_id": "mam-paris:florian-krewer",
+      "description": "First solo exhibition in France for the German painter — sixteen recent monumental canvases, some previously unseen. Free entry in the collections",
+      "importance_score": 13
+    },
+    {
+      "title": "Kerry James Marshall: The Histories",
+      "category": "art",
+      "date_start": "2026-09-18",
+      "date_label": "Sep 18, 2026 – Jan 24, 2027",
+      "date_precision": "exact",
+      "venue_or_platform": "Musée d'Art Moderne de Paris",
+      "city": "Paris",
+      "source_url": "https://www.mam.paris.fr/en/expositions",
+      "external_id": "mam-paris:kerry-james-marshall",
+      "description": "First French exhibition devoted to Marshall — ~70 works including eight new paintings made for the show. Organized with the Royal Academy and Kunsthaus Zürich",
+      "importance_score": 16
+    },
+    {
+      "title": "Simone Fattal: Des villes au fond d'un lac",
+      "category": "art",
+      "date_start": "2026-09-18",
+      "date_label": "Sep 18, 2026 – Jan 24, 2027",
+      "date_precision": "exact",
+      "venue_or_platform": "Musée d'Art Moderne de Paris",
+      "city": "Paris",
+      "source_url": "https://www.mam.paris.fr/en/expositions",
+      "external_id": "mam-paris:simone-fattal",
+      "description": "Major show of the Lebanese-American artist — ~100 works over 50+ years, from landscape painting to ceramics and collages",
+      "importance_score": 14
+    }
+  ]
+}

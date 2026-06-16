@@ -233,6 +233,38 @@
     "enabled": true
   },
   {
+    "id": "grand_palais",
+    "name": "Grand Palais",
+    "category": "art",
+    "type": "html",
+    "url": "https://www.grandpalais.fr/en",
+    "enabled": true
+  },
+  {
+    "id": "centre_pompidou",
+    "name": "Centre Pompidou",
+    "category": "art",
+    "type": "html",
+    "url": "https://www.centrepompidou.fr/en/program",
+    "enabled": true
+  },
+  {
+    "id": "mam_paris",
+    "name": "Musée d'Art Moderne de Paris",
+    "category": "art",
+    "type": "html",
+    "url": "https://www.mam.paris.fr/en/expositions",
+    "enabled": true
+  },
+  {
+    "id": "va_london",
+    "name": "Victoria and Albert Museum",
+    "category": "art",
+    "type": "html",
+    "url": "https://www.vam.ac.uk/exhibitions",
+    "enabled": true
+  },
+  {
     "id": "nycb_seasons",
     "name": "New York City Ballet Seasons",
     "category": "ballet",

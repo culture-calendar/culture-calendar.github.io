@@ -1,0 +1,19 @@
+{
+  "capturedAt": "2026-06-16",
+  "note": "Centre Pompidou's 'Constellation' program. The Paris building closed for renovation in Sept 2025, so 2026 shows are off-site. Hand-maintained capture fixture. Future-opening only; currently-running shows (La Bataille des couleurs at Maison Pompidou; the Pompidou-Metz shows) omitted, as are minor regional touring stops (Auxerre, Deauville, Toulon).",
+  "items": [
+    {
+      "title": "Vies minuscules",
+      "category": "art",
+      "date_start": "2026-09-24",
+      "date_label": "Sep 24, 2026 – Jan 31, 2027",
+      "date_precision": "exact",
+      "venue_or_platform": "Centre Pompidou (at the Panthéon)",
+      "city": "Paris",
+      "source_url": "https://www.centrepompidou.fr/en/program",
+      "external_id": "centre-pompidou:vies-minuscules",
+      "description": "Pompidou-collection show on marginal, intimate, or forgotten lives in art (~30 artists), at the Panthéon during the building's renovation",
+      "importance_score": 13
+    }
+  ]
+}

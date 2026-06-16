@@ -36,6 +36,10 @@ _HTML_TACTIC = {
     "tate_modern": "capture",
     "npg_london": "capture",
     "fondation_lv": "capture",
+    "grand_palais": "capture",
+    "centre_pompidou": "capture",
+    "va_london": "capture",
+    "mam_paris": "capture",
 }
 
 # Expected row ranges (health / silent-drift alarm). Wide enough to tolerate normal churn,
@@ -50,7 +54,8 @@ EXPECTED_ROWS: dict[str, tuple[int, int]] = {
     "new_museum": (0, 20), "met_opera_2026_27": (5, 40), "nycb_seasons": (5, 50),
     "nyphil_concerts": (5, 120), "aoty_upcoming": (0, 60), "ibdb": (0, 25),
     "pac_nyc": (1, 25), "the_shed": (1, 25), "armory": (0, 30), "tate_modern": (0, 20),
-    "npg_london": (0, 20), "fondation_lv": (0, 20),
+    "npg_london": (0, 20), "fondation_lv": (0, 20), "grand_palais": (0, 20),
+    "centre_pompidou": (0, 20), "va_london": (0, 20), "mam_paris": (0, 20),
 }
 
 

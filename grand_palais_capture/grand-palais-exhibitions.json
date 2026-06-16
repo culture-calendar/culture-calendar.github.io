@@ -1,0 +1,19 @@
+{
+  "capturedAt": "2026-06-16",
+  "note": "Grand Palais (RMN), Paris. Hand-maintained capture fixture. Refresh each season from grandpalais.fr. Future-opening only; currently-running shows (Matisse 1941-1954, Hilma af Klint) omitted.",
+  "items": [
+    {
+      "title": "Cézanne et nous",
+      "category": "art",
+      "date_start": "2026-09-23",
+      "date_label": "Sep 23, 2026 – Jan 17, 2027",
+      "date_precision": "exact",
+      "venue_or_platform": "Grand Palais",
+      "city": "Paris",
+      "source_url": "https://www.grandpalais.fr/en",
+      "external_id": "grand-palais:cezanne-et-nous",
+      "description": "~180 works (about 70 by Cézanne) on Cézanne's afterlife among later artists",
+      "importance_score": 16
+    }
+  ]
+}
