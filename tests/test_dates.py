@@ -71,6 +71,19 @@ def test_met_opera_credits():
     assert all(n != "Jo Meredith" for _, n in roles)  # movement director is not the director
 
 
+def test_shed_opening_date(monkeypatch):
+    monkeypatch.setattr(L, "today", lambda: dt.date(2026, 6, 16))
+    assert L.shed_opening_date("JUN 20 – SEP 6")[0] == dt.date(2026, 6, 20)  # year inferred
+    assert L.shed_opening_date("NOV 21, 2026")[0] == dt.date(2026, 11, 21)
+    assert L.shed_opening_date("no date here")[0] is None
+
+
+def test_shed_category():
+    assert L.shed_category("Lightscape: Sun Ra Arkestra") == "music"  # concert series
+    assert L.shed_category("Doug Aitken: Lightscape") == "art"        # the installation
+    assert L.shed_category("Imitation of Life") == "theatre"          # default
+
+
 def test_metacritic_date_variants():
     assert L.parse_metacritic_date("12 June 2026")[0] == "2026-06-12"
     assert L.parse_metacritic_date("Dec 2026")[2] == "month"

@@ -1447,6 +1447,95 @@ def import_pac(conn: sqlite3.Connection, source: Source, limit: int = 40) -> int
     return count
 
 
+# The Shed (Hudson Yards) is multidisciplinary with no per-event genre in its markup, so we
+# classify discipline from the title/tagline, defaulting to theatre (its most common form).
+SHED_CATEGORY_KEYWORDS = (
+    # Music is checked first: "Lightscape: <performer>" is a concert series, while the standalone
+    # "Doug Aitken: Lightscape" is the art installation (caught by "aitken"/"installation").
+    ("music", ("in concert", "concert", "symphony", "orchestra", "arkestra", "quartet",
+               "recital", "lightscape:", "chorale")),
+    ("art", ("exhibition", "frieze", "aitken", "installation", "retrospective",
+             "paintings", "sculpture", "art fair")),
+    ("ballet", ("dance", "ballet", "choreograph")),
+    ("film", ("film", "screening", "cinema")),
+)
+# Listing rows that aren't programmable cultural events.
+SHED_SKIP = ("open call", "application", "membership", "donate", "gift card", "rental",
+             "private event", "venue hire")
+
+
+def shed_category(text: str) -> str:
+    lowered = text.lower()
+    for category, keywords in SHED_CATEGORY_KEYWORDS:
+        if any(k in lowered for k in keywords):
+            return category
+    return "theatre"
+
+
+def shed_opening_date(label: str) -> tuple[dt.date | None, str | None]:
+    """The Shed prints "JUN 20 – SEP 6" (uppercase, usually no year). Take the first month/day
+    as the opening, using an explicit year if present or the next future one otherwise."""
+    match = re.search(rf"({MONTH_RE})\.?\s+(\d{{1,2}})", label, re.I)
+    if not match:
+        return None, None
+    month, day = match.group(1).title(), match.group(2)
+    year_match = re.search(r"20\d{2}", label)
+    if year_match:
+        opening = parse_us_date(f"{month} {day}, {year_match.group(0)}")
+    else:
+        opening = next((d for y in (today().year, today().year + 1)
+                        if (d := parse_us_date(f"{month} {day}, {y}")) and d >= today()), None)
+    return (opening, format_us_date(opening)) if opening else (None, None)
+
+
+def import_the_shed(conn: sqlite3.Connection, source: Source, limit: int = 40) -> int:
+    """The Shed — its program page is server-rendered with an #upcoming section of cards
+    (title + date range). Parse that section, infer the opening year, classify discipline from
+    the title/tagline, keep future-opening events within the horizon. NYC by definition."""
+    text = fetch_text(source.url)
+    raw_path = save_raw(source, text)
+    upcoming = text[text.find("id='upcoming'"):]
+    past = upcoming.find("id='past'")
+    if past > 0:
+        upcoming = upcoming[:past]
+    cards = re.findall(
+        r'event__link"\s+href="(/program/[^"]+)".*?'
+        r"event__title'>(.*?)</h2>\s*<h3 class='event__date'>(.*?)</h3>"
+        r"(?:\s*<p class='event__tagline'>(.*?)</p>)?",
+        upcoming, re.S,
+    )
+    count = 0
+    seen: set[str] = set()
+    for href, title_raw, date_raw, tagline_raw in cards:
+        title = normalize_space(html.unescape(strip_tags(title_raw)))
+        if not title or href in seen or any(s in title.lower() for s in SHED_SKIP):
+            continue
+        start, label = shed_opening_date(normalize_space(html.unescape(strip_tags(date_raw))))
+        if not start or start < today() or start > end_date():
+            continue
+        seen.add(href)
+        tagline = normalize_space(html.unescape(strip_tags(tagline_raw or "")))
+        url = "https://theshed.org" + href.split("?")[0]
+        item = {
+            "title": title,
+            "category": shed_category(f"{title} {tagline}"),
+            "date_start": start.isoformat(),
+            "date_label": label,
+            "date_precision": "exact",
+            "venue_or_platform": "The Shed",
+            "city": "New York",
+            "source_url": url,
+            "external_id": url,
+            "description": tagline or "The Shed, Hudson Yards",
+            "importance_score": 12,
+        }
+        upsert_item(conn, source, item)
+        ensure_model_enrichment_placeholder(conn, source, item)
+        count += 1
+    record_run(conn, source, "ok", f"imported {count} upcoming events", raw_path)
+    return count
+
+
 def parse_met_opera(source: Source, text: str, limit: int = 80) -> list[dict[str, Any]]:
     parser = LinkTextParser(source.url)
     parser.feed(text)
@@ -2688,7 +2777,7 @@ CATEGORY_DISPLAY = {
 CATEGORY_DISPLAY_ORDER = ["film", "tv", "theatre", "art", "music", "opera", "ballet"]
 # Music splits into two editorial lanes in the render: live concerts vs. album releases.
 # PAC's music-genre events are live concerts, so they render in the Concerts lane too.
-CONCERT_MUSIC_SOURCES = {"nyphil_concerts", "carnegie_hall", "pac_nyc"}
+CONCERT_MUSIC_SOURCES = {"nyphil_concerts", "carnegie_hall", "pac_nyc", "the_shed"}
 
 
 def render_html(conn: sqlite3.Connection) -> None:

@@ -193,6 +193,14 @@
     "enabled": true
   },
   {
+    "id": "the_shed",
+    "name": "The Shed",
+    "category": "art",
+    "type": "html",
+    "url": "https://theshed.org/program",
+    "enabled": true
+  },
+  {
     "id": "nycb_seasons",
     "name": "New York City Ballet Seasons",
     "category": "ballet",
