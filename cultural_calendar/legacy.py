@@ -2918,6 +2918,35 @@ def render_html(conn: sqlite3.Connection) -> None:
                 )
         return "".join(blocks)
 
+    def calendar_view(rows: list[sqlite3.Row]) -> str:
+        # Day-by-day: each opening/premiere day is a heading with that day's entries from every
+        # category beneath it (category label + title + venue/credits), in chronological order.
+        by_day: dict[str, list[sqlite3.Row]] = {}
+        for row in rows:
+            by_day.setdefault(row["date_start"], []).append(row)
+        days = []
+        for day in sorted(by_day):
+            heading = dt.date.fromisoformat(day).strftime("%A, %B %-d, %Y")
+            entries = sorted(by_day[day], key=lambda r: (
+                CATEGORY_DISPLAY_ORDER.index(r["category"]) if r["category"] in CATEGORY_DISPLAY_ORDER else 99,
+                -relevance(r["source_id"], r["importance_score"] or 0),
+                r["title"],
+            ))
+            rendered = []
+            for r in entries:
+                cat = CATEGORY_DISPLAY.get(r["category"], r["category"].title())
+                url = r["source_url"] or "#"
+                meta = " · ".join(x for x in (r["venue_or_platform"], format_credits(r["people_json"])) if x)
+                meta_html = f" <span class=\"cal-meta\">· {html.escape(meta)}</span>" if meta else ""
+                rendered.append(
+                    "<div class=\"cal-entry\">"
+                    f"<span class=\"cal-cat\">{html.escape(cat)}</span>"
+                    f"<span class=\"cal-body\"><a href=\"{html.escape(url)}\">{html.escape(r['title'])}</a>{meta_html}</span>"
+                    "</div>"
+                )
+            days.append(f"<div class=\"cal-day\"><div class=\"cal-date\">{heading}</div>{''.join(rendered)}</div>")
+        return "".join(days)
+
     months: dict[str, dict[str, list[sqlite3.Row]]] = {}
     for row in dated:
         months.setdefault(row["date_start"][:7], {}).setdefault(row["category"], []).append(row)
@@ -2925,6 +2954,7 @@ def render_html(conn: sqlite3.Connection) -> None:
     for mkey in sorted(months):
         label = dt.date(int(mkey[:4]), int(mkey[5:7]), 1).strftime("%B %Y")
         month_sections.append(f"<h2>{label}</h2>" + category_blocks(months[mkey]))
+    calendar_html = calendar_view(dated)
 
     horizon_by_cat: dict[str, list[sqlite3.Row]] = {}
     for row in horizon_rows:
@@ -2971,6 +3001,22 @@ def render_html(conn: sqlite3.Connection) -> None:
     .cols2 .v {{ color: #8c8675; font-size: 12.5px; }}
     a {{ color: #3a5a66; text-decoration: none; }}
     a:hover {{ text-decoration: underline; }}
+    /* View toggle (pure CSS): Editorial (month -> category) vs Calendar (day-by-day). */
+    input.vtoggle {{ position: absolute; opacity: 0; pointer-events: none; }}
+    .viewtoggle {{ margin: 18px 0 4px; display: inline-flex; border: 1px solid #cfc8b6; border-radius: 7px; overflow: hidden; }}
+    .viewtoggle label {{ cursor: pointer; padding: 5px 16px; font-size: 13px; color: #6d685d; background: #f1eee4; }}
+    .viewtoggle label + label {{ border-left: 1px solid #cfc8b6; }}
+    #view-editorial:checked ~ .viewtoggle label[for="view-editorial"],
+    #view-calendar:checked ~ .viewtoggle label[for="view-calendar"] {{ background: #3a5a66; color: #f6f4ee; }}
+    .view {{ display: none; }}
+    #view-editorial:checked ~ .view-editorial {{ display: block; }}
+    #view-calendar:checked ~ .view-calendar {{ display: block; }}
+    .cal-day {{ margin-top: 20px; break-inside: avoid; }}
+    .cal-date {{ font-size: 16px; color: #2a2722; margin-bottom: 2px; padding-bottom: 5px; border-bottom: 1px solid rgba(90,84,66,.3); }}
+    .cal-entry {{ display: flex; gap: 12px; padding: 6px 0; font-size: 15px; border-bottom: 1px solid rgba(110,100,75,.1); }}
+    .cal-cat {{ flex: 0 0 92px; color: #9a7c44; text-transform: uppercase; font-size: 11px; letter-spacing: .1em; padding-top: 3px; }}
+    .cal-body {{ flex: 1; min-width: 0; }}
+    .cal-meta {{ color: #8c8675; font-size: 12.5px; }}
     details.runs {{ margin-top: 32px; color: #8c8675; font-size: 12px; }}
     details.runs li {{ list-style: none; }}
   </style>
@@ -2979,7 +3025,11 @@ def render_html(conn: sqlite3.Connection) -> None:
   <main class="sheet">
   <h1>Cultural Calendar</h1>
   <p class="lede">Significant releases, openings, premieres, exhibitions, and performances through 2026. Generated {dt.datetime.now().strftime("%Y-%m-%d %H:%M")}.</p>
-  {''.join(month_sections)}
+  <input id="view-editorial" class="vtoggle" type="radio" name="view" checked>
+  <input id="view-calendar" class="vtoggle" type="radio" name="view">
+  <div class="viewtoggle"><label for="view-editorial">Editorial</label><label for="view-calendar">Calendar</label></div>
+  <div class="view view-editorial">{''.join(month_sections)}</div>
+  <div class="view view-calendar">{calendar_html}</div>
   {horizon_html}
   <details class="runs"><summary>Source runs</summary><ul>{run_html}</ul></details>
   </main>
