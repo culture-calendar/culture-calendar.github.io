@@ -170,13 +170,18 @@ def fetch_with_curl(url: str, params: dict[str, Any] | None, headers: dict[str, 
     full_url = url
     if params:
         full_url = f"{url}{'&' if '?' in url else '?'}{urlencode(params)}"
-    command = ["curl", "-sS", "--compressed", "--max-time", "30", full_url]
+    # Append the HTTP status so a 403/404/challenge body (which curl returns with exit 0) is
+    # rejected instead of flowing back as if it were real content.
+    command = ["curl", "-sS", "--compressed", "--max-time", "30", "-w", "\\n%{http_code}", full_url]
     for key, value in headers.items():
         command += ["-H", f"{key}: {value}"]
     result = subprocess.run(command, capture_output=True, text=True, timeout=40)
     if result.returncode != 0:
         raise RuntimeError(f"curl fetch failed for {url}: {result.stderr[:200]}")
-    return result.stdout
+    body, _, status_code = result.stdout.rpartition("\n")
+    if not status_code.strip().startswith("2"):
+        raise RuntimeError(f"curl fetch for {url} returned HTTP {status_code.strip()}")
+    return body
 
 
 def fetch_valid_page(url: str, must_contain: tuple[str, ...] = ()) -> str | None:
@@ -2287,7 +2292,9 @@ def import_with_cache(conn: sqlite3.Connection, source: Source, cache_path: Path
     else:
         raw_path = save_raw(source, text)
         live = parser(source, text)
-        items = merge_by_title(cache, live)
+        # Live wins on conflicts so a clean fetch can correct a stale cached date/url/title; the
+        # cache only supplies rows the live fetch is missing (e.g. a partially blocked crawl).
+        items = merge_by_title(live, cache)
         if live:
             save_capture_fixture(cache_path, items)
             status, note = "ok", f"imported {len(live)} upcoming exhibitions ({len(items)} after cache merge)"
@@ -2553,7 +2560,7 @@ def import_serpentine(conn: sqlite3.Connection, source: Source, max_pages: int =
     live = merge_by_title(merge_by_title(live_items, parse_serpentine_annual(annual) if annual else []), press_items)
     all_blocked = blocked and annual is None and not press_ok
     cache = load_capture_fixture(SERPENTINE_CAPTURE)
-    items = merge_by_title(cache, live)
+    items = merge_by_title(live, cache)  # live wins; cache only fills rows no live source returned
     # Integrity rule: a failed scrape makes data STALE, never empty. Refresh the cache only when a
     # live source returned real data; serve the cache (stale) when every source is blocked/empty.
     if all_blocked or not live:
@@ -3029,6 +3036,7 @@ def import_html_source(conn: sqlite3.Connection, source: Source) -> int:
         items = parse_moma_capture(source)
         used_moma_capture = True
     used_met_opera_capture = False
+    used_met_capture = False
     if source.id == "met_exhibitions":
         # The Met fetches fine from a normal IP but 429s CI/datacenter IPs. Refresh the
         # committed fixture on a good fetch; fall back to it when the live parse is empty.
@@ -3036,6 +3044,7 @@ def import_html_source(conn: sqlite3.Connection, source: Source) -> int:
             save_capture_fixture(MET_CAPTURE, items)
         else:
             items = load_capture_fixture(MET_CAPTURE)
+            used_met_capture = True
     if source.id == "met_opera_2026_27":
         # metopera.org serves CI/datacenter IPs a shell that parses to 0 links, so the live
         # page lost the whole season. Same treatment as the Met museum: refresh the committed
@@ -3056,12 +3065,18 @@ def import_html_source(conn: sqlite3.Connection, source: Source) -> int:
         upsert_item(conn, source, item)
         ensure_model_enrichment_placeholder(conn, source, item)
     enrich_detail_pages(conn, source, items)
+    # A fixture fallback means the live page failed/empty — report it as stale, not ok, so the
+    # "Source runs" section reflects real degradation.
+    degraded = used_moma_capture or used_met_opera_capture or used_met_capture
     source_note = ""
     if used_moma_capture:
-        source_note = " from browser capture fallback"
+        source_note = " from browser capture fallback (live empty)"
     elif used_met_opera_capture:
-        source_note = " from committed fixture fallback"
-    record_run(conn, source, "ok", f"parsed {len(items)} candidate links{source_note}", raw_path)
+        source_note = " from committed fixture fallback (live empty)"
+    elif used_met_capture:
+        source_note = " from committed fixture fallback (live 429/empty)"
+    record_run(conn, source, "stale" if degraded else "ok",
+               f"parsed {len(items)} candidate links{source_note}", raw_path)
     return len(items)
 
 
@@ -3258,7 +3273,7 @@ CONCERT_MUSIC_SOURCES = {"nyphil_concerts", "carnegie_hall", "pac_nyc", "the_she
 def render_html(conn: sqlite3.Connection) -> None:
     dated = conn.execute(
         """
-        select category, title, date_start,
+        select category, title, date_start, date_precision,
                coalesce(date_label, date_start, 'TBA') as date_label,
                source_name, source_id, venue_or_platform, source_url,
                importance_score, people_json
@@ -3402,14 +3417,9 @@ def render_html(conn: sqlite3.Connection) -> None:
                 "</div>"
             )
 
-        by_day: dict[str, list[sqlite3.Row]] = {}
-        for row in rows:
-            by_day.setdefault(row["date_start"], []).append(row)
-        days = []
-        for day in sorted(by_day):
-            heading = dt.date.fromisoformat(day).strftime("%A, %B %-d, %Y")
-            albums = sorted((r for r in by_day[day] if is_album(r)), key=lambda r: r["title"].lower())
-            others = sorted((r for r in by_day[day] if not is_album(r)), key=lambda r: (
+        def render_group(group: list[sqlite3.Row]) -> str:
+            albums = sorted((r for r in group if is_album(r)), key=lambda r: r["title"].lower())
+            others = sorted((r for r in group if not is_album(r)), key=lambda r: (
                 CATEGORY_DISPLAY_ORDER.index(r["category"]) if r["category"] in CATEGORY_DISPLAY_ORDER else 99,
                 -relevance(r["source_id"], r["importance_score"] or 0),
                 r["title"],
@@ -3424,8 +3434,28 @@ def render_html(conn: sqlite3.Connection) -> None:
                     "<div class=\"cal-entry\"><span class=\"cal-cat\">Albums</span>"
                     f"<span class=\"cal-body\">{links}</span></div>"
                 )
-            days.append(f"<div class=\"cal-day\"><div class=\"cal-date\">{heading}</div>{''.join(rendered)}</div>")
-        return "".join(days)
+            return "".join(rendered)
+
+        # Only day-precise rows get a calendar day. Month/season/TBA rows (e.g. Metacritic's
+        # "Dec 2026" stored as 2026-12-01) would imply a false exact date, so they go to a
+        # per-month "date to be confirmed" block instead.
+        exact_precision = {"exact", "exact_or_range"}
+        by_day: dict[str, list[sqlite3.Row]] = {}
+        coarse_by_month: dict[str, list[sqlite3.Row]] = {}
+        for row in rows:
+            if row["date_precision"] in exact_precision:
+                by_day.setdefault(row["date_start"], []).append(row)
+            else:
+                coarse_by_month.setdefault(row["date_start"][:7], []).append(row)
+        blocks: list[tuple[str, str]] = []
+        for day, group in by_day.items():
+            heading = dt.date.fromisoformat(day).strftime("%A, %B %-d, %Y")
+            blocks.append((day, f"<div class=\"cal-day\"><div class=\"cal-date\">{heading}</div>{render_group(group)}</div>"))
+        for mkey, group in coarse_by_month.items():
+            heading = dt.date(int(mkey[:4]), int(mkey[5:7]), 1).strftime("%B %Y") + " · date to be confirmed"
+            # sort after that month's day-blocks
+            blocks.append((f"{mkey}-99", f"<div class=\"cal-day\"><div class=\"cal-date\">{heading}</div>{render_group(group)}</div>"))
+        return "".join(html_block for _, html_block in sorted(blocks))
 
     months: dict[str, dict[str, list[sqlite3.Row]]] = {}
     for row in dated:

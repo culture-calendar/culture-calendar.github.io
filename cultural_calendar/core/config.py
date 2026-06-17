@@ -4,8 +4,14 @@ from __future__ import annotations
 
 import datetime as dt
 import json
+import os
 from dataclasses import dataclass
 from pathlib import Path
+from zoneinfo import ZoneInfo
+
+# The calendar is New York editorial; anchor "today" to Eastern so a run near midnight UTC
+# (or a runner in another tz) doesn't misclassify what counts as a future opening.
+_CALENDAR_TZ = ZoneInfo("America/New_York")
 
 # Project root = parent of the cultural_calendar/ package, so data/, sources.json, and the
 # *_capture/ fixtures resolve the same way they did for the original toy_calendar.py.
@@ -55,10 +61,17 @@ class Source:
 
 
 def today() -> dt.date:
-    return dt.date.today()
+    return dt.datetime.now(_CALENDAR_TZ).date()
 
 
 def end_date() -> dt.date:
+    # The forward horizon. Override with CALENDAR_END_DATE=YYYY-MM-DD; defaults to end of 2026.
+    override = os.environ.get("CALENDAR_END_DATE")
+    if override:
+        try:
+            return dt.date.fromisoformat(override)
+        except ValueError:
+            pass
     return dt.date(2026, 12, 31)
 
 
