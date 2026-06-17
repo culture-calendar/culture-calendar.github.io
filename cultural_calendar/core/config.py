@@ -24,7 +24,6 @@ NPG_CAPTURE = ROOT / "npg_capture" / "npg-exhibitions.json"
 GRAND_PALAIS_CAPTURE = ROOT / "grand_palais_capture" / "grand-palais-exhibitions.json"
 POMPIDOU_CAPTURE = ROOT / "pompidou_capture" / "pompidou-exhibitions.json"
 MAM_CAPTURE = ROOT / "mam_capture" / "mam-paris-exhibitions.json"
-SERPENTINE_CAPTURE = ROOT / "serpentine_capture" / "serpentine-exhibitions.json"
 CARNEGIE_CAPTURE = ROOT / "carnegie_capture" / "carnegie-events.json"
 FRICK_CAPTURE = ROOT / "frick_capture" / "frick-exhibitions.json"
 

@@ -30,7 +30,7 @@ import requests
 # Migrated to the cultural_calendar package (behavior-preserving re-org); re-exported here
 # so this module stays runnable during the migration.
 from cultural_calendar.core.config import *  # noqa: F401,F403
-from cultural_calendar.core.config import ROOT, DATA_DIR, RAW_DIR, DETAIL_DIR, DB_PATH, SOURCES_PATH, HTML_PATH, MOMA_CAPTURE_LINKS, MET_CAPTURE, MET_OPERA_CAPTURE, ARMORY_CAPTURE, SERPENTINE_CAPTURE, NPG_CAPTURE, GRAND_PALAIS_CAPTURE, POMPIDOU_CAPTURE, MAM_CAPTURE, CARNEGIE_CAPTURE, FRICK_CAPTURE, MONTH_PATTERN, MONTH_RE, MONTH_NUMBERS, Source, today, end_date, load_sources
+from cultural_calendar.core.config import ROOT, DATA_DIR, RAW_DIR, DETAIL_DIR, DB_PATH, SOURCES_PATH, HTML_PATH, MOMA_CAPTURE_LINKS, MET_CAPTURE, MET_OPERA_CAPTURE, ARMORY_CAPTURE, NPG_CAPTURE, GRAND_PALAIS_CAPTURE, POMPIDOU_CAPTURE, MAM_CAPTURE, CARNEGIE_CAPTURE, FRICK_CAPTURE, MONTH_PATTERN, MONTH_RE, MONTH_NUMBERS, Source, today, end_date, load_sources
 from cultural_calendar.core.html import normalize_space, strip_tags, LinkTextParser, ArticleParser, MetaParser  # noqa: F401
 
 
@@ -2279,6 +2279,66 @@ def import_tate(conn: sqlite3.Connection, source: Source) -> int:
     return count
 
 
+def import_serpentine(conn: sqlite3.Connection, source: Source, max_pages: int = 8) -> int:
+    """Serpentine Galleries (London). The What's On listing is server-rendered teaser cards
+    (teaser__pretitle category, teaser__title link, meta__row spans for venue + UK-format date).
+    Serpentine mixes categories and ongoing projects across pages, so a future exhibition can
+    land on /whats-on/page/2/+. Crawl page by page until a page fails or has no teaser cards.
+    Keep future-opening 'Exhibitions' only."""
+    base = "https://www.serpentinegalleries.org/whats-on/"
+    count = 0
+    seen: set[str] = set()
+    raw_path = None
+    for page in range(1, max_pages + 1):
+        url = base if page == 1 else f"{base}page/{page}/"
+        try:
+            text = fetch_text(url)
+        except Exception:
+            break
+        if page == 1:
+            raw_path = save_raw(source, text)
+        cards = re.split(r'(?=<section class="teaser )', text)
+        if len(cards) <= 1:  # no teaser cards -> past the last page
+            break
+        for card in cards:
+            # Category, venue, and pretitle all wrap nested <a> tags, so strip before matching.
+            category = re.search(r"teaser__pretitle(.*?)teaser__title", card, re.S)
+            if not category or "exhibition" not in strip_tags(category.group(1)).lower():
+                continue
+            link = re.search(r'href="(https://www\.serpentinegalleries\.org/whats-on/[a-z0-9-]+/)"', card)
+            title = re.search(r'teaser__title[^>]*>\s*(?:<a[^>]*>\s*)?([^<]+)', card)
+            rows = [normalize_space(strip_tags(r)) for r in re.findall(r'class="meta__row"[^>]*>(.*?)</span>', card, re.S)]
+            rows = [r for r in rows if r]
+            date_text = next((r for r in rows if re.search(r"20\d\d", r)), None)
+            venue = next((r for r in rows if not re.search(r"20\d\d", r)
+                          and r.lower() not in {"free", "sold out", "fully booked"} and not r.startswith("£")),
+                         "Serpentine")
+            if not link or not title or not date_text:
+                continue
+            start, label = tate_opening_date(date_text)  # shared UK day-first parser
+            target = link.group(1).split("?")[0]
+            if not start or start < today() or start > end_date() or target in seen:
+                continue
+            seen.add(target)
+            item = {
+                "title": normalize_space(html.unescape(title.group(1))),
+                "date_start": start.isoformat(),
+                "date_label": label,
+                "date_precision": "exact",
+                "venue_or_platform": normalize_space(html.unescape(venue)),
+                "city": "London",
+                "source_url": target,
+                "external_id": target,
+                "description": "Serpentine Galleries, London",
+                "importance_score": 14,
+            }
+            upsert_item(conn, source, item)
+            ensure_model_enrichment_placeholder(conn, source, item)
+            count += 1
+    record_run(conn, source, "ok", f"imported {count} upcoming exhibitions", raw_path)
+    return count
+
+
 def import_va(conn: sqlite3.Connection, source: Source) -> int:
     """Victoria and Albert Museum (London). The exhibitions listing embeds schema.org
     microdata per card (`<li id="SLUG" data-wo-type="exhibition"><article itemprop="event">`
@@ -2677,7 +2737,6 @@ def load_capture_fixture(path: Path) -> list[dict[str, Any]]:
 # venues with no scriptable path (Cloudflare/JS/non-English). Refresh each season by hand.
 CAPTURE_FIXTURE_SOURCES = {
     "armory": ARMORY_CAPTURE,
-    "serpentine": SERPENTINE_CAPTURE,
     "npg_london": NPG_CAPTURE,
     "grand_palais": GRAND_PALAIS_CAPTURE,
     "centre_pompidou": POMPIDOU_CAPTURE,

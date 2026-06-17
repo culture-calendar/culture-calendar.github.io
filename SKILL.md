@@ -153,12 +153,14 @@ section-aware, and list **newly-opening shows only** (never currently-on-view).
     the rest of FLV is an Akamai-gated SPA, but `/en/programme/a-venir` server-renders the cards
     with European DD.MM.YYYY dates; use only that surface, never the bot-walled APIs). `fetch_text`
     retries a 403 with a plainer UA before curl, since Tate's WAF blocks the Chrome/125 UA.
-  - **Capture fixtures (hand-refresh each season; see `CAPTURE_FIXTURE_SOURCES`):** Serpentine
-    and National Portrait Gallery (London); Centre Pompidou (off-site "Constellation"), Grand
-    Palais, Musée d'Art Moderne de Paris (Paris) — Grand Palais/Pompidou are JS apps with no
-    server-rendered listing; MAM's site lists only current shows; Serpentine's listing doesn't
-    yet expose its future show. The lesson (FLV): look for the smallest server-rendered surface
-    (an "upcoming"/"à venir" page) before concluding a site needs a fixture.
+    Serpentine (`import_serpentine`) crawls /whats-on/ + /whats-on/page/N/ teaser cards (future
+    exhibitions can sit on page 2+), filtering to the "Exhibitions" category.
+  - **Capture fixtures (hand-refresh each season; see `CAPTURE_FIXTURE_SOURCES`):** National
+    Portrait Gallery (London); Centre Pompidou (off-site "Constellation"), Grand Palais, Musée
+    d'Art Moderne de Paris (Paris) — Grand Palais/Pompidou are JS apps with no server-rendered
+    listing, and MAM's site lists only current shows. The lesson (FLV/Serpentine): look for the
+    smallest server-rendered surface (an "upcoming"/"à venir" page, or later pagination) before
+    concluding a site needs a fixture.
 
 Name exhibitions for the artist/subject; we generally don't care about the curator.
 
