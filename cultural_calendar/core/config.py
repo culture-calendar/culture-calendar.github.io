@@ -63,15 +63,25 @@ def today() -> dt.date:
     return dt.datetime.now(_CALENDAR_TZ).date()
 
 
+HORIZON_MONTHS = 18  # rolling editorial window
+
+
 def end_date() -> dt.date:
-    # The forward horizon. Override with CALENDAR_END_DATE=YYYY-MM-DD; defaults to end of 2026.
+    """Forward horizon for "is this upcoming." Pin with CALENDAR_END_DATE=YYYY-MM-DD; otherwise a
+    rolling ~18-month window (end of that month), floored at 2026-12-31 so it never drops below the
+    project's original through-2026 commitment. Rolling keeps the calendar useful past 2026 and
+    lets announced 2027 seasons through."""
     override = os.environ.get("CALENDAR_END_DATE")
     if override:
         try:
             return dt.date.fromisoformat(override)
         except ValueError:
             pass
-    return dt.date(2026, 12, 31)
+    t = today()
+    total = t.month - 1 + HORIZON_MONTHS
+    year, month = t.year + total // 12, total % 12 + 1
+    nxt = dt.date(year + month // 12, month % 12 + 1, 1)  # first of the following month
+    return max(nxt - dt.timedelta(days=1), dt.date(2026, 12, 31))
 
 
 def load_sources() -> list[Source]:

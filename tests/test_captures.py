@@ -15,36 +15,36 @@ def _src(sid, category):
 
 
 def test_frick_capture_future_only(monkeypatch):
+    monkeypatch.setenv("CALENDAR_END_DATE", "2026-12-31")  # pin the horizon for a fixed boundary
     monkeypatch.setattr(L, "today", lambda: dt.date(2026, 6, 1))
     items = L.parse_frick_capture(_src("frick", "art"))
     titles = [i["title"] for i in items]
     assert any("Siena" in t for t in titles)
     assert any("Kent Monkman" in t for t in titles)
     assert all(i["category"] == "art" for i in items)
-    # 2027 opening is held out of the 2026 horizon
+    # 2027 opening is held out beyond the pinned horizon
     assert not any("Susanne de Court" in t for t in titles)
 
 
 def test_met_opera_capture_fallback(monkeypatch):
     """The committed Met Opera fixture backs the CI fallback (metopera.org blocks CI IPs)."""
+    monkeypatch.setenv("CALENDAR_END_DATE", "2026-12-31")  # pin horizon → deterministic boundary
     monkeypatch.setattr(L, "today", lambda: dt.date(2026, 6, 1))
     items = L.load_capture_fixture(MET_OPERA_CAPTURE)
-    titles = [i["title"] for i in items]
     # In-horizon fall-2026 opening carries a sortable date_start.
-    assert "Lincoln in the Bardo" in titles
+    assert "Lincoln in the Bardo" in [i["title"] for i in items]
     bardo = next(i for i in items if i["title"] == "Lincoln in the Bardo")
     assert bardo["date_start"] == "2026-10-19"
-    # Spring-2027 openings are kept label-only (no 2026 date_start), not dropped.
-    aida = next(i for i in items if i["title"] == "Aida")
-    assert aida["date_start"] is None
+    # Horizon honored: nothing dated beyond the pinned end survives the load.
+    assert all(i["date_start"] is None or i["date_start"] <= "2026-12-31" for i in items)
     # A fall-2026 opening that has already passed is trimmed at load time.
     monkeypatch.setattr(L, "today", lambda: dt.date(2026, 11, 1))
-    titles_nov = [i["title"] for i in L.load_capture_fixture(MET_OPERA_CAPTURE)]
-    assert "Macbeth" not in titles_nov  # opened Sep 22, now past
+    assert "Macbeth" not in [i["title"] for i in L.load_capture_fixture(MET_OPERA_CAPTURE)]
 
 
 def test_nyphil_api_parse(monkeypatch):
     """NY Phil is now a JSON API source: filter to NYC + horizon, parse run ranges."""
+    monkeypatch.setenv("CALENDAR_END_DATE", "2026-12-31")  # pin horizon (test asserts 2027 dropped)
     monkeypatch.setattr(L, "today", lambda: dt.date(2026, 6, 1))
     events = json.loads((FIXTURES / "nyphil_events.json").read_text())
     items = L.parse_nyphil_events(events)

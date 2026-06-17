@@ -6,7 +6,8 @@ repo, so "moving machines" is mostly a clone plus credentials.
 ## What this is
 
 An editorial planning tool for The New Yorker tracking culturally significant upcoming items
-through end of 2026 across film, TV, theatre, art, music, opera, and dance/ballet — now with
+across a rolling ~18-month horizon (was through-2026; now `config.end_date()`, floored at
+2026-12-31, overridable via `CALENDAR_END_DATE`) — film, TV, theatre, art, music, opera, dance — now with
 major **London/Paris art institutions** alongside the NY core.
 
 - **Live:** https://culture-calendar.github.io

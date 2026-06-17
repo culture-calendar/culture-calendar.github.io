@@ -5,8 +5,9 @@ Use this skill when working on the Cultural Calendar in this workspace.
 ## Purpose
 
 Cultural Calendar is an editorial planning tool for The New Yorker. It tracks culturally
-significant upcoming items through the end of 2026 across film, television, theatre, art,
-music, opera, and New York-focused ballet.
+significant upcoming items across a rolling ~18-month horizon (see Date policy) — film,
+television, theatre, art (now including major London/Paris institutions), music, opera, and
+New York-focused ballet.
 
 The goal is not comprehensive listings. It is a useful forward-looking editorial horizon —
 reviews, profiles, Talk pieces, Goings On coverage, and longer-lead planning. Favor signal
@@ -71,7 +72,9 @@ Only fall back to a committed fixture when there is genuinely no scriptable path
 ## Date policy
 
 The calendar is forward-looking. A row appears in dated items only with a future
-start/opening/release/premiere date through `2026-12-31`.
+start/opening/release/premiere date within the horizon — `config.end_date()`, a rolling
+~18-month window (floored at `2026-12-31`, overridable with `CALENDAR_END_DATE`). `config.today()`
+is anchored to America/New_York. Always gate on `end_date()`/`today()`, never a hardcoded year.
 
 Vague planning rows are allowed only on a genuine future signal (`Fall 2026`, `Summer 2026`,
 `2026`) from a forward-facing context; they go to **"On the horizon."** Never let a `Through…`,

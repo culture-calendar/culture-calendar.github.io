@@ -35,7 +35,8 @@ def test_end_date_env_override(monkeypatch):
     monkeypatch.setenv("CALENDAR_END_DATE", "2027-06-30")
     assert config.end_date() == dt.date(2027, 6, 30)
     monkeypatch.delenv("CALENDAR_END_DATE", raising=False)
-    assert config.end_date() == dt.date(2026, 12, 31)
+    # default is the rolling window, never below the 2026-12-31 floor
+    assert config.end_date() >= dt.date(2026, 12, 31)
 
 
 def _item(title, start, label, ext):

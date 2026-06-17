@@ -1,17 +1,35 @@
 {
-  "capturedAt": "2026-06-15",
+  "capturedAt": "2026-06-17",
   "items": [
     {
       "title": "Aida",
-      "date_start": null,
+      "date_start": "2027-03-09",
       "date_label": "Mar 9 - Jun 12",
-      "date_precision": "exact_or_range",
+      "date_precision": "exact",
       "venue_or_platform": "Metropolitan Opera",
       "city": "New York",
       "source_url": "https://www.metopera.org/season/2026-27-season/aida/",
       "external_id": "https://www.metopera.org/season/2026-27-season/aida/",
       "description": null,
-      "importance_score": 5
+      "importance_score": 5,
+      "people": [
+        {
+          "name": "Michael Mayer",
+          "role": "Director"
+        },
+        {
+          "name": "Daniele Callegari",
+          "role": "Conductor"
+        },
+        {
+          "name": "Angel Blue",
+          "role": "Cast"
+        },
+        {
+          "name": "Judit Kutasi",
+          "role": "Cast"
+        }
+      ]
     },
     {
       "title": "Asmik Grigorian in Concert",
@@ -87,9 +105,9 @@
     },
     {
       "title": "Diamond Jubilee: 60 Years at Lincoln Center",
-      "date_start": null,
+      "date_start": "2027-05-25",
       "date_label": "May 25",
-      "date_precision": "exact_or_range",
+      "date_precision": "exact",
       "venue_or_platform": "Metropolitan Opera",
       "city": "New York",
       "source_url": "https://www.metopera.org/season/2026-27-special-presentation/diamond-jubilee/",
@@ -159,9 +177,9 @@
     },
     {
       "title": "Laffont Grand Finals Concert",
-      "date_start": null,
+      "date_start": "2027-03-21",
       "date_label": "Mar 21",
-      "date_precision": "exact_or_range",
+      "date_precision": "exact",
       "venue_or_platform": "Metropolitan Opera",
       "city": "New York",
       "source_url": "https://www.metopera.org/season/2026-27-special-presentation/laffont-grand-finals-concert/",
@@ -261,27 +279,55 @@
     },
     {
       "title": "Mahler: Symphony No. 8",
-      "date_start": null,
+      "date_start": "2027-06-10",
       "date_label": "Jun 10 - Jun 12",
-      "date_precision": "exact_or_range",
+      "date_precision": "exact",
       "venue_or_platform": "Metropolitan Opera",
       "city": "New York",
       "source_url": "https://www.metopera.org/season/2026-27-season/mahler---symphony-no.-8/",
       "external_id": "https://www.metopera.org/season/2026-27-season/mahler---symphony-no.-8/",
       "description": null,
-      "importance_score": 5
+      "importance_score": 5,
+      "people": [
+        {
+          "name": "Yannick Nézet-Séguin",
+          "role": "Conductor"
+        },
+        {
+          "name": "Angela Meade",
+          "role": "Cast"
+        }
+      ]
     },
     {
       "title": "Manon",
-      "date_start": null,
+      "date_start": "2027-03-12",
       "date_label": "Mar 12 - Apr 8",
-      "date_precision": "exact_or_range",
+      "date_precision": "exact",
       "venue_or_platform": "Metropolitan Opera",
       "city": "New York",
       "source_url": "https://www.metopera.org/season/2026-27-season/manon/",
       "external_id": "https://www.metopera.org/season/2026-27-season/manon/",
       "description": null,
-      "importance_score": 5
+      "importance_score": 5,
+      "people": [
+        {
+          "name": "Laurent Pelly",
+          "role": "Director"
+        },
+        {
+          "name": "Yves Abel",
+          "role": "Conductor"
+        },
+        {
+          "name": "Nadine Sierra",
+          "role": "Cast"
+        },
+        {
+          "name": "Matthew Polenzani",
+          "role": "Cast"
+        }
+      ]
     },
     {
       "title": "Maria Stuarda",
@@ -345,39 +391,93 @@
     },
     {
       "title": "Otello",
-      "date_start": null,
+      "date_start": "2027-01-11",
       "date_label": "Jan 11 - May 1",
-      "date_precision": "exact_or_range",
+      "date_precision": "exact",
       "venue_or_platform": "Metropolitan Opera",
       "city": "New York",
       "source_url": "https://www.metopera.org/season/2026-27-season/otello/",
       "external_id": "https://www.metopera.org/season/2026-27-season/otello/",
       "description": null,
-      "importance_score": 5
+      "importance_score": 5,
+      "people": [
+        {
+          "name": "Bartlett Sher",
+          "role": "Director"
+        },
+        {
+          "name": "Daniele Rustioni",
+          "role": "Conductor"
+        },
+        {
+          "name": "Angel Blue",
+          "role": "Cast"
+        },
+        {
+          "name": "Jennifer Johnson Cano",
+          "role": "Cast"
+        }
+      ]
     },
     {
       "title": "Parsifal",
-      "date_start": null,
+      "date_start": "2027-05-20",
       "date_label": "May 20 - Jun 5",
-      "date_precision": "exact_or_range",
+      "date_precision": "exact",
       "venue_or_platform": "Metropolitan Opera",
       "city": "New York",
       "source_url": "https://www.metopera.org/season/2026-27-season/parsifal/",
       "external_id": "https://www.metopera.org/season/2026-27-season/parsifal/",
       "description": null,
-      "importance_score": 5
+      "importance_score": 5,
+      "people": [
+        {
+          "name": "François Girard",
+          "role": "Director"
+        },
+        {
+          "name": "Yannick Nézet-Séguin",
+          "role": "Conductor"
+        },
+        {
+          "name": "Elīna Garanča",
+          "role": "Cast"
+        },
+        {
+          "name": "Piotr Beczała",
+          "role": "Cast"
+        }
+      ]
     },
     {
       "title": "Der Rosenkavalier",
-      "date_start": null,
+      "date_start": "2027-03-24",
       "date_label": "Mar 24 - Apr 10",
-      "date_precision": "exact_or_range",
+      "date_precision": "exact",
       "venue_or_platform": "Metropolitan Opera",
       "city": "New York",
       "source_url": "https://www.metopera.org/season/2026-27-season/der-rosenkavalier/",
       "external_id": "https://www.metopera.org/season/2026-27-season/der-rosenkavalier/",
       "description": null,
-      "importance_score": 5
+      "importance_score": 5,
+      "people": [
+        {
+          "name": "Robert Carsen",
+          "role": "Director"
+        },
+        {
+          "name": "Yannick Nézet-Séguin",
+          "role": "Conductor"
+        },
+        {
+          "name": "Rachel Willis-Sørensen",
+          "role": "Cast"
+        },
+        {
+          "name": "Emily D’Angelo",
+          "role": "Cast"
+        }
+      ]
     },
     {
       "title": "Samson et Dalila",
@@ -411,15 +511,33 @@
     },
     {
       "title": "Silent Night",
-      "date_start": null,
+      "date_start": "2027-03-08",
       "date_label": "Mar 8 - Apr 3",
-      "date_precision": "exact_or_range",
+      "date_precision": "exact",
       "venue_or_platform": "Metropolitan Opera",
       "city": "New York",
       "source_url": "https://www.metopera.org/season/2026-27-season/silent-night/",
       "external_id": "https://www.metopera.org/season/2026-27-season/silent-night/",
       "description": "New Production",
-      "importance_score": 15
+      "importance_score": 15,
+      "people": [
+        {
+          "name": "James Robinson",
+          "role": "Director"
+        },
+        {
+          "name": "Dalia Stasevska",
+          "role": "Conductor"
+        },
+        {
+          "name": "Elza van den Heever",
+          "role": "Cast"
+        },
+        {
+          "name": "Ben Bliss",
+          "role": "Cast"
+        }
+      ]
     },
     {
       "title": "Tosca",
