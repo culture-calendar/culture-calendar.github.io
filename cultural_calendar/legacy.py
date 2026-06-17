@@ -30,7 +30,7 @@ import requests
 # Migrated to the cultural_calendar package (behavior-preserving re-org); re-exported here
 # so this module stays runnable during the migration.
 from cultural_calendar.core.config import *  # noqa: F401,F403
-from cultural_calendar.core.config import ROOT, DATA_DIR, RAW_DIR, DETAIL_DIR, DB_PATH, SOURCES_PATH, HTML_PATH, MOMA_CAPTURE_LINKS, MET_CAPTURE, MET_OPERA_CAPTURE, ARMORY_CAPTURE, SERPENTINE_CAPTURE, NPG_CAPTURE, FLV_CAPTURE, GRAND_PALAIS_CAPTURE, POMPIDOU_CAPTURE, MAM_CAPTURE, CARNEGIE_CAPTURE, FRICK_CAPTURE, MONTH_PATTERN, MONTH_RE, MONTH_NUMBERS, Source, today, end_date, load_sources
+from cultural_calendar.core.config import ROOT, DATA_DIR, RAW_DIR, DETAIL_DIR, DB_PATH, SOURCES_PATH, HTML_PATH, MOMA_CAPTURE_LINKS, MET_CAPTURE, MET_OPERA_CAPTURE, ARMORY_CAPTURE, SERPENTINE_CAPTURE, NPG_CAPTURE, GRAND_PALAIS_CAPTURE, POMPIDOU_CAPTURE, MAM_CAPTURE, CARNEGIE_CAPTURE, FRICK_CAPTURE, MONTH_PATTERN, MONTH_RE, MONTH_NUMBERS, Source, today, end_date, load_sources
 from cultural_calendar.core.html import normalize_space, strip_tags, LinkTextParser, ArticleParser, MetaParser  # noqa: F401
 
 
@@ -2324,6 +2324,53 @@ def import_va(conn: sqlite3.Connection, source: Source) -> int:
     return count
 
 
+def import_flv(conn: sqlite3.Connection, source: Source) -> int:
+    """Fondation Louis Vuitton (Paris). The rest of the site is an Akamai-gated SPA, but the
+    English "Coming soon" programme page (/en/programme/a-venir) server-renders the exhibition
+    cards: callout__title link + callout__kicker + callout__subtitle ("From DD.MM.YYYY to ...",
+    European day-first). We use only that public HTML surface — no Akamai-protected APIs — and
+    keep future-opening exhibitions. An empty parse (e.g. if the page starts bot-challenging)
+    trips the drift warning rather than masking a problem."""
+    text = fetch_text(source.url)
+    raw_path = save_raw(source, text)
+    count = 0
+    seen: set[str] = set()
+    for match in re.finditer(
+        r'callout__link" href="(https://www\.fondationlouisvuitton\.fr/en/[^"]+)">\s*(.*?)\s*</a>.*?'
+        r'callout__kicker">([^<]*)</p>\s*'
+        r'<p class="callout__subtitle">From (\d{2})\.(\d{2})\.(20\d\d) to (\d{2})\.(\d{2})\.(20\d\d)',
+        text, re.S,
+    ):
+        url, title, kicker, d1, m1, y1, d2, m2, y2 = match.groups()
+        if kicker.strip().lower() != "exhibition":
+            continue
+        try:
+            start, end = dt.date(int(y1), int(m1), int(d1)), dt.date(int(y2), int(m2), int(d2))
+        except ValueError:
+            continue
+        url = url.split("?")[0]
+        if url in seen or start < today() or start > end_date():
+            continue
+        seen.add(url)
+        item = {
+            "title": normalize_space(html.unescape(strip_tags(title))),
+            "date_start": start.isoformat(),
+            "date_label": f"{format_us_date(start)} – {format_us_date(end)}",
+            "date_precision": "exact",
+            "venue_or_platform": "Fondation Louis Vuitton",
+            "city": "Paris",
+            "source_url": url,
+            "external_id": url,
+            "description": "Fondation Louis Vuitton, Paris",
+            "importance_score": 15,
+        }
+        upsert_item(conn, source, item)
+        ensure_model_enrichment_placeholder(conn, source, item)
+        count += 1
+    record_run(conn, source, "ok", f"imported {count} upcoming exhibitions", raw_path)
+    return count
+
+
 def import_lacma(conn: sqlite3.Connection, source: Source) -> int:
     """LACMA (Drupal Views) — listing cards expose title + start/end date fields. Fetchable
     directly (no anti-bot), so fully scriptable. Future-opening only."""
@@ -2632,7 +2679,6 @@ CAPTURE_FIXTURE_SOURCES = {
     "armory": ARMORY_CAPTURE,
     "serpentine": SERPENTINE_CAPTURE,
     "npg_london": NPG_CAPTURE,
-    "fondation_lv": FLV_CAPTURE,
     "grand_palais": GRAND_PALAIS_CAPTURE,
     "centre_pompidou": POMPIDOU_CAPTURE,
     "mam_paris": MAM_CAPTURE,

@@ -149,12 +149,16 @@ section-aware, and list **newly-opening shows only** (never currently-on-view).
   - Not yet wired (scriptable): Zwirner and Hauser & Wirth (Next.js RSC streaming), Marian Goodman.
 - **International art (London/Paris)** — a deliberate scope expansion beyond NY.
   - **Live (scriptable):** V&A (schema.org microdata; `import_va`), Tate Modern and Tate Britain
-    (whats-on cards, UK day-first dates; `import_tate`). `fetch_text` retries a 403 with a plainer
-    UA before curl, since Tate's WAF blocks the Chrome/125 Client-Hints string.
+    (whats-on cards, UK day-first dates; `import_tate`), Fondation Louis Vuitton (`import_flv` —
+    the rest of FLV is an Akamai-gated SPA, but `/en/programme/a-venir` server-renders the cards
+    with European DD.MM.YYYY dates; use only that surface, never the bot-walled APIs). `fetch_text`
+    retries a 403 with a plainer UA before curl, since Tate's WAF blocks the Chrome/125 UA.
   - **Capture fixtures (hand-refresh each season; see `CAPTURE_FIXTURE_SOURCES`):** Serpentine
     and National Portrait Gallery (London); Centre Pompidou (off-site "Constellation"), Grand
-    Palais, Musée d'Art Moderne de Paris, Fondation Louis Vuitton (Paris) — the French sites need
-    French-date parsing to go live; Serpentine's listing doesn't yet expose its future show.
+    Palais, Musée d'Art Moderne de Paris (Paris) — Grand Palais/Pompidou are JS apps with no
+    server-rendered listing; MAM's site lists only current shows; Serpentine's listing doesn't
+    yet expose its future show. The lesson (FLV): look for the smallest server-rendered surface
+    (an "upcoming"/"à venir" page) before concluding a site needs a fixture.
 
 Name exhibitions for the artist/subject; we generally don't care about the curator.
 
