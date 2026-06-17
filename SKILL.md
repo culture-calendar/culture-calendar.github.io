@@ -147,11 +147,14 @@ section-aware, and list **newly-opening shows only** (never currently-on-view).
   - Wired: Met, MoMA, Whitney, Brooklyn Museum, MOCA, LACMA, Pace, Gagosian, Guggenheim,
     New Museum, Frick.
   - Not yet wired (scriptable): Zwirner and Hauser & Wirth (Next.js RSC streaming), Marian Goodman.
-- **International art (London/Paris)** — a deliberate scope expansion beyond NY. These venues
-  are JS/French-language/bot-walled with no scriptable path, so they're hand-maintained capture
-  fixtures (see `CAPTURE_FIXTURE_SOURCES`): Tate Modern, Tate Britain, Serpentine, V&A, National
-  Portrait Gallery (London); Centre Pompidou (off-site "Constellation"), Grand Palais, Musée
-  d'Art Moderne de Paris, Fondation Louis Vuitton (Paris). Refresh each season by hand.
+- **International art (London/Paris)** — a deliberate scope expansion beyond NY.
+  - **Live (scriptable):** V&A (schema.org microdata; `import_va`), Tate Modern and Tate Britain
+    (whats-on cards, UK day-first dates; `import_tate`). `fetch_text` retries a 403 with a plainer
+    UA before curl, since Tate's WAF blocks the Chrome/125 Client-Hints string.
+  - **Capture fixtures (hand-refresh each season; see `CAPTURE_FIXTURE_SOURCES`):** Serpentine
+    and National Portrait Gallery (London); Centre Pompidou (off-site "Constellation"), Grand
+    Palais, Musée d'Art Moderne de Paris, Fondation Louis Vuitton (Paris) — the French sites need
+    French-date parsing to go live; Serpentine's listing doesn't yet expose its future show.
 
 Name exhibitions for the artist/subject; we generally don't care about the curator.
 

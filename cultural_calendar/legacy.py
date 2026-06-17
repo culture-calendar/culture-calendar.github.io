@@ -30,7 +30,7 @@ import requests
 # Migrated to the cultural_calendar package (behavior-preserving re-org); re-exported here
 # so this module stays runnable during the migration.
 from cultural_calendar.core.config import *  # noqa: F401,F403
-from cultural_calendar.core.config import ROOT, DATA_DIR, RAW_DIR, DETAIL_DIR, DB_PATH, SOURCES_PATH, HTML_PATH, MOMA_CAPTURE_LINKS, MET_CAPTURE, MET_OPERA_CAPTURE, ARMORY_CAPTURE, TATE_CAPTURE, TATE_BRITAIN_CAPTURE, SERPENTINE_CAPTURE, NPG_CAPTURE, FLV_CAPTURE, GRAND_PALAIS_CAPTURE, POMPIDOU_CAPTURE, MAM_CAPTURE, CARNEGIE_CAPTURE, FRICK_CAPTURE, MONTH_PATTERN, MONTH_RE, MONTH_NUMBERS, Source, today, end_date, load_sources
+from cultural_calendar.core.config import ROOT, DATA_DIR, RAW_DIR, DETAIL_DIR, DB_PATH, SOURCES_PATH, HTML_PATH, MOMA_CAPTURE_LINKS, MET_CAPTURE, MET_OPERA_CAPTURE, ARMORY_CAPTURE, SERPENTINE_CAPTURE, NPG_CAPTURE, FLV_CAPTURE, GRAND_PALAIS_CAPTURE, POMPIDOU_CAPTURE, MAM_CAPTURE, CARNEGIE_CAPTURE, FRICK_CAPTURE, MONTH_PATTERN, MONTH_RE, MONTH_NUMBERS, Source, today, end_date, load_sources
 from cultural_calendar.core.html import normalize_space, strip_tags, LinkTextParser, ArticleParser, MetaParser  # noqa: F401
 
 
@@ -134,6 +134,19 @@ def fetch_text(url: str, params: dict[str, Any] | None = None, headers: dict[str
             # Some sources (e.g. Metacritic) fingerprint the TLS client and 403 urllib3 while
             # serving curl normally. Retry once via curl, which presents a browser-like TLS.
             if status == 403:
+                # Some WAFs (Tate) block our Client-Hints UA string (Chrome/125.0.0.0) but
+                # serve a plainer one; others (Metacritic) fingerprint urllib3's TLS and need
+                # curl. Try a stripped-down request with an alternate UA first, then curl.
+                try:
+                    retry = requests.get(
+                        url, params=params, timeout=30,
+                        headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                                 "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36"},
+                    )
+                    if retry.ok:
+                        return retry.text
+                except requests.RequestException:
+                    pass
                 return fetch_with_curl(url, params, base_headers)
             # 429 = rate-limited (e.g. metmuseum.org throttles datacenter IPs like CI runners).
             # Back off (honoring Retry-After when present) and retry, since the refresh is not
@@ -2201,6 +2214,62 @@ def import_guggenheim(conn: sqlite3.Connection, source: Source) -> int:
     return count
 
 
+def tate_opening_date(text: str) -> tuple[dt.date | None, str | None]:
+    """Parse Tate's UK day-first run label into an opening date. "25 Jun 2026 – 3 Jan 2027"
+    and "3 June – 23 August 2026" (year only at the range end) give an opening; "Until ..."
+    (closing-only = currently running), recurring/ongoing tour-and-talk text, and a bare year
+    give none — which is how exhibitions are separated from events and running shows."""
+    if re.match(r"\s*until\b", text, re.I):
+        return None, None
+    day_month = re.search(r"(\d{1,2})\s+([A-Za-z]+)", text)
+    if not day_month:
+        return None, None
+    day, month = day_month.group(1), day_month.group(2)
+    year = re.search(rf"{re.escape(day_month.group(0))}\s+(20\d\d)", text) or re.search(r"(20\d\d)", text)
+    if not year:
+        return None, None
+    opening = parse_us_date(f"{month} {day}, {year.group(1)}")
+    return (opening, normalize_space(text)) if opening else (None, None)
+
+
+def import_tate(conn: sqlite3.Connection, source: Source) -> int:
+    """Tate Modern / Tate Britain. The whats-on listing has a card per programme: title in the
+    link's aria-label, run in an `icon--calendar` <span>. Keep future-opening exhibitions;
+    running shows ("Until ..."), tours, and talks self-exclude (no parseable opening date)."""
+    text = fetch_text(source.url)
+    raw_path = save_raw(source, text)
+    path = re.search(r"/whats-on/(tate-[a-z]+)", source.url).group(1)
+    count = 0
+    seen: set[str] = set()
+    for seg in re.split(rf'(?=<a href="/whats-on/{path}/[a-z0-9-]+" aria-label=)', text):
+        link = re.match(rf'<a href="(/whats-on/{path}/[a-z0-9-]+)" aria-label="([^"]+)"', seg)
+        date_span = re.search(r'icon--calendar"></i>\s*</div>\s*<span>([^<]+)</span>', seg)
+        if not link or not date_span:
+            continue
+        start, label = tate_opening_date(date_span.group(1))
+        url = "https://www.tate.org.uk" + link.group(1)
+        if not start or start < today() or start > end_date() or url in seen:
+            continue
+        seen.add(url)
+        item = {
+            "title": normalize_space(html.unescape(link.group(2))),
+            "date_start": start.isoformat(),
+            "date_label": label,
+            "date_precision": "exact",
+            "venue_or_platform": source.name,
+            "city": "London",
+            "source_url": url,
+            "external_id": url,
+            "description": f"{source.name}, London",
+            "importance_score": 14,
+        }
+        upsert_item(conn, source, item)
+        ensure_model_enrichment_placeholder(conn, source, item)
+        count += 1
+    record_run(conn, source, "ok", f"imported {count} upcoming exhibitions", raw_path)
+    return count
+
+
 def import_va(conn: sqlite3.Connection, source: Source) -> int:
     """Victoria and Albert Museum (London). The exhibitions listing embeds schema.org
     microdata per card (`<li id="SLUG" data-wo-type="exhibition"><article itemprop="event">`
@@ -2552,8 +2621,6 @@ def load_capture_fixture(path: Path) -> list[dict[str, Any]]:
 # venues with no scriptable path (Cloudflare/JS/non-English). Refresh each season by hand.
 CAPTURE_FIXTURE_SOURCES = {
     "armory": ARMORY_CAPTURE,
-    "tate_modern": TATE_CAPTURE,
-    "tate_britain": TATE_BRITAIN_CAPTURE,
     "serpentine": SERPENTINE_CAPTURE,
     "npg_london": NPG_CAPTURE,
     "fondation_lv": FLV_CAPTURE,

@@ -213,7 +213,7 @@
     "name": "Tate Modern",
     "category": "art",
     "type": "html",
-    "url": "https://www.tate.org.uk/visit/tate-modern",
+    "url": "https://www.tate.org.uk/whats-on/tate-modern",
     "enabled": true
   },
   {
@@ -221,7 +221,7 @@
     "name": "Tate Britain",
     "category": "art",
     "type": "html",
-    "url": "https://www.tate.org.uk/visit/tate-britain",
+    "url": "https://www.tate.org.uk/whats-on/tate-britain",
     "enabled": true
   },
   {
