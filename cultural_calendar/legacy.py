@@ -1143,10 +1143,30 @@ def parse_met_exhibitions(source: Source, text: str, limit: int = 120) -> list[d
             city="New York",
         )
         start = parse_label_start_date(item.get("date_label"))
+        if not start:
+            # Met-specific trap: an open-ended opening prints year-less ("July 25-Ongoing"),
+            # which detect_date_label can't anchor, so the row would silently vanish. We're
+            # inside the #upcoming section, so the opening is future by definition — recover
+            # the "Month D" from the article text and infer the next occurrence. (Friend's
+            # "A Lasting Legacy" case: safe here precisely because section-awareness rules
+            # out a past opening; a yearless date outside this section stays a review case.)
+            ongoing = re.search(rf"({MONTH_RE})\.?\s+(\d{{1,2}})(?:st|nd|rd|th)?\s*[–-]\s*ongoing",
+                                article["text"], re.I)
+            if ongoing and not re.search(r"\b20\d{2}\b", article["text"]):
+                start = next(
+                    (d for y in (today().year, today().year + 1)
+                     if (d := parse_us_date(f"{ongoing.group(1)} {ongoing.group(2)}, {y}")) and d >= today()),
+                    None,
+                )
+                if start:
+                    item["description"] = f"Source date: {normalize_space(ongoing.group(0))}"
+                    item["date_label"] = f"{format_us_date(start)}–Ongoing"
+                    item["date_precision"] = "exact"
         if not start or start < today() or start > end_date():
             continue
         item["date_start"] = start.isoformat()
-        if item.get("date_label") and re.search(r"\bongoing\b", item["date_label"], re.I):
+        if item.get("date_label") and re.search(r"\bongoing\b", item["date_label"], re.I) \
+                and not item.get("description", "").startswith("Source date:"):
             item["description"] = f"Source date: {item['date_label']}"
             item["date_label"] = normalize_space(re.split(r"\s*[–-]\s*ongoing\b", item["date_label"], flags=re.I)[0])
             item["date_precision"] = "exact"

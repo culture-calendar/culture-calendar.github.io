@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-06-14",
+  "capturedAt": "2026-06-18",
   "items": [
     {
       "title": "Decorative Arts in China, 1000 to the Present",
@@ -11,6 +11,17 @@
       "venue_or_platform": "The Met",
       "city": "New York",
       "description": "Source date: July 25th, 2026–Ongoing"
+    },
+    {
+      "title": "A Lasting Legacy: Chinese Jades from New York Collections",
+      "date_start": "2026-07-25",
+      "date_label": "Jul 25, 2026–Ongoing",
+      "date_precision": "exact",
+      "source_url": "https://www.metmuseum.org/exhibitions/a-lasting-legacy-chinese-jades-from-new-york-collections",
+      "external_id": "https://www.metmuseum.org/exhibitions/a-lasting-legacy-chinese-jades-from-new-york-collections",
+      "venue_or_platform": "The Met",
+      "city": "New York",
+      "description": "Source date: July 25-Ongoing"
     },
     {
       "title": "A King’s Carpet: Louis XIV and the Savonnerie",

@@ -42,6 +42,26 @@ def test_met_opera_capture_fallback(monkeypatch):
     assert "Macbeth" not in [i["title"] for i in L.load_capture_fixture(MET_OPERA_CAPTURE)]
 
 
+def test_met_yearless_ongoing_recovered(monkeypatch):
+    """A Met upcoming row printed year-less ("July 25-Ongoing") must not vanish: inside the
+    #upcoming section the opening is future by definition, so infer the next occurrence."""
+    monkeypatch.setenv("CALENDAR_END_DATE", "2026-12-31")
+    monkeypatch.setattr(L, "today", lambda: dt.date(2026, 6, 1))
+    html = (
+        '<section id="upcoming"><h2>Upcoming Exhibitions</h2>'
+        '<article><a href="https://www.metmuseum.org/exhibitions/decorative-arts-in-china">'
+        'Decorative Arts in China</a> July 25, 2026–Ongoing</article>'
+        '<article><a href="https://www.metmuseum.org/exhibitions/a-lasting-legacy">'
+        'A Lasting Legacy: Chinese Jades</a> July 25-Ongoing</article>'
+        '</section><section id="past"><h2>Past Exhibitions</h2></article></section>'
+    )
+    items = L.parse_met_exhibitions(_src("met_exhibitions", "art"), html)
+    legacy = next(i for i in items if i["title"].startswith("A Lasting Legacy"))
+    assert legacy["date_start"] == "2026-07-25"        # year inferred from the upcoming section
+    assert "Ongoing" in legacy["date_label"]           # open-ended end preserved in the label
+    assert legacy["description"] == "Source date: July 25-Ongoing"  # raw string kept for review
+
+
 def test_nyphil_api_parse(monkeypatch):
     """NY Phil is now a JSON API source: filter to NYC + horizon, parse run ranges."""
     monkeypatch.setenv("CALENDAR_END_DATE", "2026-12-31")  # pin horizon (test asserts 2027 dropped)
