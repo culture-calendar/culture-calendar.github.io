@@ -156,9 +156,14 @@ section-aware, and list **newly-opening shows only** (never currently-on-view).
   (`extract_exhibition_window`, title from `og:title`), keep future-in-horizon. Where a listing
   has `<section id="upcoming">` (Whitney-style), scope to it and keep undated upcoming shows as
   horizon items. **Galleries are NY-only** (Pace, Gagosian filter to New York).
-  - Wired: Met, MoMA, Whitney, Brooklyn Museum, MOCA, LACMA, Pace, Gagosian, Guggenheim,
-    New Museum, Frick.
-  - Not yet wired (scriptable): Zwirner and Hauser & Wirth (Next.js RSC streaming), Marian Goodman.
+  - Wired directly: Met, MoMA, Whitney, Brooklyn Museum, MOCA, LACMA, Pace, Gagosian,
+    Guggenheim, New Museum, Frick, **Marian Goodman** (`import_marian_goodman` — its own
+    `/exhibitions/` listing is server-rendered; NY-only, future-opening, cache-backed).
+  - Wired via the **Ocula** browser-capture aggregator (`import_ocula`; NY major-gallery
+    allowlist that excludes Gagosian/Pace since those are scraped directly, so no dedup):
+    White Cube, Gladstone, Lehmann Maupin, David Zwirner, Hauser & Wirth, Lisson, Sean Kelly,
+    etc. — the JS/RSC gallery sites that resist direct scripting. Ocula Cloudflare-walls
+    scripts, so it's a browser-capture fixture (`ocula_capture/`, refresh via Claude-in-Chrome).
 - **International art (London/Paris)** — a deliberate scope expansion beyond NY.
   - **Live (scriptable):** V&A (schema.org microdata; `import_va`), Tate Modern and Tate Britain
     (whats-on cards, UK day-first dates; `import_tate`), Fondation Louis Vuitton (`import_flv` —
