@@ -367,5 +367,13 @@
     "type": "html",
     "url": "https://www.abt.org/performances/summer-season/",
     "enabled": true
+  },
+  {
+    "id": "summer_city",
+    "name": "Summer for the City (Lincoln Center)",
+    "category": "music",
+    "type": "html",
+    "url": "https://www.lincolncenter.org/series/summer-for-the-city",
+    "enabled": true
   }
 ]

@@ -89,4 +89,37 @@ def test_abt_groups_by_ballet_and_cleans_titles(monkeypatch):
     assert [i["title"] for i in items] == ["Swan Lake", "Onegin"]   # dash/pipe junk stripped; past dropped
     swan = items[0]
     assert swan["date_start"] == "2026-06-19" and "–" in swan["date_label"]
-    assert swan["venue_or_platform"] == "Metropolitan Opera House" and swan["category"] == "dance"
+    assert swan["venue_or_platform"] == "Metropolitan Opera House" and swan["category"] == "ballet"
+
+
+_SFTC_SRC = Source(id="summer_city", name="Summer for the City", category="music", type="html", url="x")
+
+
+def _sftc_card(date, slug, title, discipline, venue_html):
+    return (
+        f'<h4 class="event-date"> {date} </h4>'
+        '<h2 class="presenting-organization"><a href="/series/summer-for-the-city">Summer for the City</a><br />'
+        '<a href="/series/summer-for-the-city/s/Featured%20Concerts">Featured Concerts</a></h2>'
+        f'<h2 class="event-title"><a href="/series/summer-for-the-city/{slug}">{title}</a></h2>'
+        f'<h2 class="presenting-organization more-constituent-info"><img class="show-card-loction-icon" src="x">{venue_html}</h2>'
+        '<div class="vs-show-short-description">desc</div>'
+        f'<div class="show-icons-item-text">{discipline}</div>'
+    )
+
+
+def test_summer_city_marquee_filter_and_fields(monkeypatch):
+    monkeypatch.setattr(L, "today", lambda: dt.date(2026, 6, 1))
+    monkeypatch.setattr(L, "end_date", lambda: dt.date(2027, 12, 31))
+    page = (
+        "UPCOMING SHOWS"
+        + _sftc_card("Saturday, June 20 at 7:30 pm", "fest-orch-1", "Festival Orchestra: Mozart",
+                     "MUSIC", '<a href="/venue/x">Alice Tully Hall</a>')
+        + _sftc_card("Sunday, June 21 at 12:00 pm", "silent-disco-9", "Silent Disco",
+                     "DISCO", "The Dance Floor")   # no performance discipline -> dropped
+    )
+    items = L.parse_summer_city(_SFTC_SRC, page)
+    assert [i["title"] for i in items] == ["Festival Orchestra: Mozart"]
+    it = items[0]
+    assert it["category"] == "music" and it["venue_or_platform"] == "Alice Tully Hall"
+    assert it["date_start"] == "2026-06-20"
+    assert "Summer for the City" in it["description"] and "Featured Concerts" in it["description"]

@@ -3,7 +3,7 @@
   "items": [
     {
       "title": "Swan Lake",
-      "category": "dance",
+      "category": "ballet",
       "date_start": "2026-06-19",
       "date_label": "Jun 19 – Jul 18, 2026",
       "date_precision": "exact",
@@ -17,7 +17,7 @@
     },
     {
       "title": "Onegin",
-      "category": "dance",
+      "category": "ballet",
       "date_start": "2026-06-23",
       "date_label": "Jun 23 – Jun 27, 2026",
       "date_precision": "exact",
@@ -31,7 +31,7 @@
     },
     {
       "title": "Don Quixote",
-      "category": "dance",
+      "category": "ballet",
       "date_start": "2026-06-29",
       "date_label": "Jun 29 – Jul 7, 2026",
       "date_precision": "exact",
@@ -45,7 +45,7 @@
     },
     {
       "title": "Sylvia",
-      "category": "dance",
+      "category": "ballet",
       "date_start": "2026-07-09",
       "date_label": "Jul 9 – Jul 11, 2026",
       "date_precision": "exact",
@@ -59,7 +59,7 @@
     },
     {
       "title": "ABTKids",
-      "category": "dance",
+      "category": "ballet",
       "date_start": "2026-06-27",
       "date_label": "Jun 27, 2026",
       "date_precision": "exact",

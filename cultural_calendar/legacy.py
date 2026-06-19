@@ -27,7 +27,7 @@ import requests
 # Migrated to the cultural_calendar package (behavior-preserving re-org); re-exported here
 # so this module stays runnable during the migration.
 from cultural_calendar.core.config import *  # noqa: F401,F403
-from cultural_calendar.core.config import ROOT, DATA_DIR, RAW_DIR, DETAIL_DIR, DB_PATH, SOURCES_PATH, HTML_PATH, MOMA_CAPTURE_LINKS, MET_CAPTURE, MET_OPERA_CAPTURE, ARMORY_CAPTURE, SERPENTINE_CAPTURE, VA_CACHE, TATE_MODERN_CACHE, TATE_BRITAIN_CACHE, FLV_CACHE, NPG_CAPTURE, GRAND_PALAIS_CAPTURE, POMPIDOU_CAPTURE, MAM_CAPTURE, FRICK_CAPTURE, OCULA_CAPTURE, MARIAN_GOODMAN_CACHE, LISSON_CACHE, TANYA_BONAKDAR_CACHE, BARGEMUSIC_CACHE, JOYCE_CACHE, MERKIN_CACHE, LINCOLN_CACHE, JALC_CACHE, ABT_CACHE, MONTH_PATTERN, MONTH_RE, MONTH_NUMBERS, Source, today, end_date, load_sources
+from cultural_calendar.core.config import ROOT, DATA_DIR, RAW_DIR, DETAIL_DIR, DB_PATH, SOURCES_PATH, HTML_PATH, MOMA_CAPTURE_LINKS, MET_CAPTURE, MET_OPERA_CAPTURE, ARMORY_CAPTURE, SERPENTINE_CAPTURE, VA_CACHE, TATE_MODERN_CACHE, TATE_BRITAIN_CACHE, FLV_CACHE, NPG_CAPTURE, GRAND_PALAIS_CAPTURE, POMPIDOU_CAPTURE, MAM_CAPTURE, FRICK_CAPTURE, OCULA_CAPTURE, MARIAN_GOODMAN_CACHE, LISSON_CACHE, TANYA_BONAKDAR_CACHE, BARGEMUSIC_CACHE, JOYCE_CACHE, MERKIN_CACHE, LINCOLN_CACHE, JALC_CACHE, ABT_CACHE, SFTC_CACHE, MONTH_PATTERN, MONTH_RE, MONTH_NUMBERS, Source, today, end_date, load_sources
 from cultural_calendar.core.html import normalize_space, strip_tags, LinkTextParser, ArticleParser, MetaParser  # noqa: F401
 
 
@@ -1769,7 +1769,7 @@ def parse_abt(source: Source, text: str) -> list[dict[str, Any]]:
             label = (f"{format_us_date(opening).rsplit(',', 1)[0]} – {format_us_date(closing)}"
                      if closing > opening else format_us_date(opening))
             items.append({
-                "title": _abt_title(ballet), "category": "dance", "date_start": opening.isoformat(),
+                "title": _abt_title(ballet), "category": "ballet", "date_start": opening.isoformat(),
                 "date_label": label, "date_precision": "exact",
                 "venue_or_platform": venue, "city": "New York",
                 "source_url": f"https://www.abt.org/events/{ballet}/", "external_id": key,
@@ -1780,6 +1780,87 @@ def parse_abt(source: Source, text: str) -> list[dict[str, Any]]:
 
 def import_abt(conn: sqlite3.Connection, source: Source) -> int:
     return import_with_cache(conn, source, ABT_CACHE, parse_abt, must_contain=("/event_dates/",))
+
+
+# Summer for the City is multidisciplinary; the per-event "discipline" icon drives the category.
+# The marquee-performances filter keeps only events carrying one of these (drops participatory
+# activities — Silent Disco, World at Play, kids storytime, wellbeing workshops — which have no
+# discipline icon).
+SFTC_DISCIPLINE_CATEGORY = {
+    "MUSIC": "music", "DANCE": "ballet", "FILM": "film",
+    "THEATER": "theatre", "THEATRE": "theatre", "COMEDY": "theatre",
+}
+_SFTC_HEAD = re.compile(
+    r'<h4 class="event-date">\s*(?:Mon|Tues|Wednes|Thurs|Fri|Satur|Sun)day,\s*'
+    r"([A-Z][a-z]+)\s+(\d{1,2})\s+at\s+\d{1,2}:\d{2}\s*[ap]m\s*</h4>")
+
+
+def _sftc_year(month: int, day: int) -> dt.date | None:
+    """Festival headings carry no year; pick the nearest upcoming occurrence."""
+    t = today()
+    for yr in (t.year, t.year + 1):
+        try:
+            cand = dt.date(yr, month, day)
+        except ValueError:
+            return None
+        if cand >= t:
+            return cand
+    return dt.date(t.year, month, day)
+
+
+def parse_summer_city(source: Source, text: str) -> list[dict[str, Any]]:
+    """Lincoln Center Presents — Summer for the City. Pass 2 of the festival page: each
+    <h4 class="event-date"> heading begins an event card; consume to the next heading. Keep only
+    marquee performances (those with a MUSIC/DANCE/FILM/THEATER/COMEDY discipline icon); the
+    discipline maps to the calendar category. Subseries (/s/<label>) tags annotate the entry."""
+    region = text[text.find("UPCOMING SHOWS"):] if "UPCOMING SHOWS" in text else text
+    heads = list(_SFTC_HEAD.finditer(region))
+    items, seen = [], set()
+    for idx, m in enumerate(heads):
+        end = heads[idx + 1].start() if idx + 1 < len(heads) else len(region)
+        card = region[m.start():end]
+        if "/series/summer-for-the-city" not in card:   # validate festival membership
+            continue
+        icons = [html.unescape(x).strip() for x in re.findall(r'show-icons-item-text">([^<]+)<', card)]
+        discipline = next((i for i in icons if i.upper() in SFTC_DISCIPLINE_CATEGORY), None)
+        if not discipline:   # participatory activity (no discipline) — dropped per marquee filter
+            continue
+        month = MONTH_NUMBERS.get(m.group(1).lower())
+        if not month:
+            continue
+        start = _sftc_year(month, int(m.group(2)))
+        if not start or start < today() or start > end_date():
+            continue
+        tm = re.search(r'<h2 class="event-title"><a href="([^"]+)"[^>]*>(.*?)</a>', card, re.S)
+        if not tm:
+            continue
+        url = "https://www.lincolncenter.org" + tm.group(1)
+        if url in seen:
+            continue
+        seen.add(url)
+        title = normalize_space(strip_tags(html.unescape(tm.group(2))))
+        if not title:
+            continue
+        # Venue runs from the location-icon <img> to the closing </h2>; may be an <a> link or
+        # plain text ("The Dance Floor", "Hearst Plaza"). Strip tags; fall back to "Lincoln Center".
+        vm = re.search(r"show-card-loction-icon[^>]*>(.*?)</h2>", card, re.S)
+        venue = normalize_space(strip_tags(html.unescape(vm.group(1)))) if vm else ""
+        venue = venue or "Lincoln Center"
+        tags = [normalize_space(html.unescape(x))
+                for x in re.findall(r'/series/summer-for-the-city/s/[^"]*">([^<]+)</a>', card)]
+        desc = "Summer for the City" + (" · " + " · ".join(tags) if tags else "")
+        items.append({
+            "title": title, "category": SFTC_DISCIPLINE_CATEGORY[discipline.upper()],
+            "date_start": start.isoformat(), "date_label": format_us_date(start), "date_precision": "exact",
+            "venue_or_platform": venue, "city": "New York", "source_url": url,
+            "external_id": "sftc:" + url, "description": desc, "importance_score": 14,
+        })
+    return items
+
+
+def import_summer_city(conn: sqlite3.Connection, source: Source) -> int:
+    return import_with_cache(conn, source, SFTC_CACHE, parse_summer_city,
+                             must_contain=("UPCOMING SHOWS", "event-date"))
 
 
 
@@ -4057,7 +4138,7 @@ CATEGORY_DISPLAY = {
 CATEGORY_DISPLAY_ORDER = ["film", "tv", "theatre", "art", "music", "opera", "ballet"]
 # Music splits into two editorial lanes in the render: live concerts vs. album releases.
 # PAC's music-genre events are live concerts, so they render in the Concerts lane too.
-CONCERT_MUSIC_SOURCES = {"nyphil_concerts", "carnegie_hall", "pac_nyc", "the_shed", "armory", "bargemusic", "merkin", "alice_tully", "jalc"}
+CONCERT_MUSIC_SOURCES = {"nyphil_concerts", "carnegie_hall", "pac_nyc", "the_shed", "armory", "bargemusic", "merkin", "alice_tully", "jalc", "summer_city"}
 
 
 def render_html(conn: sqlite3.Connection) -> None:

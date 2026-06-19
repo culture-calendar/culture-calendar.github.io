@@ -47,6 +47,7 @@ MERKIN_CACHE = ROOT / "merkin_capture" / "merkin-events.json"
 LINCOLN_CACHE = ROOT / "lincoln_capture" / "lincoln-events.json"
 JALC_CACHE = ROOT / "jalc_capture" / "jalc-concerts.json"
 ABT_CACHE = ROOT / "abt_capture" / "abt-performances.json"
+SFTC_CACHE = ROOT / "sftc_capture" / "summer-for-the-city.json"
 
 MONTH_PATTERN = r"Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec|January|February|March|April|May|June|July|August|September|October|November|December"
 MONTH_RE = rf"(?:{MONTH_PATTERN})"
