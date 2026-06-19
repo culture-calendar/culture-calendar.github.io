@@ -3999,6 +3999,7 @@ def render_html(conn: sqlite3.Connection) -> None:
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Cultural Calendar</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%232a2722'/><rect x='6' y='9' width='20' height='17' rx='2' fill='%23f6f4ee'/><rect x='6' y='9' width='20' height='5' fill='%233a5a66'/><rect x='10' y='6' width='2.4' height='5' rx='1' fill='%23f6f4ee'/><rect x='19.6' y='6' width='2.4' height='5' rx='1' fill='%23f6f4ee'/><g fill='%232a2722'><rect x='9' y='17' width='3' height='3' rx='.6'/><rect x='14.5' y='17' width='3' height='3' rx='.6'/><rect x='20' y='17' width='3' height='3' rx='.6'/><rect x='9' y='22' width='3' height='3' rx='.6'/><rect x='14.5' y='22' width='3' height='3' rx='.6'/></g></svg>">
   <style>
@@ -4050,6 +4051,26 @@ def render_html(conn: sqlite3.Connection) -> None:
     .cal-meta {{ color: #8c8675; font-size: 12.5px; }}
     details.runs {{ margin-top: 32px; color: #8c8675; font-size: 12px; }}
     details.runs li {{ list-style: none; }}
+    /* Mobile: tables become stacked cards (title leads; date · venue; credits folded under). */
+    @media (max-width: 640px) {{
+      .sheet {{ padding: 22px 16px 40px; border-left: none; border-right: none; }}
+      h1 {{ font-size: 32px; }}
+      h2 {{ font-size: 20px; }}
+      .cols2 {{ column-count: 1; }}
+      .sheet table, .sheet thead, .sheet tbody, .sheet tr, .sheet td {{ display: block; }}
+      .sheet thead {{ display: none; }}
+      .sheet tbody tr {{ display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 10px;
+        padding: 9px 0; border-bottom: 1px solid rgba(110,100,75,.13); }}
+      .sheet tbody td {{ border: none; padding: 0; }}
+      .sheet tbody td:nth-child(2) {{ order: 1; flex: 1 0 100%; font-size: 16px; }}
+      .sheet td.date {{ order: 2; flex: 0 0 auto; width: auto; font-style: normal;
+        font-size: 13px; white-space: nowrap; }}
+      .sheet tbody td:nth-child(4) {{ order: 3; flex: 0 0 auto; color: #6d685d; font-size: 13px; }}
+      .sheet td.credits {{ order: 4; flex: 1 0 100%; font-style: italic; font-size: 12.5px; margin-top: 2px; }}
+      .cal-entry {{ flex-direction: column; gap: 1px; }}
+      .cal-cat {{ flex: none; padding-top: 0; }}
+      .catfilter button {{ padding: 6px 13px; }}
+    }}
   </style>
 </head>
 <body>
