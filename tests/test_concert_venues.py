@@ -51,3 +51,14 @@ def test_merkin_keeps_kaufman_presented_only(monkeypatch):
     ]) + "</div>"
     titles = [i["title"] for i in L.parse_merkin(_MERKIN_SRC, page)]
     assert titles == ["Ecstatic Music: X", "Song of America"]   # co-presentation kept; rentals dropped
+
+
+def test_jsonld_event_extraction():
+    # JALC detail pages: a WP @graph with the real Event node mixed among page-metadata nodes.
+    page = ('<script type="application/ld+json">'
+            '{"@context":"x","@graph":[{"@type":"WebPage"},'
+            '{"@type":"Event","name":"Big Band Holidays &amp; More",'
+            '"startDate":"2026-12-15T19:00:00+0000","endDate":"2026-12-20"}]}</script>')
+    name, sd = L._jsonld_event(page)
+    assert name == "Big Band Holidays & More" and sd == "2026-12-15"
+    assert L._jsonld_event("<html>no structured data</html>") == (None, None)

@@ -351,5 +351,13 @@
     "type": "html",
     "url": "https://www.chambermusicsociety.org/our-concerts/at-lincoln-center",
     "enabled": true
+  },
+  {
+    "id": "jalc",
+    "name": "Jazz at Lincoln Center",
+    "category": "music",
+    "type": "html",
+    "url": "https://www.jazz.org/concerts-events/26-27-season-concerts/",
+    "enabled": true
   }
 ]

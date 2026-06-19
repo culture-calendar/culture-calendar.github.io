@@ -27,7 +27,7 @@ import requests
 # Migrated to the cultural_calendar package (behavior-preserving re-org); re-exported here
 # so this module stays runnable during the migration.
 from cultural_calendar.core.config import *  # noqa: F401,F403
-from cultural_calendar.core.config import ROOT, DATA_DIR, RAW_DIR, DETAIL_DIR, DB_PATH, SOURCES_PATH, HTML_PATH, MOMA_CAPTURE_LINKS, MET_CAPTURE, MET_OPERA_CAPTURE, ARMORY_CAPTURE, SERPENTINE_CAPTURE, VA_CACHE, TATE_MODERN_CACHE, TATE_BRITAIN_CACHE, FLV_CACHE, NPG_CAPTURE, GRAND_PALAIS_CAPTURE, POMPIDOU_CAPTURE, MAM_CAPTURE, FRICK_CAPTURE, OCULA_CAPTURE, MARIAN_GOODMAN_CACHE, LISSON_CACHE, TANYA_BONAKDAR_CACHE, BARGEMUSIC_CACHE, JOYCE_CACHE, MERKIN_CACHE, LINCOLN_CACHE, MONTH_PATTERN, MONTH_RE, MONTH_NUMBERS, Source, today, end_date, load_sources
+from cultural_calendar.core.config import ROOT, DATA_DIR, RAW_DIR, DETAIL_DIR, DB_PATH, SOURCES_PATH, HTML_PATH, MOMA_CAPTURE_LINKS, MET_CAPTURE, MET_OPERA_CAPTURE, ARMORY_CAPTURE, SERPENTINE_CAPTURE, VA_CACHE, TATE_MODERN_CACHE, TATE_BRITAIN_CACHE, FLV_CACHE, NPG_CAPTURE, GRAND_PALAIS_CAPTURE, POMPIDOU_CAPTURE, MAM_CAPTURE, FRICK_CAPTURE, OCULA_CAPTURE, MARIAN_GOODMAN_CACHE, LISSON_CACHE, TANYA_BONAKDAR_CACHE, BARGEMUSIC_CACHE, JOYCE_CACHE, MERKIN_CACHE, LINCOLN_CACHE, JALC_CACHE, ABT_CACHE, MONTH_PATTERN, MONTH_RE, MONTH_NUMBERS, Source, today, end_date, load_sources
 from cultural_calendar.core.html import normalize_space, strip_tags, LinkTextParser, ArticleParser, MetaParser  # noqa: F401
 
 
@@ -1654,6 +1654,66 @@ def parse_alice_tully(source: Source, text: str) -> list[dict[str, Any]]:
 def import_alice_tully(conn: sqlite3.Connection, source: Source) -> int:
     return import_with_cache(conn, source, LINCOLN_CACHE, parse_alice_tully,
                              must_contain=("/our-concerts/at-lincoln-center/events/",))
+
+
+def _jsonld_event(detail: str) -> tuple[str | None, str | None]:
+    """First schema.org Event (any subtype) in the page: returns (name, start_iso)."""
+    for m in re.findall(r'<script type="application/ld\+json"[^>]*>(.*?)</script>', detail, re.S):
+        try:
+            j = json.loads(m)
+        except Exception:
+            continue
+        nodes = j.get("@graph", [j]) if isinstance(j, dict) else (j if isinstance(j, list) else [j])
+        for node in (nodes if isinstance(nodes, list) else [nodes]):
+            if not isinstance(node, dict):
+                continue
+            if node.get("@type") in ("Event", "MusicEvent", "TheaterEvent", "DanceEvent", "Festival"):
+                sd = (node.get("startDate") or "")[:10]
+                if re.match(r"\d{4}-\d{2}-\d{2}", sd):
+                    return normalize_space(html.unescape(node.get("name") or "")), sd
+    return None, None
+
+
+def parse_jalc(source: Source, text: str) -> list[dict[str, Any]]:
+    """Jazz at Lincoln Center (Rose Theater / The Appel Room). The season pages list
+    jazz.org/concert/<slug> mainstage concerts; each detail carries a schema.org Event with a
+    clean startDate. Also pull the prior season page for any concerts still inside the horizon."""
+    links = list(re.findall(r"https?://(?:www\.)?jazz\.org/concert/[a-z0-9\-]+/?", text))
+    try:
+        prev = fetch_text("https://www.jazz.org/concerts-events/25-26-season-concerts/")
+        links += re.findall(r"https?://(?:www\.)?jazz\.org/concert/[a-z0-9\-]+/?", prev)
+    except Exception:
+        pass
+    items, seen = [], set()
+    for url in links:
+        url = url.rstrip("/")
+        if url in seen:
+            continue
+        seen.add(url)
+        try:
+            detail = fetch_text(url)
+        except Exception:
+            continue
+        name, sd = _jsonld_event(detail)
+        if not (name and sd):
+            continue
+        start = dt.date.fromisoformat(sd)
+        if start < today() or start > end_date():
+            continue
+        items.append({
+            "title": name, "category": "music", "date_start": sd,
+            "date_label": format_us_date(start), "date_precision": "exact",
+            "venue_or_platform": "Jazz at Lincoln Center", "city": "New York",
+            "source_url": url, "external_id": "jalc:" + url,
+            "description": "Jazz at Lincoln Center (Rose Theater / The Appel Room)",
+            "importance_score": 15,
+        })
+    return items
+
+
+def import_jalc(conn: sqlite3.Connection, source: Source) -> int:
+    return import_with_cache(conn, source, JALC_CACHE, parse_jalc,
+                             must_contain=("jazz.org/concert/",))
 
 
 
@@ -3931,7 +3991,7 @@ CATEGORY_DISPLAY = {
 CATEGORY_DISPLAY_ORDER = ["film", "tv", "theatre", "art", "music", "opera", "ballet"]
 # Music splits into two editorial lanes in the render: live concerts vs. album releases.
 # PAC's music-genre events are live concerts, so they render in the Concerts lane too.
-CONCERT_MUSIC_SOURCES = {"nyphil_concerts", "carnegie_hall", "pac_nyc", "the_shed", "armory", "bargemusic", "merkin", "alice_tully"}
+CONCERT_MUSIC_SOURCES = {"nyphil_concerts", "carnegie_hall", "pac_nyc", "the_shed", "armory", "bargemusic", "merkin", "alice_tully", "jalc"}
 
 
 def render_html(conn: sqlite3.Connection) -> None:
