@@ -1158,9 +1158,12 @@ def parse_frick_capture(source: Source) -> list[dict[str, Any]]:
 # majors we otherwise can't (White Cube, Zwirner, Hauser & Wirth, Lehmann Maupin, Gladstone…)
 # and there's no cross-source art dedupe to maintain. Key is Ocula's gallery slug.
 OCULA_MAJOR_GALLERIES = {
+    # Scraped directly (own sites), so excluded here: Gagosian, Pace, Marian Goodman.
+    # David Zwirner and Hauser & Wirth stay here: their own sites expose only current/
+    # reference-only data (RSC/lazy-load), so Ocula is the practical path for their upcoming.
     "david-zwirner": "David Zwirner", "hauser-wirth": "Hauser & Wirth", "white-cube": "White Cube",
     "lehmann-maupin": "Lehmann Maupin", "gladstone-gallery": "Gladstone",
-    "matthew-marks-gallery": "Matthew Marks",  # Marian Goodman scraped directly (import_marian_goodman)
+    "matthew-marks-gallery": "Matthew Marks",
     "paula-cooper-gallery": "Paula Cooper", "303-gallery": "303 Gallery", "petzel": "Petzel",
     "sean-kelly": "Sean Kelly", "lisson-gallery": "Lisson Gallery", "sprueth-magers": "Sprüth Magers",
     "kasmin-gallery": "Kasmin", "luhring-augustine": "Luhring Augustine", "casey-kaplan": "Casey Kaplan",
@@ -1354,6 +1357,8 @@ def import_marian_goodman(conn: sqlite3.Connection, source: Source) -> int:
     """Marian Goodman NY forthcoming exhibitions — scriptable, cache-backed per the integrity rule."""
     return import_with_cache(conn, source, MARIAN_GOODMAN_CACHE, parse_marian_goodman,
                              must_contain=("heading_title",))
+
+
 
 
 def parse_met_exhibitions(source: Source, text: str, limit: int = 120) -> list[dict[str, Any]]:
