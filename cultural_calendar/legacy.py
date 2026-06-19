@@ -3980,17 +3980,19 @@ def render_html(conn: sqlite3.Connection) -> None:
                   for c in cat_order) + "</div>")
     filter_js = """<script>
 (function(){
+  function arr(n){return Array.prototype.slice.call(n);}
   var activeCat='all', query='';
-  var blocks=document.querySelectorAll('.catblock');
-  var calEntries=document.querySelectorAll('.cal-entry');
-  var containers=document.querySelectorAll('.month,.cal-day,.hyear-group,.horizon-wrap');
+  var blocks=arr(document.querySelectorAll('.catblock'));
+  var calEntries=arr(document.querySelectorAll('.cal-entry'));
+  var containers=arr(document.querySelectorAll('.month,.cal-day,.hyear-group,.horizon-wrap'));
+  var btns=arr(document.querySelectorAll('.catfilter button'));
   function txt(e){return (e.textContent||'').toLowerCase();}
   function apply(){
-    var q=query.trim().toLowerCase();
+    var q=query.replace(/^\\s+|\\s+$/g,'').toLowerCase();
     blocks.forEach(function(b){
-      var catOk=(activeCat==='all'||b.dataset.cat===activeCat);
+      var catOk=(activeCat==='all'||b.getAttribute('data-cat')===activeCat);
       var any=false;
-      b.querySelectorAll('tbody tr, .cols2 .entry').forEach(function(en){
+      arr(b.querySelectorAll('tbody tr, .cols2 .entry')).forEach(function(en){
         var vis=catOk && (!q || txt(en).indexOf(q)>=0);
         en.style.display=vis?'':'none';
         if(vis) any=true;
@@ -3998,23 +4000,26 @@ def render_html(conn: sqlite3.Connection) -> None:
       b.style.display=any?'':'none';
     });
     calEntries.forEach(function(en){
-      var catOk=(activeCat==='all'||en.dataset.cat===activeCat);
+      var catOk=(activeCat==='all'||en.getAttribute('data-cat')===activeCat);
       en.style.display=(catOk && (!q || txt(en).indexOf(q)>=0))?'':'none';
     });
     containers.forEach(function(c){
-      var kids=c.querySelectorAll('.catblock, .cal-entry');
-      var vis=Array.prototype.some.call(kids,function(k){return k.style.display!=='none';});
+      var vis=arr(c.querySelectorAll('.catblock, .cal-entry')).some(function(k){return k.style.display!=='none';});
       c.style.display=vis?'':'none';
     });
   }
-  var btns=document.querySelectorAll('.catfilter button');
   btns.forEach(function(b){b.addEventListener('click',function(){
-    activeCat=b.dataset.filter;
-    btns.forEach(function(x){x.classList.toggle('active',x===b);});
+    activeCat=b.getAttribute('data-filter');
+    btns.forEach(function(x){x.className=(x===b)?'active':'';});
     apply();
   });});
   var box=document.querySelector('.csearch');
-  if(box) box.addEventListener('input',function(){query=box.value;apply();});
+  if(box){
+    var run=function(){query=box.value;apply();};
+    box.addEventListener('input',run);
+    box.addEventListener('keyup',run);
+    box.addEventListener('search',run);
+  }
 })();
 </script>"""
 
