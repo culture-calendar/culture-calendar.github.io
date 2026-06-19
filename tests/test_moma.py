@@ -44,6 +44,17 @@ def test_moma_document_valid_gate():
         "<h2>Upcoming exhibitions</h2><a href='/calendar/exhibitions/1'>x</a>") is False
 
 
+def test_extract_moma_date_is_year_agnostic():
+    """Date patterns use \\d{4}, so future years parse instead of silently dropping (the source
+    must not age out as the rolling horizon advances past the years that were once hard-coded)."""
+    assert L.extract_moma_title_date("Some Show Jan 10, 2028–Apr 2, 2028") == (
+        "Some Show", "Jan 10, 2028–Apr 2, 2028")
+    assert L.extract_moma_title_date("Future Thing March 2029")[1] == "March 2029"
+    assert L.extract_moma_title_date("Big Range Jul 1–Nov 29, 2030")[1] == "Jul 1–Nov 29, 2030"
+    assert L.extract_moma_title_date("Title Aug 1, 2030–Summer 2031")[1] == "Aug 1, 2030–Summer 2031"
+    assert L.extract_moma_title_date("No date here") == ("No date here", None)
+
+
 def test_parse_moma_exhibitions_is_section_scoped(monkeypatch):
     monkeypatch.setenv("CALENDAR_END_DATE", "2027-12-31")
     monkeypatch.setattr(L, "today", lambda: dt.date(2026, 6, 18))

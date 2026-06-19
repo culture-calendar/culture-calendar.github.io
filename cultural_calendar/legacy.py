@@ -525,17 +525,18 @@ def is_future_moma_item(date_label: str | None) -> bool:
 
 def extract_moma_title_date(text: str) -> tuple[str, str | None]:
     text = normalize_space(text)
+    # Year-agnostic (\d{4}) so the parser doesn't silently age out as the horizon rolls forward.
+    # Order: most-specific/longest date forms first, so a full range wins over a bare single date.
+    _Y = r"\d{4}"
+    _SEASON = r"(?:Spring|Summer|Fall|Winter)"
     patterns = [
-        rf"(?P<label>(?:{MONTH_PATTERN})\.?\s+\d{{1,2}},?\s+2025\s*[–-]\s*ongoing)",
-        rf"(?P<label>(?:{MONTH_PATTERN})\.?\s+\d{{1,2}},?\s+2027\s*[–-]\s*(?:{MONTH_PATTERN})\.?\s+\d{{1,2}},?\s+2027)",
-        rf"(?P<label>(?:{MONTH_PATTERN})\.?\s+\d{{1,2}}\s*[–-]\s*(?:{MONTH_PATTERN})\.?\s+\d{{1,2}},?\s+2027)",
-        rf"(?P<label>(?:{MONTH_PATTERN})\.?\s+\d{{1,2}},?\s+2026\s*[–-]\s*(?:{MONTH_PATTERN})\.?\s+\d{{1,2}},?\s+2027)",
-        rf"(?P<label>(?:{MONTH_PATTERN})\.?\s+\d{{1,2}},?\s+2026\s*[–-]\s*(?:Spring|Summer|Fall|Winter)\s+2027)",
-        rf"(?P<label>(?:{MONTH_PATTERN})\.?\s+\d{{1,2}},?\s+2026\s*[–-]\s*(?:Spring|Summer|Fall|Winter)\s+2026)",
-        rf"(?P<label>(?:{MONTH_PATTERN})\.?\s+\d{{1,2}}\s*[–-]\s*(?:{MONTH_PATTERN})\.?\s+\d{{1,2}},?\s+2026)",
-        rf"(?P<label>(?:{MONTH_PATTERN})\.?\s+\d{{1,2}},?\s+2026)",
-        rf"(?P<label>(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+2026)",
-        r"(?P<label>Through\s+(?:Spring|Summer|Fall|Winter)\s+2027)",
+        rf"(?P<label>(?:{MONTH_PATTERN})\.?\s+\d{{1,2}},?\s+{_Y}\s*[–-]\s*ongoing)",
+        rf"(?P<label>(?:{MONTH_PATTERN})\.?\s+\d{{1,2}}\s*[–-]\s*(?:{MONTH_PATTERN})\.?\s+\d{{1,2}},?\s+{_Y})",
+        rf"(?P<label>(?:{MONTH_PATTERN})\.?\s+\d{{1,2}},?\s+{_Y}\s*[–-]\s*(?:{MONTH_PATTERN})\.?\s+\d{{1,2}},?\s+{_Y})",
+        rf"(?P<label>(?:{MONTH_PATTERN})\.?\s+\d{{1,2}},?\s+{_Y}\s*[–-]\s*{_SEASON}\s+{_Y})",
+        rf"(?P<label>(?:{MONTH_PATTERN})\.?\s+\d{{1,2}},?\s+{_Y})",
+        rf"(?P<label>(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+{_Y})",
+        rf"(?P<label>Through\s+{_SEASON}\s+{_Y})",
         rf"(?P<label>Through\s+(?:{MONTH_PATTERN})\.?\s+\d{{1,2}})",
         r"(?P<label>Ongoing)",
     ]
