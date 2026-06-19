@@ -1,10 +1,88 @@
 # Cultural Calendar Handover
 
-Last updated: 2026-06-18
+Last updated: 2026-06-19
 
 ---
 
-## CURRENT STATE — 2026-06-18 (read this first; supersedes older sections below)
+## CURRENT STATE — 2026-06-19 (read this first; supersedes everything below)
+
+**47 sources, 63 offline tests.** This session added performing-arts venue depth (concerts,
+dance) and built out Lincoln Center as a *campus*, not a single scrape.
+
+### Lincoln Center is a campus, not one source (core principle)
+`lincolncenter.org` is both a presenter and a venue host for ~11 resident organizations, and
+its own site has **no scriptable calendar** (`/v/calendar` 404s; `/calendar` and
+`/calendar/view` 302 → `/home`; Cloudflare-fronted SPA; no data endpoint in static HTML).
+So each venue routes to its **resident organization**, which carries deeper, scriptable season
+data:
+
+| Venue | Canonical source | id |
+|---|---|---|
+| David Geffen Hall | New York Philharmonic | `nyphil_concerts` |
+| Alice Tully Hall | Chamber Music Society of Lincoln Center | `alice_tully` |
+| Metropolitan Opera House | Met Opera · NYC Ballet · American Ballet Theatre | `met_opera_2026_27`, `nycb_seasons`, `abt` |
+| Rose Theater / The Appel Room | Jazz at Lincoln Center | `jalc` |
+| Lincoln Center *Presents* (festivals) | LC's own festival landing pages | `summer_city` |
+
+LC-the-presenter's only scriptable surface is its **festival landing pages** (e.g.
+`/series/summer-for-the-city`), which *are* plain server-rendered HTML — unlike the calendar.
+
+### New sources this session
+- **`bargemusic`** (music/Concerts) — The Events Calendar (Tribe) WordPress REST API
+  (`/wp-json/tribe/events/v1/events`); `json_api`, fully scriptable. ~50 concerts.
+- **`joyce`** (dance) — The Joyce Theater season page → per-performance `/performances/<co>`
+  detail, hydrate JSON-LD `startDate`. Category **`ballet`**. ~17 shows.
+- **`merkin`** (music/Concerts) — Merkin Hall / Kaufman Music Center. Parses the **paginated
+  buy-tickets list** record-by-record (`/mch/buy-tickets/`, then `/P20`,`/P40`…), dates inline
+  per `<div class="event">`. **Filtered to Kaufman-presented programming** (presenter contains
+  "Kaufman Music Center", incl. co-presentations) — the bulk of Merkin's calendar is external
+  rentals, dropped (same rationale as Carnegie's Weill). 52 → 33.
+- **`alice_tully`** (music/Concerts) — via the **Chamber Music Society** at-Lincoln-Center
+  season: event pages carry `swiftype` metas (`internal_title`, `start_date`, `venue`); filter
+  to `venue == "Alice Tully Hall"`. ~33 concerts. (LC's own venue page is an unscriptable SPA.)
+- **`jalc`** (music/Concerts) — Jazz at Lincoln Center (Rose Theater / Appel Room). Season pages
+  list `jazz.org/concert/<slug>`; each detail has a schema.org `Event` `startDate`
+  (shared `_jsonld_event` helper). ~33 concerts.
+- **`abt`** (dance) — American Ballet Theatre. No Event JSON-LD, but season pages link each
+  performance as `/event_dates/<ballet>-<YYYY-MM-DD>-<time>/` — **the ISO date is in the slug**.
+  Group by ballet, earliest in-horizon = opening, label the run; proper title from each
+  `/events/<slug>/` `og:title`. Category **`ballet`**. Venue from the season page (Met summer,
+  Koch spring/fall). 5 summer productions now; future seasons fill in.
+- **`summer_city`** (multidiscipline) — Lincoln Center Presents · Summer for the City. **Two-pass
+  parse of `/series/summer-for-the-city`:** (1) subseries taxonomy (`/s/<label>` links) tags each
+  entry; (2) each `<h4 class="event-date">` heading ("Saturday, June 20 at 12:00 pm") begins a
+  card consumed to the next heading (title, venue, discipline icons). **Marquee filter = denylist
+  of participatory subseries** (Silent Disco, World at Play, Kids/Teens/Families, The Art of
+  Wellbeing, Sip & Snack, Social Dance) — any such tag disqualifies an event. Category from the
+  discipline icon (FILM/THEATER explicit; dance styles → ballet; else music). 207 → ~84.
+
+### Other changes
+- **Carnegie sub-venue labels** — `carnegie_hall_label` maps the Algolia `facility` to
+  "Stern Auditorium, Carnegie Hall" / "Zankel Hall, Carnegie Hall" (Weill stays excluded as
+  rental-mill).
+- **Dance category is `ballet`** (display "Dance") — fixed `abt` which had used a stray
+  `"dance"` key that rendered a duplicate section. Joyce/ABT/SFTC-dance all use `ballet`.
+- **MoMA dates year-agnostic** — `extract_moma_title_date` patterns were hard-coded to
+  2025/2026/2027 (would silently age out). Now `\d{4}`; verified identical fixture output.
+  MoMA stays **browser-capture** (moma.org still 403s scripts).
+- **Source-runs wording** — `import_with_cache` now says "imported N upcoming **entries**"
+  (was "exhibitions") since it backs concerts/dance too.
+
+### Capture-tier (hand-refresh via Claude-in-Chrome) — unchanged set
+MoMA, Frick, Ocula, NPG/Grand Palais/Pompidou/MAM, Park Avenue Armory. Everything else is
+live-scriptable. The `import_with_cache` integrity rule (stale, never empty) is unchanged.
+
+### Cache-merge gotcha (bit me twice this session)
+`import_with_cache` merges a live parse with the committed cache (`age_cache`), so changing a
+parser's *output shape* (a dropped category of rows, a cleaned title, a stricter filter) does
+**not** purge the old rows immediately — they linger until they age out. To apply such a change
+now, **regenerate the cache fixture**: `rm <source>_capture/<file>.json` then
+`python3 -m cultural_calendar --source <id>`, and commit the fresh fixture. (Done for merkin,
+abt, summer_city.)
+
+---
+
+## CURRENT STATE — 2026-06-18 (superseded by 2026-06-19 above)
 
 ### Where the code lives and how it ships
 - **It is now a git repo** (the "no Git repository" note later in this file is stale).

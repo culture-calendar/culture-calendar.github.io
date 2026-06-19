@@ -147,10 +147,14 @@ section-aware, and list **newly-opening shows only** (never currently-on-view).
   use the opening date and keep the label as detail. `metmuseum.org` 429s datacenter/CI IPs,
   so a successful fetch refreshes `met_capture/met-exhibitions.json` and a blocked fetch falls
   back to it — the Met always appears, and the fixture self-refreshes from any non-blocked IP.
-- **MoMA** (`moma_exhibitions`): keep future exact/vague openings; drop `Through…`/`Ongoing`;
-  normalize sponsor prefixes to the editorial subject (`Hyundai Card FirstLook: Joan Snyder`
-  → `Joan Snyder`). The live page is bot-protected, so it falls back to
-  `moma_capture/moma-exhibition-links.json` whenever the live parse is empty.
+- **MoMA** (`moma_exhibitions`): parse the **"Upcoming exhibitions"** section only
+  (`moma_upcoming_section` bounds it at the "Installations and projects" heading), keep
+  `/calendar/exhibitions/<digits>` links, future exact/vague openings only; drop
+  `Through…`/`Ongoing`; normalize sponsor prefixes to the editorial subject (`Hyundai Card
+  FirstLook: Joan Snyder` → `Joan Snyder`). Date patterns are **year-agnostic (`\d{4}`)** — do
+  not reintroduce hard-coded years. moma.org **still 403s scripts**, so it's browser-capture:
+  the live path is behind `MOMA_LIVE` (default off) and falls back to
+  `moma_capture/moma-exhibition-links.json`; refresh via Claude-in-Chrome.
 - **Other museums/galleries** (`MUSEUMS` + `parse_museum_listing` + `hydrate_museum_dates`):
   scrape each venue's **upcoming** listing, hydrate each detail page for the opening date
   (`extract_exhibition_window`, title from `og:title`), keep future-in-horizon. Where a listing
@@ -190,23 +194,63 @@ Two lanes, NYC-first / nationally-notable, never a firehose. The render splits t
   dates and the anticipated vague-date section ("2026", "Dec 2026", "TBA"). Notable artists
   (`NOTABLE_MUSIC_ARTISTS`) are boosted in `importance_score`, not used to filter. The album
   artist is in the title, so it is not repeated as a credit.
-- **Concerts**, NYC-only:
+- **Concerts**, NYC-only (`CONCERT_MUSIC_SOURCES`):
   - `nyphil_concerts` — NY Philharmonic via its public CloudFront events API
     (`import_nyphil_api`, through `fetch_text`'s curl fallback). The API pre-collapses
     multi-night runs into one event with a `DateDescription` range; `NYPHIL_NON_NYC` drops the
     summer Bravo! Vail residency and other out-of-town venues.
   - `carnegie_hall` — Carnegie's own programming via direct Algolia query (`import_carnegie`);
-    marquee halls only, rental-mill events dropped.
+    marquee halls only, rental-mill events dropped. `carnegie_hall_label` maps the Algolia
+    `facility` to a specific hall — "Stern Auditorium, Carnegie Hall" / "Zankel Hall, Carnegie
+    Hall" (Weill Recital Hall stays excluded — it's almost all rentals).
+  - `bargemusic` — Bargemusic via its WordPress **Tribe Events** REST API (`json_api`,
+    fully scriptable).
+  - `merkin` — Merkin Hall / Kaufman Music Center. Parse the **paginated buy-tickets list**
+    record-by-record (`/mch/buy-tickets/`, then `/mch/buy-tickets-default/P20`,`/P40`… until a
+    page is empty or past the horizon), dates inline per `<div class="event">`. **Filtered to
+    Kaufman-presented** (presenter contains "Kaufman Music Center", incl. co-presentations) —
+    Merkin's calendar is mostly external rentals, dropped (same call as Carnegie's Weill).
+  - `alice_tully` — Alice Tully Hall via the **Chamber Music Society of Lincoln Center**
+    at-Lincoln-Center season; event pages carry `swiftype` metas (`internal_title`,
+    `start_date`, `venue`), filtered to `venue == "Alice Tully Hall"`. (LC's own venue page is
+    an unscriptable SPA — see the Lincoln Center note below.)
+  - `jalc` — Jazz at Lincoln Center (Rose Theater / The Appel Room); season pages list
+    `jazz.org/concert/<slug>`, each detail a schema.org `Event` with `startDate` (shared
+    `_jsonld_event`).
+  - `summer_city` (multidiscipline — its music rows land here) — see Lincoln Center note.
 
 Tours are **deferred** (launch data is API-key-gated: Ticketmaster/Songkick/Bandsintown).
 
-## Opera and ballet
+### Lincoln Center is a campus, not one source
+
+`lincolncenter.org` is both a presenter and host for ~11 resident orgs, and its own site has
+**no scriptable calendar** (`/v/calendar` 404s; `/calendar` 302→`/home`; Cloudflare SPA). So
+each venue routes to its **resident organization** (deeper, scriptable season data): Geffen
+Hall→`nyphil_concerts`, Alice Tully→`alice_tully` (CMS), Met Opera House→`met_opera_2026_27` /
+`nycb_seasons` / `abt`, Rose Theater & Appel Room→`jalc`. LC-the-presenter's only scriptable
+surface is its **festival landing pages** (plain HTML, unlike the calendar): `summer_city`
+two-passes `/series/summer-for-the-city` — subseries `/s/<label>` taxonomy tags + per-card
+`<h4 class="event-date">` events — and keeps **marquee performances** via a denylist of
+participatory subseries (Silent Disco, World at Play, Kids/Teens/Families, wellbeing, social
+dance). Category from the per-event discipline icon.
+
+## Opera and dance
+
+Dance uses the category key **`ballet`** (it renders as "Dance"). Use `ballet`, not `"dance"` —
+a `"dance"` key produces a stray duplicate section. (`joyce`, `abt`, and SFTC dance rows all use
+`ballet`.)
 
 - `met_opera_2026_27` — Met Opera season; season-year date normalization. Like the Met museum,
   `metopera.org` serves CI/datacenter IPs a JS shell that parses to 0 links, so a good fetch
   refreshes `met_opera_capture/met-opera-season.json` and an empty parse falls back to it — the
   season always appears on the live page, and the fixture self-refreshes from any non-blocked IP.
 - `nycb_seasons` — New York City Ballet; keep discrete future-dated programs.
+- `abt` — American Ballet Theatre. No Event JSON-LD; season pages link each performance as
+  `/event_dates/<ballet>-<YYYY-MM-DD>-<time>/`, so **the ISO date is in the slug** — group by
+  ballet, earliest in-horizon = opening, label the run, title from each `/events/<slug>/`
+  `og:title`. Venue from the season page (Met Opera House summer; Koch spring/fall).
+- `joyce` — The Joyce Theater (dance). Season page → per-performance `/performances/<co>` detail,
+  hydrate the JSON-LD `startDate`.
 
 ## Presentation
 
