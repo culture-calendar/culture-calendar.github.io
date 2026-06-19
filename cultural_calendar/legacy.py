@@ -27,7 +27,7 @@ import requests
 # Migrated to the cultural_calendar package (behavior-preserving re-org); re-exported here
 # so this module stays runnable during the migration.
 from cultural_calendar.core.config import *  # noqa: F401,F403
-from cultural_calendar.core.config import ROOT, DATA_DIR, RAW_DIR, DETAIL_DIR, DB_PATH, SOURCES_PATH, HTML_PATH, MOMA_CAPTURE_LINKS, MET_CAPTURE, MET_OPERA_CAPTURE, ARMORY_CAPTURE, SERPENTINE_CAPTURE, VA_CACHE, TATE_MODERN_CACHE, TATE_BRITAIN_CACHE, FLV_CACHE, NPG_CAPTURE, GRAND_PALAIS_CAPTURE, POMPIDOU_CAPTURE, MAM_CAPTURE, FRICK_CAPTURE, MONTH_PATTERN, MONTH_RE, MONTH_NUMBERS, Source, today, end_date, load_sources
+from cultural_calendar.core.config import ROOT, DATA_DIR, RAW_DIR, DETAIL_DIR, DB_PATH, SOURCES_PATH, HTML_PATH, MOMA_CAPTURE_LINKS, MET_CAPTURE, MET_OPERA_CAPTURE, ARMORY_CAPTURE, SERPENTINE_CAPTURE, VA_CACHE, TATE_MODERN_CACHE, TATE_BRITAIN_CACHE, FLV_CACHE, NPG_CAPTURE, GRAND_PALAIS_CAPTURE, POMPIDOU_CAPTURE, MAM_CAPTURE, FRICK_CAPTURE, OCULA_CAPTURE, MONTH_PATTERN, MONTH_RE, MONTH_NUMBERS, Source, today, end_date, load_sources
 from cultural_calendar.core.html import normalize_space, strip_tags, LinkTextParser, ArticleParser, MetaParser  # noqa: F401
 
 
@@ -1149,6 +1149,155 @@ def parse_frick_capture(source: Source) -> list[dict[str, Any]]:
             }
         )
     return items
+
+
+# Ocula (ocula.com) aggregates gallery shows as clean rows but Cloudflare-walls scripts
+# (curl/requests 403; only a real browser fetches it), so it's a browser-capture source —
+# refresh the fixture via Claude-in-Chrome (see capture/README.md). The allowlist deliberately
+# EXCLUDES galleries we already scrape directly (Gagosian, Pace), so Ocula only adds the
+# majors we otherwise can't (White Cube, Zwirner, Hauser & Wirth, Lehmann Maupin, Gladstone…)
+# and there's no cross-source art dedupe to maintain. Key is Ocula's gallery slug.
+OCULA_MAJOR_GALLERIES = {
+    "david-zwirner": "David Zwirner", "hauser-wirth": "Hauser & Wirth", "white-cube": "White Cube",
+    "lehmann-maupin": "Lehmann Maupin", "gladstone-gallery": "Gladstone",
+    "marian-goodman-gallery": "Marian Goodman", "matthew-marks-gallery": "Matthew Marks",
+    "paula-cooper-gallery": "Paula Cooper", "303-gallery": "303 Gallery", "petzel": "Petzel",
+    "sean-kelly": "Sean Kelly", "lisson-gallery": "Lisson Gallery", "sprueth-magers": "Sprüth Magers",
+    "kasmin-gallery": "Kasmin", "luhring-augustine": "Luhring Augustine", "casey-kaplan": "Casey Kaplan",
+    "andrew-kreps-gallery": "Andrew Kreps", "tanya-bonakdar-gallery": "Tanya Bonakdar",
+}
+
+
+def _ocula_slug(href: str) -> str | None:
+    m = re.search(r"/(?:art-galleries|exhibition-previews)/([^/]+)/", href or "")
+    return m.group(1) if m else None
+
+
+def parse_ocula_dates(text: str):
+    """Parse Ocula's date strings → (start_iso, end_iso|None, label, precision) or None.
+    Handles 'From 4 March 2026', '11 June–14 August 2026' (year at end), and
+    '12 November 2026–23 January 2027' (cross-year)."""
+    M = MONTH_PATTERN
+
+    def mk(year, month, day):
+        try:
+            return dt.date(int(year), MONTH_NUMBERS[str(month).strip(".").lower()], int(day))
+        except (KeyError, ValueError):
+            return None
+
+    m = re.search(rf"From\s+(\d{{1,2}})\s+({M})\.?\s+(\d{{4}})", text)
+    if m:
+        d = mk(m.group(3), m.group(2), m.group(1))
+        return (d.isoformat(), None, f"From {format_us_date(d)}", "exact") if d else None
+
+    m = re.search(rf"(\d{{1,2}})\s+({M})\.?(?:\s+(\d{{4}}))?\s*[–-]\s*(\d{{1,2}})\s+({M})\.?\s+(\d{{4}})", text)
+    if m:
+        sd, sm, sy, ed, em, ey = m.groups()
+        end = mk(ey, em, ed)
+        start_year = int(sy) if sy else int(ey)
+        if not sy and MONTH_NUMBERS.get(sm.lower(), 0) > MONTH_NUMBERS.get(em.lower(), 0):
+            start_year -= 1  # range wraps a year boundary, e.g. "Dec–Jan 2027"
+        start = mk(start_year, sm, sd)
+        if not start:
+            return None
+        label = format_us_date(start) + (f" – {format_us_date(end)}" if end else "")
+        return (start.isoformat(), end.isoformat() if end else None, label, "exact")
+
+    m = re.search(rf"(\d{{1,2}})\s+({M})\.?\s+(\d{{4}})", text)
+    if m:
+        d = mk(m.group(3), m.group(2), m.group(1))
+        return (d.isoformat(), None, format_us_date(d), "exact") if d else None
+    return None
+
+
+def parse_ocula_exhibitions(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Major-gallery, New York, future-opening exhibition rows from the Ocula capture."""
+    items: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for row in rows:
+        slug = row.get("gallery_slug") or _ocula_slug(row.get("href", ""))
+        gallery = OCULA_MAJOR_GALLERIES.get(slug)
+        if not gallery:
+            continue
+        text = normalize_space(html.unescape(row.get("text", "")))
+        if "new york" not in text.lower():
+            continue
+        parsed = parse_ocula_dates(text)
+        if not parsed:
+            continue
+        start_iso, end_iso, label, precision = parsed
+        start = dt.date.fromisoformat(start_iso)
+        if start < today() or start > end_date():
+            continue
+        href = row.get("href", "")
+        ext = f"ocula:{href}"
+        if ext in seen:
+            continue
+        seen.add(ext)
+        title = normalize_space(text.split(gallery)[0]) if gallery in text else text
+        items.append({
+            "title": title or gallery,
+            "category": "art",
+            "date_start": start_iso,
+            "date_end": end_iso,
+            "date_label": label,
+            "date_precision": precision,
+            "venue_or_platform": gallery,
+            "city": "New York",
+            "source_url": "https://ocula.com" + href,
+            "external_id": ext,
+            "description": f"{gallery}, New York",
+            "importance_score": 14,
+        })
+    return items
+
+
+def parse_ocula_fairs(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Major NY art fairs from the Ocula capture (future-only). All notable fairs Ocula
+    lists are kept — its fair list is already curated."""
+    items: list[dict[str, Any]] = []
+    for row in rows:
+        text = normalize_space(html.unescape(row.get("text", "")))
+        if "new york" not in text.lower():
+            continue
+        parsed = parse_ocula_dates(text)
+        if not parsed:
+            continue
+        start_iso, end_iso, label, precision = parsed
+        start = dt.date.fromisoformat(start_iso)
+        if start < today() or start > end_date():
+            continue
+        name = re.split(rf"\s+\d{{1,2}}\s*[–-]?\s*\d{{0,2}}\s*(?:{MONTH_PATTERN})", text, maxsplit=1)[0]
+        name = normalize_space(re.sub(r"\s+20\d{2}$", "", name)) or "Art Fair"
+        items.append({
+            "title": name,
+            "category": "art",
+            "date_start": start_iso,
+            "date_end": end_iso,
+            "date_label": label,
+            "date_precision": precision,
+            "venue_or_platform": "Art fair",
+            "city": "New York",
+            "source_url": "https://ocula.com/art-fairs/" + (row.get("slug", "")),
+            "external_id": f"ocula-fair:{row.get('slug','')}",
+            "description": "New York art fair",
+            "importance_score": 18,
+        })
+    return items
+
+
+def import_ocula(conn: sqlite3.Connection, source: Source) -> int:
+    """Major NY gallery shows + fairs from the Ocula browser-capture fixture."""
+    if not OCULA_CAPTURE.exists():
+        record_run(conn, source, "skipped", "no Ocula fixture")
+        return 0
+    data = json.loads(OCULA_CAPTURE.read_text())
+    items = parse_ocula_exhibitions(data.get("exhibitions", [])) + parse_ocula_fairs(data.get("fairs", []))
+    for item in items:
+        upsert_item(conn, source, item)
+        ensure_model_enrichment_placeholder(conn, source, item)
+    record_run(conn, source, "ok", f"parsed {len(items)} NY gallery shows/fairs from Ocula capture")
+    return len(items)
 
 
 def parse_met_exhibitions(source: Source, text: str, limit: int = 120) -> list[dict[str, Any]]:

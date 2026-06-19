@@ -169,6 +169,14 @@
     "enabled": true
   },
   {
+    "id": "ocula",
+    "name": "Ocula (major NY galleries)",
+    "category": "art",
+    "type": "html",
+    "url": "https://ocula.com/cities/usa/new-york-art-galleries/exhibitions/?date=upcoming",
+    "enabled": true
+  },
+  {
     "id": "new_museum",
     "name": "New Museum",
     "category": "art",
@@ -258,7 +266,7 @@
   },
   {
     "id": "mam_paris",
-    "name": "Musée d'Art Moderne de Paris",
+    "name": "Mus\u00e9e d'Art Moderne de Paris",
     "category": "art",
     "type": "html",
     "url": "https://www.mam.paris.fr/en/expositions",

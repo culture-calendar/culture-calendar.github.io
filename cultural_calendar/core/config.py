@@ -37,6 +37,7 @@ GRAND_PALAIS_CAPTURE = ROOT / "grand_palais_capture" / "grand-palais-exhibitions
 POMPIDOU_CAPTURE = ROOT / "pompidou_capture" / "pompidou-exhibitions.json"
 MAM_CAPTURE = ROOT / "mam_capture" / "mam-paris-exhibitions.json"
 FRICK_CAPTURE = ROOT / "frick_capture" / "frick-exhibitions.json"
+OCULA_CAPTURE = ROOT / "ocula_capture" / "ocula-ny.json"
 
 MONTH_PATTERN = r"Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec|January|February|March|April|May|June|July|August|September|October|November|December"
 MONTH_RE = rf"(?:{MONTH_PATTERN})"

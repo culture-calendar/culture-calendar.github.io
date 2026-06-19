@@ -1,0 +1,33 @@
+{
+  "capturedAt": "2026-06-18",
+  "note": "Browser-capture from Ocula (Cloudflare-walls scripts: curl/requests get 403, only a real browser fetches it). Refresh via Claude-in-Chrome — see cultural_calendar/capture/README.md. Raw rows; the importer parses, allowlists, NY-filters, and future-filters them.",
+  "exhibitions_url": "https://ocula.com/cities/usa/new-york-art-galleries/exhibitions/?gallery-type=gallery&date=upcoming",
+  "fairs_url": "https://ocula.com/art-fairs/",
+  "exhibitions": [
+    {"gallery_slug": "white-cube", "href": "/my-ocula/exhibition-previews/white-cube/theaster-gates-and-otherpaintings/", "text": "THEASTER GATES And Other paintings White Cube 6 March–4 April 2026 Paris"},
+    {"gallery_slug": "karma", "href": "/my-ocula/exhibition-previews/karma/casey-bolding-bloodstream/", "text": "CASEY BOLDING Bloodstream Karma 21 February–28 March 2026 Los Angeles"},
+    {"gallery_slug": "massimo-de-carlo", "href": "/my-ocula/exhibition-previews/massimo-de-carlo/a-grass-roof/", "text": "LILY STOCKMAN A Grass Roof MASSIMODECARLO 24 March–12 June 2026 Hong Kong"},
+    {"gallery_slug": "lehmann-maupin", "href": "/my-ocula/exhibition-previews/lehmann-maupin/catherine-opie-1/", "text": "CATHERINE OPIE Lehmann Maupin From 4 March 2026 501 West 24th Street, New York"},
+    {"gallery_slug": "galerie-max-hetzler", "href": "/art-galleries/galerie-max-hetzler/exhibitions/vivien-zhang-field-conditions/", "text": "Vivien Zhang Field Conditions Galerie Max Hetzler 30 April–27 June 2026 Goethestraße 2/3, Berlin"},
+    {"gallery_slug": "galeria-rgr", "href": "/art-galleries/galeria-rgr/exhibitions/un-cuerpo-es-una-casa-un-organismo-un-templo-/", "text": "Group Exhibition Un cuerpo es una casa, un organismo, un templo, un contenedor, un mundo Galería RGR 6 June–15 August 2026 Mexico City"},
+    {"gallery_slug": "sundaram-tagore", "href": "/art-galleries/sundaram-tagore/exhibitions/hybridity-and-belonging-in-contemporary-art/", "text": "Group Exhibition Hybridity and Belonging in Contemporary Art Sundaram Tagore Gallery 26 May–20 June 2026 London"},
+    {"gallery_slug": "victoria-miro-gallery", "href": "/art-galleries/victoria-miro-gallery/exhibitions/ns-harsha-camel-and-the-tent-times/", "text": "NS Harsha Camel and the tent times Victoria Miro 5 June–31 July 2026 Wharf Road, London"},
+    {"gallery_slug": "lisson-gallery", "href": "/art-galleries/lisson-gallery/exhibitions/li-ran-(1)/", "text": "Li Ran Like a Stranger Lisson Gallery 16 May–4 July 2026 2/F Huqui Road, Shanghai"},
+    {"gallery_slug": "white-cube", "href": "/art-galleries/white-cube/exhibitions/doris-salcedo/", "text": "Doris Salcedo White Cube 12 November 2026–23 January 2027 New York"},
+    {"gallery_slug": "white-cube", "href": "/art-galleries/white-cube/exhibitions/danh-vo-(1)/", "text": "Danh Vo White Cube 10 September–1 October 2026 New York"},
+    {"gallery_slug": "gagosian-gallery", "href": "/art-galleries/gagosian-gallery/exhibitions/brice-marden-i-am-plane-image/", "text": "Brice Marden I Am Plane Image Gagosian 10 September–17 October 2026 West 21st Street, New York"},
+    {"gallery_slug": "gagosian-gallery", "href": "/art-galleries/gagosian-gallery/exhibitions/helen-marden-interlude-of-joy/", "text": "Helen Marden Interlude of Joy Gagosian 14 July–21 August 2026 541 West 24th Street, New York"},
+    {"gallery_slug": "anat-ebgi", "href": "/art-galleries/anat-ebgi/exhibitions/megan-gabrielle-harris-all-things-held-between/", "text": "Megan Gabrielle Harris All Things Held Between Anat Ebgi 26 June–7 August 2026 Tribeca"},
+    {"gallery_slug": "grimm-gallery", "href": "/art-galleries/grimm-gallery/exhibitions/you-must-change-your-life/", "text": "Group Exhibition You Must Change Your Life GRIMM 26 June–7 August 2026 New York"},
+    {"gallery_slug": "kiang-malingue", "href": "/art-galleries/kiang-malingue/exhibitions/once-more-encore-bennys-video/", "text": "Group Exhibition Once More Encore: The First Year of Benny's Video Remixed Kiang Malingue 25 June–7 August 2026 New York"},
+    {"gallery_slug": "white-cube", "href": "/art-galleries/white-cube/exhibitions/sara-flores-(1)/", "text": "Sara Flores Akinananti White Cube 25 June–14 August 2026 New York"},
+    {"gallery_slug": "gladstone-gallery", "href": "/art-galleries/gladstone-gallery/exhibitions/the-vandals/", "text": "Group Exhibition The Vandals Gladstone 24 June–8 August 2026 515 West 24th Street, New York"}
+  ],
+  "fairs": [
+    {"slug": "tefaf-new-york", "text": "TEFAF New York 2026 15–19 May 2026 New York"},
+    {"slug": "independent-new-york", "text": "Independent New York 2026 14–17 May 2026 New York"},
+    {"slug": "frieze-new-york", "text": "Frieze New York 2026 13–17 May 2026 New York"},
+    {"slug": "nada-new-york", "text": "NADA New York 2026 13–17 May 2026 New York"},
+    {"slug": "ifpda-print-fair-2026", "text": "IFPDA Print Fair 2026 9–12 April 2026 New York"}
+  ]
+}
