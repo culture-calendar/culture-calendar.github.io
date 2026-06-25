@@ -2622,6 +2622,11 @@ def tv_importance_score(episode: dict[str, Any], show: dict[str, Any]) -> int:
     return max(score, 0)
 
 
+# Non-English originals must clear this (well above the English `wide` bar of 20) to be admitted,
+# and only as Scripted/Documentary on a major global streamer — prestige international, not volume.
+NON_ENGLISH_MIN_SCORE = 90
+
+
 def is_relevant_tv_episode(episode: dict[str, Any], show: dict[str, Any], aperture: str) -> bool:
     country = source_country_code(show)
     web_channel = show.get("webChannel") or {}
@@ -2640,10 +2645,17 @@ def is_relevant_tv_episode(episode: dict[str, Any], show: dict[str, Any], apertu
         "Paramount+",
         "Dropout",
     }
-    if country != "US" and not (is_global_streamer and web_channel.get("name") in major_global_streamers):
+    on_major_streamer = is_global_streamer and web_channel.get("name") in major_global_streamers
+    if country != "US" and not on_major_streamer:
         return False
     if show.get("language") not in {None, "English"}:
-        return False
+        # Admit non-English originals only when they're prestige international: a scripted or
+        # documentary premiere on a major global streamer that clears a high bar. Keeps the likes
+        # of One Hundred Years of Solitude and Lupin (Netflix) and top Korean/Spanish dramas;
+        # excludes the foreign reality firehose (the type gate) and lower-tier titles (the score).
+        if not (on_major_streamer and show.get("type") in {"Scripted", "Documentary"}
+                and tv_importance_score(episode, show) >= NON_ENGLISH_MIN_SCORE):
+            return False
 
     number = episode.get("number")
     season = episode.get("season")
