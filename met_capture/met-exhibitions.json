@@ -1,27 +1,15 @@
 {
-  "capturedAt": "2026-06-18",
+  "capturedAt": "2026-08-01",
   "items": [
     {
-      "title": "Decorative Arts in China, 1000 to the Present",
-      "date_start": "2026-07-25",
-      "date_label": "July 25th, 2026",
-      "date_precision": "exact",
-      "source_url": "https://www.metmuseum.org/exhibitions/decorative-arts-in-china-1000-to-the-present",
-      "external_id": "https://www.metmuseum.org/exhibitions/decorative-arts-in-china-1000-to-the-present",
+      "title": "Rediscovering Della Robbia at The Met",
+      "date_start": "2026-08-10",
+      "date_label": "August 10, 2026–January 17, 2028",
+      "date_precision": "exact_or_range",
+      "source_url": "https://www.metmuseum.org/exhibitions/rediscovering-della-robbia-at-the-met",
+      "external_id": "https://www.metmuseum.org/exhibitions/rediscovering-della-robbia-at-the-met",
       "venue_or_platform": "The Met",
-      "city": "New York",
-      "description": "Source date: July 25th, 2026–Ongoing"
-    },
-    {
-      "title": "A Lasting Legacy: Chinese Jades from New York Collections",
-      "date_start": "2026-07-25",
-      "date_label": "Jul 25, 2026–Ongoing",
-      "date_precision": "exact",
-      "source_url": "https://www.metmuseum.org/exhibitions/a-lasting-legacy-chinese-jades-from-new-york-collections",
-      "external_id": "https://www.metmuseum.org/exhibitions/a-lasting-legacy-chinese-jades-from-new-york-collections",
-      "venue_or_platform": "The Met",
-      "city": "New York",
-      "description": "Source date: July 25-Ongoing"
+      "city": "New York"
     },
     {
       "title": "A King’s Carpet: Louis XIV and the Savonnerie",
@@ -34,12 +22,32 @@
       "city": "New York"
     },
     {
-      "title": "The Genesis Facade Commission: Liu Wei",
+      "title": "The Genesis Facade Commission: Liu Wei, Speculation",
       "date_start": "2026-09-17",
       "date_label": "September 17, 2026–June 8, 2027",
       "date_precision": "exact_or_range",
       "source_url": "https://www.metmuseum.org/exhibitions/the-genesis-facade-commission-liu-wei",
       "external_id": "https://www.metmuseum.org/exhibitions/the-genesis-facade-commission-liu-wei",
+      "venue_or_platform": "The Met",
+      "city": "New York"
+    },
+    {
+      "title": "David Hartt: Peripheries",
+      "date_start": "2026-09-25",
+      "date_label": "September 25, 2026–February 7, 2027",
+      "date_precision": "exact_or_range",
+      "source_url": "https://www.metmuseum.org/exhibitions/david-hartt-peripheries",
+      "external_id": "https://www.metmuseum.org/exhibitions/david-hartt-peripheries",
+      "venue_or_platform": "The Met",
+      "city": "New York"
+    },
+    {
+      "title": "There Are No Words: Si Lewen's Parade",
+      "date_start": "2026-10-01",
+      "date_label": "October 1, 2026–January 5, 2027",
+      "date_precision": "exact_or_range",
+      "source_url": "https://www.metmuseum.org/exhibitions/there-are-no-words-si-lewens-parade",
+      "external_id": "https://www.metmuseum.org/exhibitions/there-are-no-words-si-lewens-parade",
       "venue_or_platform": "The Met",
       "city": "New York"
     },
@@ -50,6 +58,26 @@
       "date_precision": "exact_or_range",
       "source_url": "https://www.metmuseum.org/exhibitions/krasner-and-pollock-past-continuous",
       "external_id": "https://www.metmuseum.org/exhibitions/krasner-and-pollock-past-continuous",
+      "venue_or_platform": "The Met",
+      "city": "New York"
+    },
+    {
+      "title": "Designing the Gilded Age: Drawings from the Studios of Louis C. Tiffany",
+      "date_start": "2026-10-22",
+      "date_label": "October 22, 2026–February 7, 2027",
+      "date_precision": "exact_or_range",
+      "source_url": "https://www.metmuseum.org/exhibitions/designing-the-gilded-age-drawings-from-the-studios-of-louis-c-tiffany",
+      "external_id": "https://www.metmuseum.org/exhibitions/designing-the-gilded-age-drawings-from-the-studios-of-louis-c-tiffany",
+      "venue_or_platform": "The Met",
+      "city": "New York"
+    },
+    {
+      "title": "Across Wine-Dark Seas: Art and Identity beyond Ancient Greece",
+      "date_start": "2026-12-20",
+      "date_label": "December 20, 2026–April 11, 2027",
+      "date_precision": "exact_or_range",
+      "source_url": "https://www.metmuseum.org/exhibitions/across-wine-dark-seas-art-and-identity-beyond-ancient-greece",
+      "external_id": "https://www.metmuseum.org/exhibitions/across-wine-dark-seas-art-and-identity-beyond-ancient-greece",
       "venue_or_platform": "The Met",
       "city": "New York"
     }

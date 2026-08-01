@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-06-16",
+  "capturedAt": "2026-08-01",
   "note": "Park Avenue Armory is Cloudflare-bot-walled, so it can't be fetched by the project's scraper or in CI. This is a hand-maintained capture fixture; refresh it each season from the live current-season page (https://www.armoryonpark.org/season-events/current-season/) via a browser. Future-opening events only; companion artist talks and the already-running clinamen installation omitted.",
   "items": [
     {
@@ -27,7 +27,12 @@
       "external_id": "armory:the-cherry-orchard",
       "description": "Simon Stone's Chekhov adaptation, performed in Korean with English captions",
       "importance_score": 16,
-      "people": [{"name": "Simon Stone", "role": "Director"}]
+      "people": [
+        {
+          "name": "Simon Stone",
+          "role": "Director"
+        }
+      ]
     },
     {
       "title": "Raven Chacon",
@@ -67,7 +72,12 @@
       "external_id": "armory:music-for-18-musicians",
       "description": "Steve Reich's work staged by Alan Pierson with Alarm Will Sound and the Steve Reich Ensemble",
       "importance_score": 15,
-      "people": [{"name": "Steve Reich", "role": "Composer"}]
+      "people": [
+        {
+          "name": "Steve Reich",
+          "role": "Composer"
+        }
+      ]
     },
     {
       "title": "IONE: Listening with Dreams",
@@ -107,7 +117,12 @@
       "external_id": "armory:steven-schick-tyshawn-sorey",
       "description": "Recital Series · world premiere of a new percussion work by Tyshawn Sorey",
       "importance_score": 13,
-      "people": [{"name": "Tyshawn Sorey", "role": "Composer"}]
+      "people": [
+        {
+          "name": "Tyshawn Sorey",
+          "role": "Composer"
+        }
+      ]
     },
     {
       "title": "Balkan Erotic Epic",
@@ -121,7 +136,12 @@
       "external_id": "armory:balkan-erotic-epic",
       "description": "Marina Abramović · North American premiere (18+, nudity and graphic content)",
       "importance_score": 17,
-      "people": [{"name": "Marina Abramović", "role": "Cast"}]
+      "people": [
+        {
+          "name": "Marina Abramović",
+          "role": "Cast"
+        }
+      ]
     }
   ]
 }

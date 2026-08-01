@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-06-17",
+  "capturedAt": "2026-08-01",
   "items": [
     {
       "title": "Aida",
@@ -474,7 +474,7 @@
           "role": "Cast"
         },
         {
-          "name": "Emily D’Angelo",
+          "name": "Ying Fang",
           "role": "Cast"
         }
       ]
@@ -568,18 +568,6 @@
           "role": "Cast"
         }
       ]
-    },
-    {
-      "title": "Your Privacy Choices",
-      "date_start": null,
-      "date_label": null,
-      "date_precision": "unknown",
-      "venue_or_platform": "Metropolitan Opera",
-      "city": "New York",
-      "source_url": "https://www.metopera.org/season/2026-27-season/#",
-      "external_id": "https://www.metopera.org/season/2026-27-season/#",
-      "description": null,
-      "importance_score": 5
     }
   ]
 }

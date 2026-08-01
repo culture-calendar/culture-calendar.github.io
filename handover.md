@@ -1,10 +1,15 @@
 # Cultural Calendar Handover
 
-Last updated: 2026-06-19
+Last updated: 2026-08-01
 
 ---
 
-## CURRENT STATE — 2026-06-19 (read this first; supersedes everything below)
+## MONTHLY CAPTURE REFRESH LOG
+- **2026-08-01** — ran the monthly refresh from the Pennington Mac (residential IP + Claude-in-Chrome).
+  Browser-recaptured MoMA (8), Frick (3), Ocula (9), Armory (9, unchanged — verified); live-refreshed
+  the IP-blocked Met (8), Met Opera (21), Brooklyn (4), Serpentine (2). All fixtures committed + deployed.
+
+## CURRENT STATE — 2026-08-01 (read this first; supersedes everything below)
 
 **47 sources, 63 offline tests.** This session added performing-arts venue depth (concerts,
 dance) and built out Lincoln Center as a *campus*, not a single scrape.
