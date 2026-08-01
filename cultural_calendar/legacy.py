@@ -1208,6 +1208,17 @@ def parse_ocula_dates(text: str):
         label = format_us_date(start) + (f" – {format_us_date(end)}" if end else "")
         return (start.isoformat(), end.isoformat() if end else None, label, "exact")
 
+    # Same-month day range, e.g. "24–27 September 2026" (common for art fairs). Take the FIRST
+    # day as the opening — otherwise the single-date fallback below matches "27 September 2026".
+    m = re.search(rf"(\d{{1,2}})\s*[–-]\s*(\d{{1,2}})\s+({M})\.?\s+(\d{{4}})", text)
+    if m:
+        sd, ed, mo, yr = m.groups()
+        start, end = mk(yr, mo, sd), mk(yr, mo, ed)
+        if not start:
+            return None
+        label = format_us_date(start) + (f" – {format_us_date(end)}" if end else "")
+        return (start.isoformat(), end.isoformat() if end else None, label, "exact")
+
     m = re.search(rf"(\d{{1,2}})\s+({M})\.?\s+(\d{{4}})", text)
     if m:
         d = mk(m.group(3), m.group(2), m.group(1))

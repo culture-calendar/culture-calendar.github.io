@@ -19,6 +19,13 @@ def test_dates_from_form():
     assert L.parse_ocula_dates("CATHERINE OPIE Lehmann Maupin From 4 March 2026 New York")[:2] == ("2026-03-04", None)
 
 
+def test_dates_same_month_day_range_takes_opening():
+    # "24–27 September 2026" (art-fair form) must yield the OPENING day, not the closing 27th.
+    s, e, label, prec = L.parse_ocula_dates("The Armory Show 2026 24–27 September 2026 New York")
+    assert (s, e) == ("2026-09-24", "2026-09-27")
+    assert label == "Sep 24, 2026 – Sep 27, 2026" and prec == "exact"
+
+
 def test_exhibitions_allowlist_ny_future(monkeypatch):
     monkeypatch.setattr(L, "today", lambda: dt.date(2026, 6, 18))
     monkeypatch.setattr(L, "end_date", lambda: dt.date(2027, 12, 31))
