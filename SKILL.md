@@ -95,6 +95,23 @@ validated fetch (separate "fetch" from "publish"); a good run merges live result
 (`merge_by_title`) so a known future item never vanishes. Zero imports are valid only after a
 clean fetch of the expected shape. (404 on a paginated crawl = end-of-pages, not a block.)
 
+**The integrity rule's blind spot — and the fix (Oct 2026).** "Stale, never empty" also hides
+breakage: six parsers broke silently for weeks behind their caches. So:
+- **Empty vs broken.** On an empty parse `import_with_cache` re-parses with the future filter off
+  (`_count_listed`): records recognized → `ok`, "0 upcoming, page lists N" (a quiet venue);
+  none → `stale`, "page fetched but nothing recognizable" (the site changed — fix the parser).
+- **Judge a source by its run status, never its row count** — counts include cached rows.
+- **Who refreshes what.** GitHub weekly; `registry.MAC_REFRESHED` (sites that refuse GitHub's
+  runners) by the Sunday launchd job on the Pennington iMac (`tools/mac_refresh.sh`);
+  `registry.BROWSER_CAPTURED` (bot-walled for every script) in the monthly Claude-in-Chrome
+  session. Add a source to the right set when you find it blocked.
+- **Alarm.** `tools/refresh_alert.py` (in the workflow) keeps one `refresh-alert` GitHub issue for
+  unreadable pages, unexpected failures, and overdue caches (`capturedAt` > 15 / 45 days).
+- **Diagnose a stale source** by running it from the Mac: works there → GitHub is refused (add to
+  `MAC_REFRESHED`); fails there too → look at the page — usually a site change (new link format,
+  redesigned cards, a JS-rendered list with a WordPress REST feed behind it), occasionally a
+  season ending or a bot wall for everyone (→ `BROWSER_CAPTURED`).
+
 ## Film (`tmdb_movies`)
 
 TMDb discover, US releases. Require a real US theatrical/limited release

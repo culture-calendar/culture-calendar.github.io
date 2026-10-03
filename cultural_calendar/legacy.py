@@ -3059,7 +3059,7 @@ def import_guggenheim(conn: sqlite3.Connection, source: Source) -> int:
     text = fetch_text(source.url)
     raw_path = save_raw(source, text)
     decoder = json.JSONDecoder()
-    count = 0
+    count = listed = 0
     seen: set[str] = set()
     for section in ("on_view", "upcoming"):
         marker = f'"{section}":'
@@ -3067,15 +3067,17 @@ def import_guggenheim(conn: sqlite3.Connection, source: Source) -> int:
         if idx < 0:
             continue
         try:
-            obj, _ = decoder.raw_decode(text[idx + len(marker):])
+            obj, _ = decoder.raw_decode(text[idx + len(marker):].lstrip())  # tolerate `"key": {`
         except ValueError:
             continue
-        for item in obj.get("items", []):
+        # A section with nothing in it arrives as {"items": null} (e.g. no upcoming shows).
+        for item in (obj.get("items") or []) if isinstance(obj, dict) else []:
             start_raw = (item.get("dates") or {}).get("start") or {}
             try:
                 start = dt.date(int(start_raw["year"]), parse_month(start_raw["month"]), int(start_raw["day"]))
             except (KeyError, ValueError, TypeError):
                 continue
+            listed += 1
             if start < today() or start > end_date():  # future-opening only
                 continue
             title = strip_tags(item.get("title", ""))
@@ -3100,7 +3102,12 @@ def import_guggenheim(conn: sqlite3.Connection, source: Source) -> int:
             upsert_item(conn, source, record)
             ensure_model_enrichment_placeholder(conn, source, record)
             count += 1
-    record_run(conn, source, "ok", f"imported {count} upcoming exhibitions", raw_path)
+    if count:
+        record_run(conn, source, "ok", f"imported {count} upcoming exhibitions", raw_path)
+    elif listed:  # a quiet museum, not a broken page
+        record_run(conn, source, "ok", f"0 upcoming — page lists {listed} current or past, none upcoming yet", raw_path)
+    else:
+        record_run(conn, source, "stale", "0 — page fetched but nothing recognizable (check parser/shape)", raw_path)
     return count
 
 

@@ -10,9 +10,16 @@ refreshed by hand through a real browser (Claude-in-Chrome):
 | MoMA   | Akamai-style bot check serves a contentless shell / 403 to non-browser clients; data is in the page HTML, no API. | `moma_capture/moma-exhibition-links.json` |
 | Frick  | Yottaa returns HTTP 418 / blank to automated Chromium (headless and headful). | `frick_capture/frick-exhibitions.json` |
 | Ocula  | Cloudflare-walls scripts (curl/requests 403); a real browser passes. Aggregates major-gallery NY shows + fairs. | `ocula_capture/ocula-ny.json` |
+| Park Avenue Armory | Cloudflare bot wall. Hand-maintained items; re-check the current-season page and bump `capturedAt`. | `armory_capture/armory-events.json` |
+| Met Opera | Since Sept 2026 metopera.org serves a JavaScript bot check to every script, home IP included. Its 2026–27 season fixture (Aug 2026) is still current; capture steps to be settled at the first monthly session that needs them. | `met_opera_capture/met-opera-season.json` |
+
+**Cadence and alerting.** These five are refreshed in the monthly Claude-in-Chrome session (first
+Saturday). `registry.BROWSER_CAPTURED` lists them; if any fixture's `capturedAt` is more than 45
+days old, the weekly GitHub run opens a `refresh-alert` issue. Sources that only refuse GitHub's
+runners are refreshed unattended by the Sunday Mac job instead (`tools/README-mac-refresh.md`).
 
 We tried headless Playwright; it worked only for MoMA and not Frick, for a heavy dependency.
-Since the cadence is seasonal, these two are refreshed by hand through **Claude-in-Chrome**
+Since the cadence is seasonal, these are refreshed by hand through **Claude-in-Chrome**
 (a real, trusted browser session). The importer then parses the fixtures as before.
 
 ## How to refresh (run inside the connected browser)

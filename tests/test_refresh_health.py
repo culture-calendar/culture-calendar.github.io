@@ -105,3 +105,20 @@ def test_moca_reads_dates_from_listing_card_not_the_repeated_page_header(monkeyp
             "source_url": "https://www.moca.org/exhibitions/julian-charriere", "external_id": "jc"}
     kept = L.hydrate_museum_dates(None, src, [card])
     assert [(k["title"], k["date_start"]) for k in kept] == [("Julian Charrière: Deep End", "2026-11-15")]
+
+
+def test_guggenheim_with_no_upcoming_section_is_quiet_not_a_crash(monkeypatch, tmp_path):
+    # Oct 2026: with nothing announced, Guggenheim sends "upcoming": {"items": null}; the importer
+    # crashed ("'NoneType' object is not iterable") and the page showed an error for the source.
+    monkeypatch.setattr(L, "today", lambda: TODAY)
+    monkeypatch.setattr(L, "DB_PATH", tmp_path / "t.db")
+    monkeypatch.setattr(L, "save_raw", lambda *a, **k: None)
+    page = ('{"on_view": {"items": [{"title": "Guggenheim Pop", "slug": "pop", '
+            '"dates": {"start": {"day": "5", "month": "June", "year": "2026"}}}]}, '
+            '"upcoming": {"items": null}}')
+    monkeypatch.setattr(L, "fetch_text", lambda *a, **k: page)
+    src = Source(id="guggenheim", name="Guggenheim", category="art", type="html", url="https://g/exhibitions")
+    conn = L.connect()
+    assert L.import_guggenheim(conn, src) == 0
+    assert tuple(conn.execute("select status, message from source_runs").fetchone()) == (
+        "ok", "0 upcoming — page lists 1 current or past, none upcoming yet")

@@ -1,6 +1,57 @@
 # Cultural Calendar Handover
 
-Last updated: 2026-08-01
+Last updated: 2026-10-03
+
+---
+
+## CURRENT STATE — 2026-10-03 (read this first)
+
+### Refresh health: who refreshes what (new — the key operational change)
+Six parsers broke silently between August and October (site changes), and several sites began
+refusing GitHub's runners. The integrity rule kept the page from going blank but also hid the
+breakage. Now there are three refresh paths and an alarm:
+
+| Path | Sources | Cadence | How |
+|---|---|---|---|
+| GitHub Actions | everything it can still reach | Mondays 6:37 AM ET | `.github/workflows/weekly-refresh.yml` |
+| Pennington iMac, unattended | `registry.MAC_REFRESHED`: Lisson, MOCA, Brooklyn, The Met, Serpentine (+ refreshes all others too) | Sundays 6:50 PM (runs at the iMac's own 6:55 PM weekend wake) | `tools/mac_refresh.sh` via launchd; own clone at `~/.cultural-calendar/repo`; log `~/Library/Logs/cultural-calendar-refresh.log`; see `tools/README-mac-refresh.md` |
+| Monthly Claude-in-Chrome session | `registry.BROWSER_CAPTURED`: MoMA, Frick, Ocula, Armory, Met Opera | first Saturday (calendar reminder) | `cultural_calendar/capture/README.md` |
+
+**Alarm:** `tools/refresh_alert.py` runs after each GitHub refresh and keeps one GitHub issue
+(label `refresh-alert`, mentions @hdfinder-tech) listing: pages a parser can no longer read;
+unexpected failures; caches overdue (Mac >15 days, browser >45 days, by each cache's
+`capturedAt`). Comments only when the list changes; closes itself when healthy.
+
+**Empty vs broken:** when a fetched page yields nothing upcoming, `import_with_cache` re-parses
+with the future filter off (`_count_listed`). Records found → "ok, 0 upcoming, page lists N"
+(healthy, e.g. V&A between shows). None → "page fetched but nothing recognizable" (site change).
+Museums: a legitimate empty now stamps the cache. **Judge a source by its status, never its row
+count — counts include cached rows** (this misled me once on MOCA).
+
+### Parser fixes this session (all site changes)
+- **Alice Tully/CMS:** links became absolute URLs; regex accepts both. (Was serving a stale cache
+  incl. orphaned `<em>` titles → duplicate "Copland's <em>Appalachian Spring</em>".)
+- **ABT:** gate on `/performances/` index, read every season page; venue = the one the page names
+  most (both are in the site menu).
+- **Lisson:** 2026 redesign — `<article>` cards, title in cover link `aria-label`.
+- **MOCA:** `/exhibition/` → `/exhibitions/`; `"dates_from_listing": True` because every exhibition
+  page repeats the current shows' run above its own dates.
+- **Jazz at Lincoln Center:** season page is now JS-rendered; read the WordPress REST feed
+  `jazz.org/wp-json/wp/v2/concert` (now a `json_api` source), dates from each concert page's JSON-LD.
+- **Summer for the City:** out of season the URL is LC's home page → "ok, out of season".
+- **Met Opera:** bot-checks every script since Sept 2026 → moved to the monthly browser session.
+- **Guggenheim:** with nothing announced it sends `"upcoming": {"items": null}`; the importer crashed
+  (caught by the new alert on its first run). Now reports "ok, 0 upcoming".
+
+### Presentation and links (this session)
+- **Palette A′:** ink titles (#2a2722) on lighter paper (#faf9f6); details #5e594f; grey category
+  labels #736c5f; ochre #8a6a2e only for active states. No slate blue (clashed with the beige).
+  Pinned by `tests/test_home_screen.py::test_palette_is_warm_ink_on_paper`.
+- **Home-screen icon / iPhone app:** `apple-touch-icon` + manifest from `site/`, drawn by
+  `tools/make_icons.py` (music, film, theatre, art tiles); label "Cultural Calendar"; standalone
+  mode; outbound links `target=_blank`.
+- **TV links:** `tvmaze_best_url` → IMDb (from TVMaze `externals.imdb`), else official site, else
+  TVMaze show page — never the empty episode page.
 
 ---
 
