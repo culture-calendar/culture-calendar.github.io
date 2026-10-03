@@ -1,16 +1,76 @@
 {
-  "capturedAt": "2026-06-19",
+  "capturedAt": "2026-10-03",
   "items": [
     {
-      "title": "Roy Lichtenstein",
+      "title": "Roy Lichtenstein: Like New",
       "venue_or_platform": "Whitney Museum",
       "city": "New York",
       "source_url": "https://whitney.org/exhibitions/lichtenstein",
       "external_id": "https://whitney.org/exhibitions/lichtenstein",
       "upcoming": true,
-      "date_start": "2026-10-14",
-      "date_end": "2027-05-01",
-      "date_label": "Oct 14, 2026",
+      "date_start": "2026-10-11",
+      "date_end": "2027-05-10",
+      "date_label": "Oct 11, 2026",
+      "date_precision": "exact"
+    },
+    {
+      "title": "Charles Burchfield: Elemental",
+      "venue_or_platform": "Whitney Museum",
+      "city": "New York",
+      "source_url": "https://whitney.org/exhibitions/charles-burchfield-elemental",
+      "external_id": "https://whitney.org/exhibitions/charles-burchfield-elemental",
+      "upcoming": true,
+      "date_start": "2026-10-22",
+      "date_end": "2027-01-31",
+      "date_label": "Oct 22, 2026",
+      "date_precision": "exact"
+    },
+    {
+      "title": "artport: A History of Internet Art",
+      "venue_or_platform": "Whitney Museum",
+      "city": "New York",
+      "source_url": "https://whitney.org/exhibitions/artport-25",
+      "external_id": "https://whitney.org/exhibitions/artport-25",
+      "upcoming": true,
+      "date_start": "2026-11-21",
+      "date_end": "2027-03-28",
+      "date_label": "Nov 21, 2026",
+      "date_precision": "exact"
+    },
+    {
+      "title": "Farah Al Qasimi: TAILSPIN",
+      "venue_or_platform": "Whitney Museum",
+      "city": "New York",
+      "source_url": "https://whitney.org/exhibitions/farah-al-qasimi",
+      "external_id": "https://whitney.org/exhibitions/farah-al-qasimi",
+      "upcoming": true,
+      "date_start": "2027-01-30",
+      "date_end": "2027-08-01",
+      "date_label": "Jan 30, 2027",
+      "date_precision": "exact"
+    },
+    {
+      "title": "Sonya Kelliher-Combs: TITIQ/MARK",
+      "venue_or_platform": "Whitney Museum",
+      "city": "New York",
+      "source_url": "https://whitney.org/exhibitions/sonya-kelliher-combs",
+      "external_id": "https://whitney.org/exhibitions/sonya-kelliher-combs",
+      "upcoming": true,
+      "date_start": "2027-02-06",
+      "date_end": "2027-09-01",
+      "date_label": "Feb 6, 2027",
+      "date_precision": "exact"
+    },
+    {
+      "title": "Juan Sánchez: States of Liberation",
+      "venue_or_platform": "Whitney Museum",
+      "city": "New York",
+      "source_url": "https://whitney.org/exhibitions/juan-sanchez",
+      "external_id": "https://whitney.org/exhibitions/juan-sanchez",
+      "upcoming": true,
+      "date_start": "2027-10-01",
+      "date_end": "2028-09-01",
+      "date_label": "Oct 1, 2027",
       "date_precision": "exact"
     }
   ]

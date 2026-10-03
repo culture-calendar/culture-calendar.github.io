@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-06-17",
+  "capturedAt": "2026-10-03",
   "items": [
     {
       "title": "The 90s: Art and Fashion",
@@ -11,7 +11,8 @@
       "source_url": "https://www.tate.org.uk/whats-on/tate-britain/the-90s",
       "external_id": "https://www.tate.org.uk/whats-on/tate-britain/the-90s",
       "description": "Tate Britain, London",
-      "importance_score": 14
+      "importance_score": 14,
+      "_misses": 0
     },
     {
       "title": "Vanessa Bell & Duncan Grant: Inside Bloomsbury",
@@ -23,7 +24,73 @@
       "source_url": "https://www.tate.org.uk/whats-on/tate-britain/vanessa-bell-and-duncan-grant",
       "external_id": "https://www.tate.org.uk/whats-on/tate-britain/vanessa-bell-and-duncan-grant",
       "description": "Tate Britain, London",
-      "importance_score": 14
+      "importance_score": 14,
+      "_misses": 0
+    },
+    {
+      "title": "Sonia Boyce",
+      "date_start": "2027-03-24",
+      "date_label": "24 Mar – 22 Aug 2027",
+      "date_precision": "exact",
+      "venue_or_platform": "Tate Britain",
+      "city": "London",
+      "source_url": "https://www.tate.org.uk/whats-on/tate-britain/sonia-boyce",
+      "external_id": "https://www.tate.org.uk/whats-on/tate-britain/sonia-boyce",
+      "description": "Tate Britain, London",
+      "importance_score": 14,
+      "_misses": 0
+    },
+    {
+      "title": "Thomas Gainsborough",
+      "date_start": "2027-05-20",
+      "date_label": "20 May – 10 Oct 2027",
+      "date_precision": "exact",
+      "venue_or_platform": "Tate Britain",
+      "city": "London",
+      "source_url": "https://www.tate.org.uk/whats-on/tate-britain/thomas-gainsborough",
+      "external_id": "https://www.tate.org.uk/whats-on/tate-britain/thomas-gainsborough",
+      "description": "Tate Britain, London",
+      "importance_score": 14,
+      "_misses": 0
+    },
+    {
+      "title": "David Hockney",
+      "date_start": "2027-10-07",
+      "date_label": "7 Oct 2027 – 20 Feb 2028",
+      "date_precision": "exact",
+      "venue_or_platform": "Tate Britain",
+      "city": "London",
+      "source_url": "https://www.tate.org.uk/whats-on/tate-britain/david-hockney",
+      "external_id": "https://www.tate.org.uk/whats-on/tate-britain/david-hockney",
+      "description": "Tate Britain, London",
+      "importance_score": 14,
+      "_misses": 0
+    },
+    {
+      "title": "The Tudors",
+      "date_start": "2027-11-18",
+      "date_label": "18 Nov 2027 – 23 Apr 2028",
+      "date_precision": "exact",
+      "venue_or_platform": "Tate Britain",
+      "city": "London",
+      "source_url": "https://www.tate.org.uk/whats-on/tate-britain/the-tudors",
+      "external_id": "https://www.tate.org.uk/whats-on/tate-britain/the-tudors",
+      "description": "Tate Britain, London",
+      "importance_score": 14,
+      "_misses": 0
+    },
+    {
+      "title": "Reissuing Alexey Brodovitch’s Ballet: Nina Holland in conversation with Katy Wan",
+      "date_start": "2026-10-09",
+      "date_label": "9 Oct 2026",
+      "date_precision": "exact",
+      "venue_or_platform": "Tate Britain",
+      "city": "London",
+      "source_url": "https://www.tate.org.uk/whats-on/tate-britain/nina-holland-in-conversation-with-katy-wan",
+      "external_id": "https://www.tate.org.uk/whats-on/tate-britain/nina-holland-in-conversation-with-katy-wan",
+      "description": "Tate Britain, London",
+      "importance_score": 14,
+      "_misses": 0
     }
   ]
 }

@@ -1,36 +1,6 @@
 {
-  "capturedAt": "2026-06-19",
+  "capturedAt": "2026-10-03",
   "items": [
-    {
-      "title": "The Surge",
-      "category": "ballet",
-      "date_start": "2026-09-16",
-      "date_end": "2026-09-27",
-      "date_label": "Sep 16, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "The Joyce Theater",
-      "city": "New York",
-      "source_url": "https://www.joyce.org/performances/the-surge-b1jd",
-      "external_id": "joyce:/performances/the-surge-b1jd",
-      "description": "The Joyce Theater, New York",
-      "importance_score": 15,
-      "_misses": 0
-    },
-    {
-      "title": "The Sarasota Ballet",
-      "category": "ballet",
-      "date_start": "2026-09-29",
-      "date_end": "2026-10-04",
-      "date_label": "Sep 29, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "The Joyce Theater",
-      "city": "New York",
-      "source_url": "https://www.joyce.org/performances/the-sarasota-ballet-typc",
-      "external_id": "joyce:/performances/the-sarasota-ballet-typc",
-      "description": "The Joyce Theater, New York",
-      "importance_score": 15,
-      "_misses": 0
-    },
     {
       "title": "Limon Dance Company",
       "category": "ballet",
@@ -222,6 +192,21 @@
       "city": "New York",
       "source_url": "https://www.joyce.org/performances/black-grace-s3t2",
       "external_id": "joyce:/performances/black-grace-s3t2",
+      "description": "The Joyce Theater, New York",
+      "importance_score": 15,
+      "_misses": 0
+    },
+    {
+      "title": "The Surge",
+      "category": "ballet",
+      "date_start": "2027-02-09",
+      "date_end": "2027-02-14",
+      "date_label": "Feb 9, 2027",
+      "date_precision": "exact",
+      "venue_or_platform": "The Joyce Theater",
+      "city": "New York",
+      "source_url": "https://www.joyce.org/performances/the-surge-qyst",
+      "external_id": "joyce:/performances/the-surge-qyst",
       "description": "The Joyce Theater, New York",
       "importance_score": 15,
       "_misses": 0
