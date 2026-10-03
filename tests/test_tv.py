@@ -68,3 +68,29 @@ def test_non_english_on_non_streamer_is_dropped():
     show["network"] = {"name": "Telemundo", "country": {"code": "US"}}
     show["webChannel"] = None
     assert L.is_relevant_tv_episode(ep, show, "wide") is False
+
+
+# --- Where a TV entry links (Oct 2026): TVMaze's episode page is near-empty before a premiere
+# airs, so link to IMDb, then the official network page, then TVMaze's show page.
+
+_EP = {"url": "https://www.tvmaze.com/episodes/999/tracker-4x01-pilot"}
+
+
+def test_tv_link_prefers_imdb():
+    show = {"externals": {"imdb": "tt13875494"}, "officialSite": "https://www.cbs.com/shows/tracker/",
+            "url": "https://www.tvmaze.com/shows/1/tracker"}
+    assert L.tvmaze_best_url(_EP, show) == "https://www.imdb.com/title/tt13875494/"
+
+
+def test_tv_link_falls_back_to_official_site_then_tvmaze_show_page():
+    official = {"externals": {"imdb": None}, "officialSite": "https://www.adultswim.com/videos/get-jiro",
+                "url": "https://www.tvmaze.com/shows/2/get-jiro"}
+    assert L.tvmaze_best_url(_EP, official) == "https://www.adultswim.com/videos/get-jiro"
+    bare = {"externals": {}, "officialSite": None, "url": "https://www.tvmaze.com/shows/3/her-baby"}
+    assert L.tvmaze_best_url(_EP, bare) == "https://www.tvmaze.com/shows/3/her-baby"   # show page, not episode
+
+
+def test_tv_link_ignores_malformed_imdb_id():
+    show = {"externals": {"imdb": "13875494"}, "officialSite": "", "url": "https://www.tvmaze.com/shows/4/x"}
+    assert L.tvmaze_best_url(_EP, show) == "https://www.tvmaze.com/shows/4/x"
+    assert L.tvmaze_best_url(_EP, {}) == _EP["url"]                                     # last resort

@@ -3542,6 +3542,19 @@ def import_lacma(conn: sqlite3.Connection, source: Source) -> int:
     return count
 
 
+def tvmaze_best_url(episode: dict[str, Any], show: dict[str, Any]) -> str | None:
+    """Where a TV entry should link. TVMaze's episode page is near-empty before a premiere
+    airs, so prefer the show's IMDb page (cast, creator, plot), then its official
+    network/streamer page, then TVMaze's show page; the episode page is the last resort."""
+    imdb = (show.get("externals") or {}).get("imdb") or ""
+    if re.fullmatch(r"tt\d{5,}", imdb):
+        return f"https://www.imdb.com/title/{imdb}/"
+    official = show.get("officialSite") or ""
+    if official.startswith(("https://", "http://")):
+        return official
+    return show.get("url") or episode.get("url")
+
+
 def import_tvmaze(conn: sqlite3.Connection, source: Source, aperture: str) -> int:
     text = fetch_text(source.url)
     raw_path = save_raw(source, text)
@@ -3586,7 +3599,7 @@ def import_tvmaze(conn: sqlite3.Connection, source: Source, aperture: str) -> in
             "date_precision": "exact",
             "date_label": airdate,
             "venue_or_platform": network,
-            "source_url": episode.get("url") or show.get("url"),
+            "source_url": tvmaze_best_url(episode, show),
             "external_id": str(episode.get("id")),
             "description": "; ".join(notes) + ". " + (normalize_space(re.sub("<[^>]+>", "", episode.get("summary") or "")) or ""),
             "importance_score": score,
