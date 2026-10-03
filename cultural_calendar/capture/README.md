@@ -64,10 +64,13 @@ New-York filter, future-only, and date parsing — so the fixture is just the ra
 ```js
 [...document.querySelectorAll('a[href*="/art-galleries/"][href*="/exhibitions/"], a[href*="/exhibition-previews/"]')]
   .map(a => { const h=a.getAttribute('href')||''; const m=h.match(/\/(?:art-galleries|exhibition-previews)\/([^/]+)\//);
-    let c=a; for(let i=0;i<7;i++){ if(!c.parentElement)break; c=c.parentElement; if(/\d{1,2}\s+[A-Za-z]+.*20\d{2}/.test(c.innerText))break; }
-    return m ? {href:h, gallery_slug:m[1], text:c.innerText.replace(/\s+/g,' ').trim().slice(0,200)} : null; })
+    let c=a; for(let i=0;i<7;i++){ if(!c.parentElement)break; c=c.parentElement; if(/\d{1,2}\s+[A-Za-z]+.*20\d{2}/.test(c.textContent))break; }
+    return m ? {href:h, gallery_slug:m[1], text:c.textContent.replace(/\s+/g,' ').trim().slice(0,200)} : null; })
   .filter(Boolean);
 ```
+
+Use `textContent` here, not `innerText`: Ocula styles artist names `text-transform: uppercase`,
+and `innerText` returns them in capitals. (MoMA is the opposite: it needs `innerText` for spacing.)
 
 **Discipline:** an empty/blocked capture must never overwrite a good fixture — if the page
 didn't render, leave the existing JSON in place.

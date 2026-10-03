@@ -1,28 +1,28 @@
 {
-  "capturedAt": "2026-08-01",
+  "capturedAt": "2026-10-03",
   "note": "Cloudflare-walled to scripts; captured via Claude-in-Chrome.",
   "exhibitions_url": "https://ocula.com/cities/usa/new-york-art-galleries/exhibitions/?gallery-type=gallery&date=upcoming",
   "fairs_url": "https://ocula.com/art-fairs/",
   "exhibitions": [
     {
       "gallery_slug": "white-cube",
-      "href": "/my-ocula/exhibition-previews/white-cube/theaster-gates-and-otherpaintings/",
-      "text": "THEASTER GATES And Other paintings White Cube 6 March–4 April 2026 Paris"
+      "href": "/my-ocula/exhibition-previews/white-cube/georg-baselitz-2/",
+      "text": "GEORG BASELITZ Back Again White Cube 10 June–30 August 2026 Bermondsey, London"
     },
     {
-      "gallery_slug": "lehmann-maupin",
-      "href": "/my-ocula/exhibition-previews/lehmann-maupin/catherine-opie-1/",
-      "text": "CATHERINE OPIE Lehmann Maupin From 4 March 2026 501 West 24th Street, New York"
+      "gallery_slug": "hauser-wirth",
+      "href": "/art-galleries/hauser-wirth/exhibitions/george-rouy-reprise/",
+      "text": "GEORGE ROUY Reprise Hauser & Wirth 10 September–17 October 2026 New York, 22nd Street"
     },
     {
-      "gallery_slug": "luhring-augustine",
-      "href": "/art-galleries/luhring-augustine/exhibitions/masa-and-luhring-augustine/",
-      "text": "MASA + Luhring Augustine Joaquín A. Pérez 6, San Miguel Chapultepec, Mexico City"
+      "gallery_slug": "hauser-wirth",
+      "href": "/art-galleries/hauser-wirth/exhibitions/anna-maria-maiolino-annaand-the-infinite-line/",
+      "text": "ANNA MARIA MAIOLINO ANNA—And the infinite line Hauser & Wirth 10 September–31 October 2026 New York"
     },
     {
-      "gallery_slug": "white-cube",
-      "href": "/art-galleries/white-cube/exhibitions/sara-flores-(1)/",
-      "text": "Sara Flores Akinananti White Cube 25 June–14 August 2026 New York"
+      "gallery_slug": "hauser-wirth",
+      "href": "/art-galleries/hauser-wirth/exhibitions/lucio-fontana-spatialism-pioneering-the-conte/",
+      "text": "LUCIO FONTANA Spatialism. Pioneering the Contemporary Hauser & Wirth 17 September–19 December 2026"
     },
     {
       "gallery_slug": "white-cube",
@@ -31,43 +31,18 @@
     },
     {
       "gallery_slug": "david-zwirner",
-      "href": "/art-galleries/david-zwirner/exhibitions/emma-mcintyre-(1)/",
-      "text": "Emma McIntyre David Zwirner From 18 September 2026 New York: 52 Walker"
-    },
-    {
-      "gallery_slug": "gladstone-gallery",
-      "href": "/art-galleries/gladstone-gallery/exhibitions/joseph-yaeger-agita/",
-      "text": "Joseph Yaeger Agita Gladstone 16 September–31 October 2026 515 West 24th Street, New York"
-    },
-    {
-      "gallery_slug": "white-cube",
-      "href": "/art-galleries/white-cube/exhibitions/danh-vo-(1)/",
-      "text": "Danh Vo White Cube 10 September–16 October 2026 New York"
-    },
-    {
-      "gallery_slug": "david-zwirner",
-      "href": "/art-galleries/david-zwirner/exhibitions/thomas-ruff-jpegs-ny/",
-      "text": "Thomas Ruff jpegs ny David Zwirner From 10 September 2026 New York: 19th Street"
-    },
-    {
-      "gallery_slug": "david-zwirner",
-      "href": "/art-galleries/david-zwirner/exhibitions/nate-lowman-(1)/",
-      "text": "Nate Lowman David Zwirner From 10 September 2026 New York: 19th Street"
-    },
-    {
-      "gallery_slug": "david-zwirner",
-      "href": "/art-galleries/david-zwirner/exhibitions/scott-kahn/",
-      "text": "Scott Kahn David Zwirner From 10 September 2026 New York: 20th Street"
+      "href": "/art-galleries/david-zwirner/exhibitions/jem-perucchini-sospiro/",
+      "text": "Jem Perucchini Sospiro David Zwirner 6 November–19 December 2026 New York: 52 Walker"
     }
   ],
   "fairs": [
     {
-      "slug": "the-armory-show",
-      "text": "The Armory Show 2026 24–27 September 2026 New York"
-    },
-    {
       "slug": "adaa-the-art-show",
       "text": "ADAA Fair 2026 12–16 November 2026 New York"
+    },
+    {
+      "slug": "the-armory-show",
+      "text": "The Armory Show 2026 24–27 September 2026 New York"
     },
     {
       "slug": "tefaf-new-york",
