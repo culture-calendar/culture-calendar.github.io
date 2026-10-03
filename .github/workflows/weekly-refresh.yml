@@ -50,6 +50,10 @@ jobs:
         run: |
           mkdir -p _site
           cp data/toy-calendar.html _site/index.html
+          # Home-screen icon + web-app manifest (drawn by tools/make_icons.py). iOS also
+          # requests the -precomposed name on its own, so serve both at the root.
+          cp site/*.png site/manifest.webmanifest _site/
+          cp site/apple-touch-icon.png _site/apple-touch-icon-precomposed.png
 
       - uses: actions/upload-pages-artifact@v5
         with:

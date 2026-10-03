@@ -4248,7 +4248,7 @@ def render_html(conn: sqlite3.Connection) -> None:
             out.append(
                 "<tr>"
                 f"<td class=\"date\">{html.escape(date_display(row['date_label']))}</td>"
-                f"<td><a href=\"{html.escape(url)}\">{html.escape(row['title'])}</a></td>"
+                f"<td><a href=\"{html.escape(url)}\" target=\"_blank\" rel=\"noopener\">{html.escape(row['title'])}</a></td>"
                 f"<td class=\"credits\">{html.escape(format_credits(row['people_json']))}</td>"
                 f"<td>{html.escape(row['venue_or_platform'] or '')}</td>"
                 "</tr>"
@@ -4268,7 +4268,7 @@ def render_html(conn: sqlite3.Connection) -> None:
             items.append(
                 "<div class=\"entry\">"
                 f"<span class=\"d\">{html.escape(shown_date)}</span>"
-                f"<span class=\"body\"><a href=\"{html.escape(url)}\">{html.escape(row['title'])}</a>{extra}</span>"
+                f"<span class=\"body\"><a href=\"{html.escape(url)}\" target=\"_blank\" rel=\"noopener\">{html.escape(row['title'])}</a>{extra}</span>"
                 "</div>"
             )
         return f"<div class=\"cols2\">{''.join(items)}</div>"
@@ -4329,7 +4329,7 @@ def render_html(conn: sqlite3.Connection) -> None:
             return (
                 f"<div class=\"cal-entry\" data-cat=\"{r['category']}\">"
                 f"<span class=\"cal-cat\">{html.escape(cat)}</span>"
-                f"<span class=\"cal-body\"><a href=\"{html.escape(url)}\">{html.escape(r['title'])}</a>{meta_html}</span>"
+                f"<span class=\"cal-body\"><a href=\"{html.escape(url)}\" target=\"_blank\" rel=\"noopener\">{html.escape(r['title'])}</a>{meta_html}</span>"
                 "</div>"
             )
 
@@ -4343,7 +4343,7 @@ def render_html(conn: sqlite3.Connection) -> None:
             rendered = [cal_entry(r) for r in others]
             if albums:
                 links = ", ".join(
-                    f"<a href=\"{html.escape(r['source_url'] or '#')}\">{html.escape(r['title'])}</a>"
+                    f"<a href=\"{html.escape(r['source_url'] or '#')}\" target=\"_blank\" rel=\"noopener\">{html.escape(r['title'])}</a>"
                     for r in albums
                 )
                 rendered.append(
@@ -4479,6 +4479,16 @@ def render_html(conn: sqlite3.Connection) -> None:
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Cultural Calendar</title>
+  <!-- Add to Home Screen: iOS ignores SVG favicons and wants an opaque square PNG (it applies
+       its own rounded mask). The icon files are drawn by tools/make_icons.py into site/ and
+       published beside index.html by the Pages workflow. -->
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="apple-mobile-web-app-title" content="TNY Calendar">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#efece3">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%232a2722'/><rect x='6' y='9' width='20' height='17' rx='2' fill='%23f6f4ee'/><rect x='6' y='9' width='20' height='5' fill='%233a5a66'/><rect x='10' y='6' width='2.4' height='5' rx='1' fill='%23f6f4ee'/><rect x='19.6' y='6' width='2.4' height='5' rx='1' fill='%23f6f4ee'/><g fill='%232a2722'><rect x='9' y='17' width='3' height='3' rx='.6'/><rect x='14.5' y='17' width='3' height='3' rx='.6'/><rect x='20' y='17' width='3' height='3' rx='.6'/><rect x='9' y='22' width='3' height='3' rx='.6'/><rect x='14.5' y='22' width='3' height='3' rx='.6'/></g></svg>">
   <style>
     html {{ background: #efece3; }}
