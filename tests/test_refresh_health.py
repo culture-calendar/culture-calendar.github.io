@@ -155,3 +155,17 @@ def test_relabel_never_hides_a_broken_page_or_touches_other_sources(monkeypatch,
     other = {}   # a source in neither group is left exactly as recorded
     assert _labelled(monkeypatch, tmp_path, "joyce", "stale", "fetch blocked/invalid", TODAY, other) == (
         "stale", "fetch blocked/invalid")
+
+
+def test_relabel_says_one_entry_not_one_entries(monkeypatch, tmp_path):
+    status, msg = _labelled(monkeypatch, tmp_path, "brooklyn_museum", "stale", "fetch failed/empty page (stale)",
+                            TODAY, R.MAC_REFRESHED)
+    assert msg.startswith("3 entries")   # _labelled passes count=3
+    import json
+    src = Source(id="lisson", name="Lisson", category="art", type="html", url="x")
+    conn = L.connect()
+    cap = tmp_path / "lisson.json"; cap.write_text(json.dumps({"capturedAt": TODAY.isoformat(), "items": []}))
+    monkeypatch.setitem(R.MAC_REFRESHED, "lisson", cap)
+    L.record_run(conn, src, "stale", "fetch blocked/invalid (stale)")
+    R.relabel_by_capture_age(conn, src, 1, today=TODAY)
+    assert conn.execute("select message from source_runs order by id desc limit 1").fetchone()[0].startswith("1 entry —")

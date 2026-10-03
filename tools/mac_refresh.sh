@@ -46,7 +46,14 @@ main() {
       || { echo "FAIL: push rejected"; return 1; }
   fi
   echo "pushed $(git rev-parse --short HEAD)"
-  gh workflow run weekly-refresh.yml --ref main && echo "deploy requested"
+  # GitHub's API sometimes answers 503 for a moment; retry. If it never takes, the caches are
+  # pushed anyway and GitHub's own Monday build publishes them.
+  local i
+  for i in 1 2 3; do
+    gh workflow run weekly-refresh.yml --ref main && { echo "deploy requested"; return 0; }
+    echo "deploy request failed (attempt $i)"; sleep 30
+  done
+  echo "WARN: deploy not requested; Monday's scheduled build will publish these caches"
 }
 
 # Defined as a function so zsh parses the whole script before running it: the git reset above

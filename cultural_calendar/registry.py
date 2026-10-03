@@ -139,10 +139,11 @@ def relabel_by_capture_age(conn, source: Source, count: int, today: "dt.date | N
     except (OSError, ValueError, TypeError, AttributeError):
         return
     age = ((today or legacy.today()) - captured).days
+    n = f"{count} {'entry' if count == 1 else 'entries'}"
     when = f"{captured:%b} {captured.day}"
     if age <= limit:
-        status, message = "ok", f"{count} entries — {how} {when}"
+        status, message = "ok", f"{n} — {how} {when}"
     else:
-        status, message = "stale", f"{count} entries — {how} {when}, {age} days old (due for refresh)"
+        status, message = "stale", f"{n} — {how} {when}, {age} days old (due for refresh)"
     conn.execute("update source_runs set status = ?, message = ? where id = ?", (status, message, row[0]))
     conn.commit()
