@@ -1630,7 +1630,11 @@ def parse_alice_tully(source: Source, text: str) -> list[dict[str, Any]]:
     links to event pages; each carries swiftype metas (internal_title, start_date, venue).
     Filtered to venue 'Alice Tully Hall' (CMS also plays the Rose Studio)."""
     items, seen = [], set()
-    paths = re.findall(r'href="(/our-concerts/at-lincoln-center/events/[a-z0-9\-]+/[a-z0-9\-]+)"', text)
+    # CMS has used both relative and absolute hrefs (it switched to absolute in 2026); accept
+    # either and key on the path, so external_ids are stable across the change.
+    paths = re.findall(
+        r'href="(?:https?://(?:www\.)?chambermusicsociety\.org)?'
+        r'(/our-concerts/at-lincoln-center/events/[a-z0-9\-]+/[a-z0-9\-]+)/?"', text)
     for path in paths:
         if path in seen:
             continue

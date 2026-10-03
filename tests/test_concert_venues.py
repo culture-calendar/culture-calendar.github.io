@@ -126,3 +126,29 @@ def test_summer_city_marquee_filter_and_fields(monkeypatch):
     assert it["date_start"] == "2026-06-20"
     assert "Summer for the City" in it["description"]
     assert "Festival Orchestra of Lincoln Center" in it["description"]
+
+
+_TULLY_SRC = Source(id="alice_tully", name="Alice Tully Hall (CMS)", category="music", type="html", url="x")
+
+
+def test_alice_tully_accepts_absolute_and_relative_links(monkeypatch):
+    # CMS switched its listing from relative to absolute hrefs in 2026; the parser silently
+    # found 0 concerts and the page fell back to a stale cache. Both forms must parse, and the
+    # source's <em> markup must be stripped from titles.
+    monkeypatch.setattr(L, "today", lambda: dt.date(2026, 10, 1))
+    monkeypatch.setattr(L, "end_date", lambda: dt.date(2027, 12, 31))
+    def detail(title, start):
+        return (f'<meta class="swiftype" name="internal_title" data-type="string" content="{title}">'
+                f'<meta class="swiftype" name="start_date" data-type="date" content="{start}">'
+                '<meta class="swiftype" name="venue" data-type="string" content="Alice Tully Hall">')
+    pages = {
+        "/our-concerts/at-lincoln-center/events/26-27/appalachian-spring":
+            detail("Copland&#39;s &lt;em&gt;Appalachian Spring&lt;/em&gt;", "2026-10-13T19:30:00Z"),
+        "/our-concerts/at-lincoln-center/events/26-27/winterreise":
+            detail("Schubert's Winterreise", "2027-01-24T17:00:00Z"),
+    }
+    monkeypatch.setattr(L, "fetch_text", lambda url, *a, **k: pages[url.replace("https://www.chambermusicsociety.org", "")])
+    listing = ('<a href="https://www.chambermusicsociety.org/our-concerts/at-lincoln-center/events/26-27/appalachian-spring">x</a>'
+               '<a href="/our-concerts/at-lincoln-center/events/26-27/winterreise">y</a>')
+    titles = sorted(i["title"] for i in L.parse_alice_tully(_TULLY_SRC, listing))
+    assert titles == ["Copland's Appalachian Spring", "Schubert's Winterreise"]
