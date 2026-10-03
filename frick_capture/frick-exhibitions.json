@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-08-01",
+  "capturedAt": "2026-10-03",
   "source": "https://www.frick.org/exhibitions",
   "note": "Yottaa-walled to scripts; captured via Claude-in-Chrome.",
   "exhibitions": [
@@ -16,7 +16,12 @@
     {
       "title": "Painting with Fire: Susanne de Court and the Art of Enamel",
       "start": "2027-04-08",
-      "label": "April 8, 2027 – July 12, 2027"
+      "label": "April 8 – July 12, 2027"
+    },
+    {
+      "title": "Vilhelm Hammershøi: Pictures from Home",
+      "start": "2027-11-11",
+      "label": "November 11, 2027 – February 14, 2028"
     }
   ]
 }

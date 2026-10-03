@@ -11,7 +11,7 @@ refreshed by hand through a real browser (Claude-in-Chrome):
 | Frick  | Yottaa returns HTTP 418 / blank to automated Chromium (headless and headful). | `frick_capture/frick-exhibitions.json` |
 | Ocula  | Cloudflare-walls scripts (curl/requests 403); a real browser passes. Aggregates major-gallery NY shows + fairs. | `ocula_capture/ocula-ny.json` |
 | Park Avenue Armory | Cloudflare bot wall. Hand-maintained items; re-check the current-season page and bump `capturedAt`. | `armory_capture/armory-events.json` |
-| Met Opera | Since Sept 2026 metopera.org serves a JavaScript bot check to every script, home IP included. Its 2026–27 season fixture (Aug 2026) is still current; capture steps to be settled at the first monthly session that needs them. | `met_opera_capture/met-opera-season.json` |
+| Met Opera | Since Sept 2026 metopera.org serves a JavaScript bot check to every script, home IP included; the season index `/season/2026-27-season/` was also removed (404). | `met_opera_capture/met-opera-season.json` |
 
 **Cadence and alerting.** These five are refreshed in the monthly Claude-in-Chrome session (first
 Saturday). `registry.BROWSER_CAPTURED` lists them; if any fixture's `capturedAt` is more than 45
@@ -71,3 +71,35 @@ New-York filter, future-only, and date parsing — so the fixture is just the ra
 
 **Discipline:** an empty/blocked capture must never overwrite a good fixture — if the page
 didn't render, leave the existing JSON in place.
+
+### Met Opera — `https://www.metopera.org/season/tickets/explore-by-opera/`
+The listing has no dates, so verify each production against its own page from inside the
+browser session (same-origin `fetch` carries the session's cookies past the bot check). Run in
+the connected tab, then compare with `met-opera-season.json`; if the runs match, bump
+`capturedAt` (and fix any moved `source_url`); if a production is added or its run changes,
+edit that item. Return the rows in chunks (`window.__metd.slice(...)`) — tool output truncates.
+
+```js
+await (async () => {
+  const links = [...new Set([...document.querySelectorAll('a[href*="/season/2026-27-"]')].map(a => a.href)
+    .filter(h => /\/season\/2026-27-(season|special-presentation)\/[^/?#]+\/?$/.test(h)))];
+  const M = '(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\\.?';
+  const re = new RegExp(`${M} \\d{1,2}(?:, 20\\d\\d)?(?:\\s*[–-]\\s*(?:${M} )?\\d{1,2})?(?:, 20\\d\\d)?`);
+  window.__metd = [];
+  for (const h of links) {
+    const doc = new DOMParser().parseFromString(await (await fetch(h, {credentials: 'include'})).text(), 'text/html');
+    const d = (doc.querySelector('main') || doc.body).innerText.replace(/\s+/g, ' ').match(re);
+    window.__metd.push([h.split('/').filter(Boolean).pop(), d ? d[0] : '?']);
+  }
+  return JSON.stringify(window.__metd.slice(0, 11));
+})()
+```
+
+### Park Avenue Armory — `https://www.armoryonpark.org/season-events/current-season/`
+Hand-maintained items. Dated headings on the listing give the big productions; recital and
+Artists Studio dates are on each event's own page (fetch them in-browser as for Met Opera).
+If nothing changed, bump `capturedAt`.
+
+### When Cloudflare asks for a human
+Ocula sometimes holds the tab on "Just a moment..." with a "verify you are human" checkbox.
+Claude must not tick it: ask Henry to complete it in the Chrome tab, then continue.

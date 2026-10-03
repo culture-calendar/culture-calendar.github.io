@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-08-01",
+  "capturedAt": "2026-10-03",
   "note": "Park Avenue Armory is Cloudflare-bot-walled, so it can't be fetched by the project's scraper or in CI. This is a hand-maintained capture fixture; refresh it each season from the live current-season page (https://www.armoryonpark.org/season-events/current-season/) via a browser. Future-opening events only; companion artist talks and the already-running clinamen installation omitted.",
   "items": [
     {
@@ -42,7 +42,7 @@
       "date_precision": "exact",
       "venue_or_platform": "Park Avenue Armory",
       "city": "New York",
-      "source_url": "https://www.armoryonpark.org/season-events/current-season/",
+      "source_url": "https://www.armoryonpark.org/season-events/2026-season/artists-studio/raven-chacon/",
       "external_id": "armory:raven-chacon",
       "description": "Artists Studio · new work by the Pulitzer-winning Diné composer and artist",
       "importance_score": 13
@@ -55,7 +55,7 @@
       "date_precision": "exact",
       "venue_or_platform": "Park Avenue Armory",
       "city": "New York",
-      "source_url": "https://www.armoryonpark.org/season-events/current-season/",
+      "source_url": "https://www.armoryonpark.org/season-events/2026-season/recital-series/ben-bliss-christopher-allen/",
       "external_id": "armory:ben-bliss-christopher-allen",
       "description": "Recital Series · tenor and piano recital",
       "importance_score": 12
@@ -87,7 +87,7 @@
       "date_precision": "exact",
       "venue_or_platform": "Park Avenue Armory",
       "city": "New York",
-      "source_url": "https://www.armoryonpark.org/season-events/current-season/",
+      "source_url": "https://www.armoryonpark.org/season-events/2026-season/artists-studio/ione/",
       "external_id": "armory:ione-listening-with-dreams",
       "description": "Artists Studio · a deep-listening exercise with collaborators",
       "importance_score": 11
@@ -100,7 +100,7 @@
       "date_precision": "exact",
       "venue_or_platform": "Park Avenue Armory",
       "city": "New York",
-      "source_url": "https://www.armoryonpark.org/season-events/current-season/",
+      "source_url": "https://www.armoryonpark.org/season-events/2026-season/recital-series/deepa-johnny-jonathan-ware/",
       "external_id": "armory:deepa-johnny-jonathan-ware",
       "description": "Recital Series · mezzo-soprano recital, North American recital debut",
       "importance_score": 12
@@ -113,7 +113,7 @@
       "date_precision": "exact",
       "venue_or_platform": "Park Avenue Armory",
       "city": "New York",
-      "source_url": "https://www.armoryonpark.org/season-events/current-season/",
+      "source_url": "https://www.armoryonpark.org/season-events/2026-season/recital-series/steven-schick-tyshawn-sorey/",
       "external_id": "armory:steven-schick-tyshawn-sorey",
       "description": "Recital Series · world premiere of a new percussion work by Tyshawn Sorey",
       "importance_score": 13,
