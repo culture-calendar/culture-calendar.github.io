@@ -4488,64 +4488,65 @@ def render_html(conn: sqlite3.Connection) -> None:
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="theme-color" content="#efece3">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%232a2722'/><rect x='6' y='9' width='20' height='17' rx='2' fill='%23f6f4ee'/><rect x='6' y='9' width='20' height='5' fill='%233a5a66'/><rect x='10' y='6' width='2.4' height='5' rx='1' fill='%23f6f4ee'/><rect x='19.6' y='6' width='2.4' height='5' rx='1' fill='%23f6f4ee'/><g fill='%232a2722'><rect x='9' y='17' width='3' height='3' rx='.6'/><rect x='14.5' y='17' width='3' height='3' rx='.6'/><rect x='20' y='17' width='3' height='3' rx='.6'/><rect x='9' y='22' width='3' height='3' rx='.6'/><rect x='14.5' y='22' width='3' height='3' rx='.6'/></g></svg>">
+  <meta name="theme-color" content="#faf9f6">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%232a2722'/><rect x='6' y='9' width='20' height='17' rx='2' fill='%23faf9f6'/><rect x='6' y='9' width='20' height='5' fill='%238a6a2e'/><rect x='10' y='6' width='2.4' height='5' rx='1' fill='%23faf9f6'/><rect x='19.6' y='6' width='2.4' height='5' rx='1' fill='%23faf9f6'/><g fill='%232a2722'><rect x='9' y='17' width='3' height='3' rx='.6'/><rect x='14.5' y='17' width='3' height='3' rx='.6'/><rect x='20' y='17' width='3' height='3' rx='.6'/><rect x='9' y='22' width='3' height='3' rx='.6'/><rect x='14.5' y='22' width='3' height='3' rx='.6'/></g></svg>">
   <style>
-    html {{ background: #efece3; }}
+    html {{ background: #efede8; }}
     body {{ font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif; margin: 0; color: #322f29; }}
     .sheet {{ max-width: 1080px; margin: 0 auto; padding: 40px 48px 56px; min-height: 100vh;
       border-left: 1px solid #e6e2d8; border-right: 1px solid #e6e2d8;
       background: radial-gradient(circle at 20% 6%, rgba(252,251,247,.45), transparent 55%),
-        radial-gradient(circle at 85% 96%, rgba(223,219,208,.1), transparent 55%), #f6f4ee; }}
+        radial-gradient(circle at 85% 96%, rgba(223,219,208,.1), transparent 55%), #faf9f6; }}
     h1 {{ font-size: 42px; font-weight: 400; letter-spacing: -.01em; color: #2a2722; margin: 0 0 4px; }}
     h2 {{ font-size: 23px; font-weight: 400; color: #2a2722; margin: 40px 0 4px; padding-bottom: 5px; border-bottom: 1px solid rgba(90,84,66,.3); }}
-    h3 {{ font-size: 12px; font-weight: 400; text-transform: uppercase; letter-spacing: .14em; color: #9a7c44; margin: 22px 0 2px; }}
-    .sub {{ color: #8c8675; font-weight: 400; font-size: 14px; }}
+    h3 {{ font-size: 12px; font-weight: 400; text-transform: uppercase; letter-spacing: .14em; color: #736c5f; margin: 22px 0 2px; }}
+    .sub {{ color: #736c5f; font-weight: 400; font-size: 14px; }}
     p.lede {{ color: #6d685d; font-size: 14px; margin: 0 0 8px; }}
     details.runs p.freshness {{ color: #8a5a2b; font-size: 12px; margin: 4px 0 6px; }}
     table {{ border-collapse: collapse; width: 100%; margin-top: 6px; }}
     th, td {{ border-bottom: 1px solid rgba(110,100,75,.12); padding: 7px 10px; text-align: left; vertical-align: top; font-size: 15px; }}
-    th {{ font-size: 11px; font-weight: 400; text-transform: uppercase; letter-spacing: .08em; color: #8c8675; border-bottom: 1px solid rgba(90,84,66,.28); }}
+    th {{ font-size: 11px; font-weight: 400; text-transform: uppercase; letter-spacing: .08em; color: #736c5f; border-bottom: 1px solid rgba(90,84,66,.28); }}
     td.date {{ white-space: nowrap; color: #6d685d; font-style: italic; width: 120px; }}
     td.credits {{ color: #4a4640; }}
     .cols2 {{ column-count: 2; column-gap: 36px; margin-top: 8px; }}
     .cols2 .entry {{ display: flex; gap: 10px; break-inside: avoid; padding: 5px 0; font-size: 15px; border-bottom: 1px solid rgba(110,100,75,.1); }}
     .cols2 .d {{ flex: 0 0 104px; color: #6d685d; font-style: italic; white-space: nowrap; }}
     .cols2 .body {{ flex: 1; min-width: 0; }}
-    .cols2 .v {{ color: #8c8675; font-size: 12.5px; }}
-    a {{ color: #3a5a66; text-decoration: none; }}
+    .cols2 .v {{ color: #5e594f; font-size: 12.5px; }}
+    a {{ color: #2a2722; text-decoration: none; }}
+    a:hover {{ text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(42,39,34,.35); }}
     a:hover {{ text-decoration: underline; }}
     /* Category filter (JS): show only the chosen category across both views + the horizon. */
     .catfilter {{ margin: 8px 0 2px; display: flex; flex-wrap: wrap; gap: 6px; }}
     .catfilter button {{ cursor: pointer; padding: 4px 12px; font-size: 12.5px; font-family: inherit;
       color: #6d685d; background: #f1eee4; border: 1px solid #cfc8b6; border-radius: 6px; }}
-    .catfilter button.active {{ background: #3a5a66; color: #f6f4ee; border-color: #3a5a66; }}
+    .catfilter button.active {{ background: #8a6a2e; color: #faf9f6; border-color: #8a6a2e; }}
     h3.hyear {{ font-size: 16px; text-transform: none; letter-spacing: .02em; color: #2a2722; margin: 20px 0 0; }}
     .csearch-wrap {{ position: relative; display: block; width: 100%; max-width: 360px; margin: 12px 0 2px; }}
     .csearch {{ width: 100%; box-sizing: border-box; padding: 8px 32px 8px 12px;
       font-family: inherit; font-size: 14px; color: #322f29; background: #fbfaf5; border: 1px solid #cfc8b6; border-radius: 7px; }}
-    .csearch:focus {{ outline: none; border-color: #3a5a66; }}
+    .csearch:focus {{ outline: none; border-color: #8a6a2e; }}
     .csearch::-webkit-search-cancel-button {{ -webkit-appearance: none; appearance: none; }}
     .csearch-clear {{ display: none; position: absolute; right: 3px; top: 0; height: 100%; border: none;
-      background: none; color: #8c8675; font-size: 19px; line-height: 1; cursor: pointer; padding: 0 9px; }}
-    .csearch-clear:hover {{ color: #3a5a66; }}
+      background: none; color: #736c5f; font-size: 19px; line-height: 1; cursor: pointer; padding: 0 9px; }}
+    .csearch-clear:hover {{ color: #2a2722; }}
     /* View toggle (pure CSS): Editorial (month -> category) vs Calendar (day-by-day). */
     input.vtoggle {{ position: absolute; opacity: 0; pointer-events: none; }}
     .viewtoggle {{ margin: 18px 0 4px; display: inline-flex; border: 1px solid #cfc8b6; border-radius: 7px; overflow: hidden; }}
     .viewtoggle label {{ cursor: pointer; padding: 5px 16px; font-size: 13px; color: #6d685d; background: #f1eee4; }}
     .viewtoggle label + label {{ border-left: 1px solid #cfc8b6; }}
     #view-editorial:checked ~ .viewtoggle label[for="view-editorial"],
-    #view-calendar:checked ~ .viewtoggle label[for="view-calendar"] {{ background: #3a5a66; color: #f6f4ee; }}
+    #view-calendar:checked ~ .viewtoggle label[for="view-calendar"] {{ background: #8a6a2e; color: #faf9f6; }}
     .view {{ display: none; }}
     #view-editorial:checked ~ .view-editorial {{ display: block; }}
     #view-calendar:checked ~ .view-calendar {{ display: block; }}
     .cal-day {{ margin-top: 20px; break-inside: avoid; }}
     .cal-date {{ font-size: 16px; color: #2a2722; margin-bottom: 2px; padding-bottom: 5px; border-bottom: 1px solid rgba(90,84,66,.3); }}
     .cal-entry {{ display: flex; gap: 12px; padding: 6px 0; font-size: 15px; border-bottom: 1px solid rgba(110,100,75,.1); }}
-    .cal-cat {{ flex: 0 0 92px; color: #9a7c44; text-transform: uppercase; font-size: 11px; letter-spacing: .1em; padding-top: 3px; }}
+    .cal-cat {{ flex: 0 0 92px; color: #736c5f; text-transform: uppercase; font-size: 10.5px; letter-spacing: .12em; padding-top: 3px; }}
     .cal-body {{ flex: 1; min-width: 0; }}
-    .cal-meta {{ color: #8c8675; font-size: 12.5px; }}
-    details.runs {{ margin-top: 32px; color: #8c8675; font-size: 12px; }}
+    .cal-meta {{ color: #5e594f; font-size: 12.5px; }}
+    details.runs {{ margin-top: 32px; color: #736c5f; font-size: 12px; }}
     details.runs li {{ list-style: none; }}
     /* Mobile: tables become stacked cards (title leads; date · venue; credits folded under). */
     @media (max-width: 640px) {{
@@ -4563,7 +4564,8 @@ def render_html(conn: sqlite3.Connection) -> None:
         font-size: 13px; white-space: nowrap; }}
       .sheet tbody td:nth-child(4) {{ order: 3; flex: 0 0 auto; color: #6d685d; font-size: 13px; }}
       .sheet td.credits {{ order: 4; flex: 1 0 100%; font-style: italic; font-size: 12.5px; margin-top: 2px; }}
-      .cal-entry {{ flex-direction: column; gap: 1px; }}
+      .cal-entry {{ flex-direction: column; gap: 1px; font-size: 16px; }}
+      .cal-meta {{ font-size: 13px; }}
       .cal-cat {{ flex: none; padding-top: 0; }}
       .catfilter button {{ padding: 6px 13px; }}
       .csearch-wrap {{ max-width: none; }}

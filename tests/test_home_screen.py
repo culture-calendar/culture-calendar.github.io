@@ -73,3 +73,15 @@ def test_pages_workflow_publishes_the_icons():
     wf = (ROOT / ".github" / "workflows" / "weekly-refresh.yml").read_text()
     assert "cp site/*.png site/manifest.webmanifest _site/" in wf
     assert "_site/apple-touch-icon-precomposed.png" in wf
+
+
+def test_palette_is_warm_ink_on_paper(monkeypatch, tmp_path):
+    """Palette A′ (Oct 2026): ink titles on a light warm paper, darker details, grey labels,
+    ochre only for active states — and no slate blue, which clashed with the beige."""
+    page = _render(monkeypatch, tmp_path)
+    assert "#3a5a66" not in page.lower() and "%233a5a66" not in page
+    assert "a {{ color: #2a2722;".replace("{{", "{") in page
+    assert ".cal-meta { color: #5e594f;" in page
+    assert ".catfilter button.active { background: #8a6a2e;" in page
+    manifest = json.loads((SITE / "manifest.webmanifest").read_text())
+    assert f'<meta name="theme-color" content="{manifest["theme_color"]}">' in page

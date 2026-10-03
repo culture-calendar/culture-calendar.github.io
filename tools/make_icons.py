@@ -13,9 +13,9 @@ from pathlib import Path
 from PIL import Image, ImageChops, ImageDraw
 
 INK = (42, 39, 34)        # #2a2722 — page headings
-PAPER = (246, 244, 238)   # #f6f4ee — the sheet
-SLATE = (58, 90, 102)     # #3a5a66 — links / active buttons
-OCHRE = (154, 124, 68)    # #9a7c44 — category labels
+PAPER = (250, 249, 246)   # #faf9f6 — the sheet
+GRAY = (115, 108, 95)     # #736c5f — category labels
+OCHRE = (138, 106, 46)    # #8a6a2e — the active filter
 RUST = (138, 90, 43)      # #8a5a2b — freshness note
 
 OUT = Path(__file__).resolve().parents[1] / "site"
@@ -42,13 +42,13 @@ def music(s: int) -> Image.Image:
     notes = [(0.31 * s, 0.71 * s, 0.25 * s), (0.66 * s, 0.63 * s, 0.17 * s)]  # head cx, cy, stem top
     xs = []
     for cx, cy, top in notes:
-        rot_ellipse(im, cx, cy, hw, hh, 22, SLATE)
+        rot_ellipse(im, cx, cy, hw, hh, 22, RUST)
         x = cx + 0.095 * s
-        d.rectangle((x, top, x + sw, cy - 0.01 * s), fill=SLATE)
+        d.rectangle((x, top, x + sw, cy - 0.01 * s), fill=RUST)
         xs.append((x, top))
     (x1, t1), (x2, t2) = xs
     beam = 0.11 * s
-    d.polygon([(x1, t1), (x2 + sw, t2), (x2 + sw, t2 + beam), (x1, t1 + beam)], fill=SLATE)
+    d.polygon([(x1, t1), (x2 + sw, t2), (x2 + sw, t2 + beam), (x1, t1 + beam)], fill=RUST)
     return im
 
 
@@ -106,7 +106,7 @@ def theatre(s: int) -> Image.Image:
     """Comedy and tragedy masks."""
     im, _ = layer(s)
     k = int(s * 0.72)  # overlap only at the cheeks, so both faces stay readable at icon size
-    back = mask_face(s, SLATE, comedy=False).rotate(14, resample=BICUBIC).resize((k, k), Image.LANCZOS)
+    back = mask_face(s, INK, comedy=False).rotate(14, resample=BICUBIC).resize((k, k), Image.LANCZOS)
     front = mask_face(s, OCHRE, comedy=True).rotate(-12, resample=BICUBIC).resize((k, k), Image.LANCZOS)
     im.alpha_composite(back, (int(-0.02 * s), int(0.02 * s)))
     im.alpha_composite(front, (int(0.30 * s), int(0.26 * s)))
@@ -120,7 +120,7 @@ def art(s: int) -> Image.Image:
     ix0, iy0, ix1, iy1 = 0.245 * s, 0.30 * s, 0.755 * s, 0.70 * s
     d.rectangle((ix0, iy0, ix1, iy1), fill=PAPER)
     d.ellipse((0.57 * s, 0.35 * s, 0.68 * s, 0.46 * s), fill=OCHRE)
-    d.polygon([(ix0, iy1), (0.40 * s, 0.44 * s), (0.56 * s, iy1)], fill=SLATE)
+    d.polygon([(ix0, iy1), (0.40 * s, 0.44 * s), (0.56 * s, iy1)], fill=GRAY)
     d.polygon([(0.44 * s, iy1), (0.62 * s, 0.52 * s), (ix1, iy1)], fill=INK)
     return im
 
