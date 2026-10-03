@@ -9,10 +9,12 @@ on:
   workflow_dispatch: {}      # lets you trigger a run manually from the Actions tab
 
 # Pages deployment needs these; contents stays read-only (nothing is committed back).
+# issues: write lets tools/refresh_alert.py open/close the "refresh-alert" issue.
 permissions:
   contents: read
   pages: write
   id-token: write
+  issues: write
 
 concurrency:
   group: calendar-refresh
@@ -45,6 +47,17 @@ jobs:
         env:
           TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
         run: python -m cultural_calendar
+
+      - name: Raise or clear the refresh alert
+        # One GitHub issue (label refresh-alert, mentions @hdfinder-tech so GitHub emails him)
+        # when a parser can't read its page, a source fails unexpectedly, or a Mac-refreshed /
+        # browser-captured cache is overdue. Comments only when the problem list changes;
+        # closes itself when all is healthy. Never blocks publishing.
+        if: always()
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python tools/refresh_alert.py
 
       - name: Stage the generated calendar for Pages
         run: |

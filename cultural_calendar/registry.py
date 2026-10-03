@@ -83,3 +83,31 @@ def plugin_for(source: Source) -> SourcePlugin:
         return SourcePlugin(source.id, tactic, importer, needs_aperture, expected)
     tactic = _HTML_TACTIC.get(source.id, "html")
     return SourcePlugin(source.id, tactic, legacy.import_html_source, False, expected)
+
+
+# --- Refresh ownership (used by tools/refresh_alert.py) -------------------------------------
+# On GitHub's runners these sources are expected to come back "stale": the live fetch is
+# refused there, so GitHub serves the committed cache. What matters is that someone keeps that
+# cache fresh, judged by its `capturedAt` stamp (bumped on every successful fetch).
+
+# Refused by GitHub, fine from a home connection: the Pennington Mac refreshes them weekly
+# (tools/mac_refresh.sh). Overdue after MAC_REFRESH_MAX_DAYS -> the Sunday job isn't running.
+MAC_REFRESHED: dict[str, "Path"] = {
+    "lisson": legacy.LISSON_CACHE,
+    "moca_la": legacy.museum_cache_path("moca_la"),
+    "brooklyn_museum": legacy.museum_cache_path("brooklyn_museum"),
+    "met_exhibitions": legacy.MET_CAPTURE,
+    "serpentine": legacy.SERPENTINE_CAPTURE,
+}
+MAC_REFRESH_MAX_DAYS = 15
+
+# No script can fetch these at all: captured by hand in the monthly Claude-in-Chrome session
+# (cultural_calendar/capture/README.md). Overdue after BROWSER_CAPTURE_MAX_DAYS.
+BROWSER_CAPTURED: dict[str, "Path"] = {
+    "moma_exhibitions": legacy.MOMA_CAPTURE_LINKS,
+    "frick": legacy.FRICK_CAPTURE,
+    "ocula": legacy.OCULA_CAPTURE,
+    "armory": legacy.ARMORY_CAPTURE,
+    "met_opera_2026_27": legacy.MET_OPERA_CAPTURE,
+}
+BROWSER_CAPTURE_MAX_DAYS = 45

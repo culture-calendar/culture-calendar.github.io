@@ -1903,6 +1903,18 @@ def parse_summer_city(source: Source, text: str) -> list[dict[str, Any]]:
 
 
 def import_summer_city(conn: sqlite3.Connection, source: Source) -> int:
+    # Out of season the festival URL redirects to Lincoln Center's home page. That's dormancy,
+    # not a block or a broken parser: record it as such (and serve nothing — the cache holds
+    # only last summer's past events) instead of a "stale" failure.
+    try:
+        page = fetch_text(source.url)
+    except Exception:
+        page = None
+    title = (re.search(r"<title>\s*([^<]*?)\s*</title>", page or "") or [None, ""])[1]
+    if (page is not None and 'class="event-date"' not in page and len(page) > 100_000
+            and title.strip() == "Lincoln Center"):  # the full LC home page, not a block page
+        record_run(conn, source, "ok", "out of season — festival page not live (returns each spring)")
+        return 0
     return import_with_cache(conn, source, SFTC_CACHE, parse_summer_city,
                              must_contain=("UPCOMING SHOWS", "event-date"))
 
@@ -1997,7 +2009,10 @@ MUSEUMS = {
     "brooklyn_museum": {"name": "Brooklyn Museum", "city": "New York",
                         "link": r"https://www\.brooklynmuseum\.org/exhibitions/[a-z0-9-]+$"},
     "moca_la": {"name": "MOCA", "city": "Los Angeles",
-                "link": r"https://www\.moca\.org/exhibition/[a-z0-9-]+$"},
+                "link": r"https://www\.moca\.org/exhibitions?/[a-z0-9-]+$",  # /exhibition/ -> /exhibitions/ in 2026
+                # Every MOCA exhibition page repeats the current shows' run ("Sept 20, 2026 –
+                # Jan 3, 2027") above its own dates, so read each show's dates off its listing card.
+                "dates_from_listing": True},
     "pace_gallery": {"name": "Pace Gallery", "city": "New York",
                      "link": r"https://www\.pacegallery\.com/exhibitions/[a-z0-9-]+$"},
     "new_museum": {"name": "New Museum", "city": "New York", "json": True},
@@ -2152,7 +2167,9 @@ def hydrate_museum_dates(conn: sqlite3.Connection, source: Source, items: list[d
     """Follow each exhibition page for its opening date; keep only future/seasonal openings
     within the horizon (drops already-running and beyond-2026 shows)."""
     kept: list[dict[str, Any]] = []
+    dates_from_listing = MUSEUMS.get(source.id, {}).get("dates_from_listing", False)
     for item in items[:limit]:
+        listing_text = item["title"]  # the listing card's link text, before og:title replaces it
         try:
             html_text = fetch_text(item["source_url"])
             raw_path = save_detail(source, item["external_id"], html_text)
@@ -2165,6 +2182,14 @@ def hydrate_museum_dates(conn: sqlite3.Connection, source: Source, items: list[d
         clean_title = re.split(r"\s*[|]\s*", clean_title)[0]  # drop " | Whitney Museum" suffix
         if clean_title and len(normalize_space(clean_title)) >= 3:
             item["title"] = normalize_space(clean_title)
+        if dates_from_listing:
+            start, label = extract_exhibition_window(listing_text)
+            if start and today() <= start <= end_date():
+                item["date_start"] = start.isoformat()
+                item["date_label"] = label or format_us_date(start)
+                item["date_precision"] = "exact"
+                kept.append(item)
+            continue  # no future opening on the card -> already open, past, or undated
         # Prefer JSON-LD ExhibitionEvent dates — structured and reliable. A JSON-LD start in the
         # past is authoritative: the show is already open (or a permanent/Artport piece), so drop
         # it without falling through to prose scanning that could misread an unrelated date.
@@ -3097,6 +3122,22 @@ def tate_opening_date(text: str) -> tuple[dt.date | None, str | None]:
     return (opening, normalize_space(text)) if opening else (None, None)
 
 
+def _count_listed(parser: "callable", source: Source, text: str) -> int:
+    """How many records `parser` recognizes on `text` when the future-opening filter is
+    disabled (today() pinned to 1900). Separates "nothing upcoming" from "can't read the page".
+    Only called when the normal parse is empty, so a detail-hydrating parser's extra fetches
+    are rare."""
+    global today
+    real_today = today
+    today = lambda: dt.date(1900, 1, 1)
+    try:
+        return len(parser(source, text))
+    except Exception:
+        return 0
+    finally:
+        today = real_today
+
+
 def import_with_cache(conn: sqlite3.Connection, source: Source, cache_path: Path,
                       parser: "callable", must_contain: tuple[str, ...] = ()) -> int:
     """Run a live scraper backed by a committed last-good cache, enforcing the integrity rule:
@@ -3124,13 +3165,20 @@ def import_with_cache(conn: sqlite3.Connection, source: Source, cache_path: Path
             items = age_cache(live, cache)
             save_capture_fixture(cache_path, items)
             status, note = "ok", f"imported {len(live)} upcoming entries ({len(items)} after cache merge)"
-        elif cache:
-            items = cache  # parsed nothing / parser crashed — serve cache, don't age or overwrite
-            reason = f"parser error: {parse_error}" if parse_error else "clean fetch parsed nothing (check parser/shape)"
-            status, note = "stale", f"{len(cache)} from cache — {reason}"
         else:
-            items = []
-            status, note = "ok", "0 — clean fetch, nothing upcoming"
+            # Nothing upcoming. Tell a healthy page with nothing new (a museum between shows) from
+            # a page the parser can no longer read (a site change): re-parse without the
+            # future-opening filter and see whether it recognizes any records at all.
+            listed = 0 if parse_error else _count_listed(parser, source, text)
+            items = cache  # serve the cache either way; don't age it on an empty parse
+            if listed:
+                if cache:
+                    save_capture_fixture(cache_path, cache)  # re-verified today: bump capturedAt
+                status, note = "ok", f"0 upcoming — page lists {listed} current or past, none upcoming yet"
+            else:
+                reason = (f"parser error: {parse_error}" if parse_error
+                          else "page fetched but nothing recognizable (check parser/shape)")
+                status, note = "stale", f"{len(cache)} from cache — {reason}"
     for item in items:
         upsert_item(conn, source, item)
         ensure_model_enrichment_placeholder(conn, source, item)
@@ -3936,6 +3984,7 @@ def import_html_source(conn: sqlite3.Connection, source: Source) -> int:
             note = (f"{len(items)} from last-good cache — fetch failed/empty page (stale)"
                     if items else "0 — fetch failed/empty and no cache")
         else:  # clean fetch, cards present, none upcoming — a legitimate empty
+            save_capture_fixture(cache_path, [])  # verified today: nothing upcoming
             status, note = "ok", f"0 upcoming ({cards} current shows listed)"
         for item in items:
             upsert_item(conn, source, item)
