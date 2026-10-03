@@ -46,7 +46,7 @@ def test_page_head_has_home_screen_tags(monkeypatch, tmp_path):
     page = _render(monkeypatch, tmp_path)
     assert '<link rel="apple-touch-icon" href="apple-touch-icon.png">' in page
     assert '<link rel="manifest" href="manifest.webmanifest">' in page
-    assert '<meta name="apple-mobile-web-app-title" content="TNY Calendar">' in page
+    assert '<meta name="apple-mobile-web-app-title" content="Cultural Calendar">' in page
     assert '<meta name="apple-mobile-web-app-capable" content="yes">' in page
 
 
@@ -63,7 +63,7 @@ def test_apple_touch_icon_is_opaque_square_180():
 
 def test_manifest_icons_exist_at_declared_sizes():
     manifest = json.loads((SITE / "manifest.webmanifest").read_text())
-    assert manifest["short_name"] == "TNY Calendar" and manifest["display"] == "standalone"
+    assert manifest["short_name"] == "Cultural Calendar" and manifest["display"] == "standalone"
     for icon in manifest["icons"]:
         w, h, _ = _png_header(SITE / icon["src"])
         assert f"{w}x{h}" == icon["sizes"]

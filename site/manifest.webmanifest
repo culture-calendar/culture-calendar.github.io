@@ -1,6 +1,6 @@
 {
   "name": "Cultural Calendar",
-  "short_name": "TNY Calendar",
+  "short_name": "Cultural Calendar",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

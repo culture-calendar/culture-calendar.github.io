@@ -4484,7 +4484,7 @@ def render_html(conn: sqlite3.Connection) -> None:
        published beside index.html by the Pages workflow. -->
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="manifest" href="manifest.webmanifest">
-  <meta name="apple-mobile-web-app-title" content="TNY Calendar">
+  <meta name="apple-mobile-web-app-title" content="Cultural Calendar">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
