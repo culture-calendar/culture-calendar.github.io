@@ -11,7 +11,7 @@ import os
 
 from . import legacy
 from .core.config import DB_PATH, HTML_PATH, load_sources
-from .registry import plugin_for
+from .registry import plugin_for, relabel_by_capture_age
 
 
 def run_imports(selected: set[str] | None = None, aperture: str = "wide") -> None:
@@ -29,6 +29,7 @@ def run_imports(selected: set[str] | None = None, aperture: str = "wide") -> Non
             conn.execute("delete from items where source_id = ?", (source.id,))
             conn.commit()
             count = plugin.run(conn, source, aperture)
+            relabel_by_capture_age(conn, source, count)  # status describes the data, not the fetch
             print(f"{source.name}: {count} [{plugin.tactic}]")
             warning = plugin.health(count)
             if warning:

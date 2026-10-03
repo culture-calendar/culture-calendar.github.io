@@ -105,6 +105,11 @@ breakage: six parsers broke silently for weeks behind their caches. So:
   runners) by the Sunday launchd job on the Pennington iMac (`tools/mac_refresh.sh`);
   `registry.BROWSER_CAPTURED` (bot-walled for every script) in the monthly Claude-in-Chrome
   session. Add a source to the right set when you find it blocked.
+- **Labels describe the data, not the fetch.** `registry.relabel_by_capture_age` (run loop) re-labels
+  Mac-refreshed sources refused by GitHub, and all browser-captured sources, by their capture's age:
+  within 15 / 45 days → `ok` ("refreshed from the Pennington Mac on Oct 3" / "browser capture of Oct 3");
+  older → `stale` with the age. An unreadable page is never re-labelled. So "stale" on the page means
+  something genuinely needs refreshing, and matches the alert.
 - **Alarm.** `tools/refresh_alert.py` (in the workflow) keeps one `refresh-alert` GitHub issue for
   unreadable pages, unexpected failures, and overdue caches (`capturedAt` > 15 / 45 days).
 - **Diagnose a stale source** by running it from the Mac: works there → GitHub is refused (add to

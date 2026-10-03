@@ -122,3 +122,36 @@ def test_guggenheim_with_no_upcoming_section_is_quiet_not_a_crash(monkeypatch, t
     assert L.import_guggenheim(conn, src) == 0
     assert tuple(conn.execute("select status, message from source_runs").fetchone()) == (
         "ok", "0 upcoming — page lists 1 current or past, none upcoming yet")
+
+
+def _labelled(monkeypatch, tmp_path, sid, status, message, captured, group):
+    """Record a run for `sid`, point its group entry at a capture dated `captured`, relabel."""
+    import json
+    monkeypatch.setattr(L, "DB_PATH", tmp_path / "t.db")
+    cap = tmp_path / f"{sid}.json"
+    cap.write_text(json.dumps({"capturedAt": captured.isoformat(), "items": []}))
+    monkeypatch.setitem(group, sid, cap)
+    src = Source(id=sid, name=sid, category="art", type="html", url="x")
+    conn = L.connect()
+    L.record_run(conn, src, status, message)
+    R.relabel_by_capture_age(conn, src, 3, today=TODAY)
+    return tuple(conn.execute("select status, message from source_runs order by id desc limit 1").fetchone())
+
+
+def test_labels_describe_the_data_not_the_fetch(monkeypatch, tmp_path):
+    fresh, old = TODAY, TODAY - dt.timedelta(days=63)
+    # Refused by GitHub but refreshed from the Mac today: current, so not stale.
+    assert _labelled(monkeypatch, tmp_path, "met_exhibitions", "stale",
+                     "parsed 3 candidate links from committed fixture fallback (live 429/empty)",
+                     fresh, R.MAC_REFRESHED) == ("ok", "3 entries — refreshed from the Pennington Mac on Oct 3")
+    # A browser capture its importer called "ok", but 63 days old: stale, with the age.
+    status, msg = _labelled(monkeypatch, tmp_path, "frick", "ok", "parsed 3 from browser capture", old, R.BROWSER_CAPTURED)
+    assert status == "stale" and "63 days old" in msg
+
+
+def test_relabel_never_hides_a_broken_page_or_touches_other_sources(monkeypatch, tmp_path):
+    broken = "1 from cache — page fetched but nothing recognizable (check parser/shape)"
+    assert _labelled(monkeypatch, tmp_path, "lisson", "stale", broken, TODAY, R.MAC_REFRESHED) == ("stale", broken)
+    other = {}   # a source in neither group is left exactly as recorded
+    assert _labelled(monkeypatch, tmp_path, "joyce", "stale", "fetch blocked/invalid", TODAY, other) == (
+        "stale", "fetch blocked/invalid")

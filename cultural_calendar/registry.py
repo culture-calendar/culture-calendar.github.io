@@ -111,3 +111,38 @@ BROWSER_CAPTURED: dict[str, "Path"] = {
     "met_opera_2026_27": legacy.MET_OPERA_CAPTURE,
 }
 BROWSER_CAPTURE_MAX_DAYS = 45
+
+
+def relabel_by_capture_age(conn, source: Source, count: int, today: "dt.date | None" = None) -> None:
+    """Make a run's status describe the DATA, not GitHub's fetch.
+
+    A Mac-refreshed source whose live fetch was refused here serves its saved cache and records
+    "stale" — though the Mac may have refreshed it this morning. A browser-captured source always
+    serves its capture, and some importers call that "ok" however old it is. So re-label by the
+    capture's age: within its refresh window it's current ("ok"); past it, "stale" with the age.
+    A page that was fetched but couldn't be read stays flagged — that's a real break."""
+    import datetime as dt
+    import json
+
+    if source.id in BROWSER_CAPTURED:
+        path, limit, how, relabel = BROWSER_CAPTURED[source.id], BROWSER_CAPTURE_MAX_DAYS, "browser capture of", ("ok", "stale")
+    elif source.id in MAC_REFRESHED:
+        path, limit, how, relabel = MAC_REFRESHED[source.id], MAC_REFRESH_MAX_DAYS, "refreshed from the Pennington Mac on", ("stale",)
+    else:
+        return
+    row = conn.execute("select id, status, coalesce(message, '') from source_runs where source_id = ? "
+                       "order by id desc limit 1", (source.id,)).fetchone()
+    if not row or row[1] not in relabel or "nothing recognizable" in row[2] or "parser error" in row[2]:
+        return
+    try:
+        captured = dt.date.fromisoformat(str(json.loads(path.read_text()).get("capturedAt"))[:10])
+    except (OSError, ValueError, TypeError, AttributeError):
+        return
+    age = ((today or legacy.today()) - captured).days
+    when = f"{captured:%b} {captured.day}"
+    if age <= limit:
+        status, message = "ok", f"{count} entries — {how} {when}"
+    else:
+        status, message = "stale", f"{count} entries — {how} {when}, {age} days old (due for refresh)"
+    conn.execute("update source_runs set status = ?, message = ? where id = ?", (status, message, row[0]))
+    conn.commit()
