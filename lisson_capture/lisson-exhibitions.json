@@ -1,17 +1,17 @@
 {
-  "capturedAt": "2026-06-19",
+  "capturedAt": "2026-10-03",
   "items": [
     {
-      "title": "Hiroshi Sugimoto",
+      "title": "Yu Hong: Field of Asura",
       "category": "art",
-      "date_start": "2026-09-01",
-      "date_end": null,
-      "date_label": "September – October 2026",
-      "date_precision": "month",
+      "date_start": "2026-11-04",
+      "date_end": "2027-01-09",
+      "date_label": "4 November 2026 – 9 January 2027",
+      "date_precision": "exact",
       "venue_or_platform": "Lisson Gallery",
       "city": "New York",
-      "source_url": "https://www.lissongallery.com/exhibitions/hiroshi-sugimoto-91293d6d-4567-48ba-81a0-3986eb6b1360",
-      "external_id": "lisson:/exhibitions/hiroshi-sugimoto-91293d6d-4567-48ba-81a0-3986eb6b1360",
+      "source_url": "https://www.lissongallery.com/exhibitions/yu-hong-lisson-new-york",
+      "external_id": "lisson:/exhibitions/yu-hong-lisson-new-york",
       "description": "Lisson Gallery, New York",
       "importance_score": 14,
       "_misses": 0

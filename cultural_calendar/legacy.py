@@ -1411,19 +1411,24 @@ def parse_show_dates(datestr: str):
 
 
 def parse_lisson(source: Source, text: str) -> list[dict[str, Any]]:
-    """Lisson NY upcoming shows. Each card: a `link-discreet` anchor whose inner text is
-    Artist <br> date <br> location."""
+    """Lisson NY upcoming shows. Since the 2026 redesign each show is an <article> card: a
+    cover link whose aria-label is the title, then text with the city and the date range.
+    Keep New York gallery shows (not off-site museum loans) opening within the horizon."""
     items, seen = [], set()
-    for m in re.finditer(r'<a class="link-discreet" href="(/exhibitions/[^"]+)">(.*?)</a>', text, re.S):
-        href = m.group(1)
-        parts = [normalize_space(strip_tags(p)) for p in re.split(r"<br\s*/?>", m.group(2))]
-        parts = [p for p in parts if p]
-        if len(parts) < 3:
+    for card in re.findall(r"<article\b.*?</article>", text, re.S):
+        link = re.search(r'aria-label="([^"]+)"\s+href="(/exhibitions/[^"]+)"', card) or \
+            re.search(r'href="(/exhibitions/[^"]+)"[^>]*aria-label="([^"]+)"', card)
+        if not link:
             continue
-        name, datestr, location = parts[0], parts[1], parts[-1]
-        if "new york" not in location.lower():
+        name, href = (link.group(1), link.group(2)) if link.group(2).startswith("/exhibitions/") \
+            else (link.group(2), link.group(1))
+        body = normalize_space(strip_tags(re.sub(r"<(?:source|img|picture)[^>]*>", " ", card)))
+        if "new york" not in body.lower() or re.search(r"\bmuseum\b", body, re.I):
             continue
-        parsed = parse_show_dates(datestr)
+        # Isolate the date range ("4 November 2026 – 9 January 2027", "15 September – 24 October
+        # 2026") so the label isn't the whole card text.
+        rng = re.search(rf"\d{{1,2}}\s+{MONTH_RE}(?:\s+\d{{4}})?\s*[–-]\s*\d{{1,2}}\s+{MONTH_RE}\s+\d{{4}}", body)
+        parsed = parse_show_dates(rng.group(0)) if rng else None
         if not parsed:
             continue
         start_iso, end_iso, label, precision = parsed
@@ -1435,16 +1440,17 @@ def parse_lisson(source: Source, text: str) -> list[dict[str, Any]]:
             continue
         seen.add(ext)
         items.append({
-            "title": name, "category": "art", "date_start": start_iso, "date_end": end_iso,
-            "date_label": label, "date_precision": precision, "venue_or_platform": "Lisson Gallery",
-            "city": "New York", "source_url": "https://www.lissongallery.com" + href,
+            "title": normalize_space(html.unescape(name)), "category": "art", "date_start": start_iso,
+            "date_end": end_iso, "date_label": label, "date_precision": precision,
+            "venue_or_platform": "Lisson Gallery", "city": "New York",
+            "source_url": "https://www.lissongallery.com" + href,
             "external_id": ext, "description": "Lisson Gallery, New York", "importance_score": 14,
         })
     return items
 
 
 def import_lisson(conn: sqlite3.Connection, source: Source) -> int:
-    return import_with_cache(conn, source, LISSON_CACHE, parse_lisson, must_contain=("link-discreet",))
+    return import_with_cache(conn, source, LISSON_CACHE, parse_lisson, must_contain=("<article", "/exhibitions/"))
 
 
 def parse_tanya_bonakdar(source: Source, text: str) -> list[dict[str, Any]]:
@@ -1691,15 +1697,13 @@ def _jsonld_event(detail: str) -> tuple[str | None, str | None]:
 
 
 def parse_jalc(source: Source, text: str) -> list[dict[str, Any]]:
-    """Jazz at Lincoln Center (Rose Theater / The Appel Room). The season pages list
-    jazz.org/concert/<slug> mainstage concerts; each detail carries a schema.org Event with a
-    clean startDate. Also pull the prior season page for any concerts still inside the horizon."""
-    links = list(re.findall(r"https?://(?:www\.)?jazz\.org/concert/[a-z0-9\-]+/?", text))
+    """Jazz at Lincoln Center (Rose Theater / The Appel Room). Since 2026 the season pages draw
+    their concert list with JavaScript, so `text` is the site's WordPress REST feed of `concert`
+    posts (source.url). Each concert page carries a schema.org Event with a clean startDate."""
     try:
-        prev = fetch_text("https://www.jazz.org/concerts-events/25-26-season-concerts/")
-        links += re.findall(r"https?://(?:www\.)?jazz\.org/concert/[a-z0-9\-]+/?", prev)
-    except Exception:
-        pass
+        links = [r["link"] for r in json.loads(text) if r.get("link")]
+    except (ValueError, TypeError, KeyError):
+        links = []
     items, seen = [], set()
     for url in links:
         url = url.rstrip("/")
@@ -1729,11 +1733,11 @@ def parse_jalc(source: Source, text: str) -> list[dict[str, Any]]:
 
 def import_jalc(conn: sqlite3.Connection, source: Source) -> int:
     return import_with_cache(conn, source, JALC_CACHE, parse_jalc,
-                             must_contain=("jazz.org/concert/",))
+                             must_contain=('"type":"concert"',))
 
 
 _ABT_SEASON_PAGES = [
-    "https://www.abt.org/performances/summer-season/",   # also source.url (page 1)
+    "https://www.abt.org/performances/summer-season/",
     "https://www.abt.org/performances/fall-season/",
     "https://www.abt.org/performances/spring-season/",
 ]
@@ -1756,17 +1760,23 @@ def parse_abt(source: Source, text: str) -> list[dict[str, Any]]:
     """American Ballet Theatre. The season pages link each performance as
     /event_dates/<ballet>-<YYYY-MM-DD>-<time>/, so group by ballet, take the earliest
     in-horizon date as the opening, and label the run. Venue comes from the season page
-    (Met Opera House in summer; David H. Koch Theater in spring/fall)."""
-    pages = [text]
-    for url in _ABT_SEASON_PAGES[1:]:
+    (Met Opera House in summer; David H. Koch Theater in spring/fall).
+
+    `text` is the /performances/ index (the fetch gate). Every season page is read, because
+    whichever season just ended has no performances left — gating on one season page made the
+    whole source go stale between seasons. Both venue names appear in the site menu on every
+    page, so the season's own venue is the one mentioned more often."""
+    pages = []
+    for url in _ABT_SEASON_PAGES:
         try:
             pages.append(fetch_text(url))
         except Exception:
             pass
     items, seen = [], set()
     for page in pages:
-        venue = ("Metropolitan Opera House" if "Metropolitan Opera House" in page
-                 else "David H. Koch Theater" if "David H. Koch Theater" in page
+        met, koch = page.count("Metropolitan Opera House"), page.count("David H. Koch Theater")
+        venue = ("Metropolitan Opera House" if met > koch
+                 else "David H. Koch Theater" if koch > met
                  else "American Ballet Theatre")
         groups: dict[str, list[dt.date]] = {}
         for ballet, iso in re.findall(r"/event_dates/([a-z0-9\-]+?)-(20\d\d-\d\d-\d\d)-[^/]*/", page):
@@ -1795,7 +1805,7 @@ def parse_abt(source: Source, text: str) -> list[dict[str, Any]]:
 
 
 def import_abt(conn: sqlite3.Connection, source: Source) -> int:
-    return import_with_cache(conn, source, ABT_CACHE, parse_abt, must_contain=("/event_dates/",))
+    return import_with_cache(conn, source, ABT_CACHE, parse_abt, must_contain=("/performances/fall-season",))
 
 
 # Summer for the City is multidisciplinary. The marquee-performances filter is a denylist of the

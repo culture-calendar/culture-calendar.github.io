@@ -16,18 +16,26 @@ def test_show_dates_us_uk_and_dayless():
     assert L.parse_show_dates("no date here") is None
 
 
+def _lisson_card(slug, title, body):
+    return (f'<article class="group"><a class="cover" aria-label="{title}" href="/exhibitions/{slug}"></a>'
+            f'<figure><picture><img src="x.jpg"></picture></figure><div><h3>{title}</h3><p>{body}</p></div></article>')
+
+
 def test_lisson_ny_future(monkeypatch):
-    monkeypatch.setattr(L, "today", lambda: dt.date(2026, 6, 19))
+    # Lisson's 2026 redesign: <article> cards, title in the cover link's aria-label.
+    monkeypatch.setattr(L, "today", lambda: dt.date(2026, 10, 3))
     monkeypatch.setattr(L, "end_date", lambda: dt.date(2027, 12, 31))
-    page = (
-        '<a class="link-discreet" href="/exhibitions/sugimoto"> Hiroshi Sugimoto <br/> September – October 2026 <br/> New York </a>'
-        '<a class="link-discreet" href="/exhibitions/ken-price"> Ken Price <br/> 1 May – 25 July 2026 <br/> London </a>'
-        '<a class="link-discreet" href="/exhibitions/akashi"> Kelly Akashi: <br/> Heirloom <br/> New York </a>'
-    )
+    page = "".join([
+        _lisson_card("yu-hong-lisson-new-york", "Yu Hong: Field of Asura", "New York 4 November 2026 – 9 January 2027 Explore"),
+        _lisson_card("dana-awartani-lisson-london", "Dana Awartani", "London 19 November 2026 – 13 February 2027 Explore"),
+        _lisson_card("tony-bechara", "Tony Bechara", "museum The Parrish Art Museum, New York 27 November 2026 – 1 February 2027 museum"),
+        _lisson_card("leonilson", "Leonilson", "New York 15 September – 24 October 2026 Explore"),
+    ])
     items = L.parse_lisson(_SRC, page)
-    titles = [i["title"] for i in items]
-    assert titles == ["Hiroshi Sugimoto"]            # NY + future; London excluded; dateless excluded
-    assert items[0]["venue_or_platform"] == "Lisson Gallery" and items[0]["date_start"] == "2026-09-01"
+    assert [i["title"] for i in items] == ["Yu Hong: Field of Asura"]   # London, museum loan, already open: out
+    it = items[0]
+    assert it["date_start"] == "2026-11-04" and it["date_end"] == "2027-01-09"
+    assert it["date_label"] == "4 November 2026 – 9 January 2027" and it["venue_or_platform"] == "Lisson Gallery"
 
 
 def test_tanya_bonakdar_ny_future(monkeypatch):

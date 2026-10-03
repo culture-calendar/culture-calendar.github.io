@@ -68,28 +68,31 @@ _ABT_SRC = Source(id="abt", name="American Ballet Theatre", category="dance", ty
 
 
 def test_abt_groups_by_ballet_and_cleans_titles(monkeypatch):
+    # parse_abt reads every season page itself (whichever season just ended is empty), and the
+    # site menu names both venues on every page, so the season's venue is the one named more.
     monkeypatch.setattr(L, "today", lambda: dt.date(2026, 6, 1))
     monkeypatch.setattr(L, "end_date", lambda: dt.date(2027, 12, 31))
-
-    def fake_fetch(url, *a, **k):
-        if "/events/swan-lake/" in url:
-            return '<meta property="og:title" content="Swan Lake | American Ballet Theatre (ABT) - Metropolitan Opera House">'
-        if "/events/onegin/" in url:
-            return '<meta property="og:title" content="Onegin - Met - American Ballet Theatre">'
-        return ""  # supplemental season pages: empty
-    monkeypatch.setattr(L, "fetch_text", fake_fetch)
-    page = (
-        "Metropolitan Opera House"
-        '<a href="/event_dates/swan-lake-2026-06-19-730pm/">x</a>'
-        '<a href="/event_dates/swan-lake-2026-07-18-200pm/">x</a>'   # range -> opening is earliest
-        '<a href="/event_dates/onegin-2026-06-23-730pm/">x</a>'
-        '<a href="/event_dates/giselle-2025-01-01-730pm/">past</a>'  # opening past -> dropped
-    )
-    items = sorted(L.parse_abt(_ABT_SRC, page), key=lambda i: i["date_start"])
-    assert [i["title"] for i in items] == ["Swan Lake", "Onegin"]   # dash/pipe junk stripped; past dropped
-    swan = items[0]
+    menu = "<nav>Metropolitan Opera House David H. Koch Theater</nav>"
+    summer = (menu + "Summer Season Metropolitan Opera House"
+              '<a href="/event_dates/swan-lake-2026-06-19-730pm/">x</a>'
+              '<a href="/event_dates/swan-lake-2026-07-18-200pm/">x</a>'   # range -> opening is earliest
+              '<a href="/event_dates/onegin-2026-06-23-730pm/">x</a>'
+              '<a href="/event_dates/giselle-2025-01-01-730pm/">past</a>')  # opening past -> dropped
+    fall = (menu + "Fall Season David H. Koch Theater"
+            '<a href="/event_dates/paquita-2026-10-21-730pm/">x</a>')
+    pages = {
+        "/performances/summer-season/": summer, "/performances/fall-season/": fall,
+        "/events/swan-lake/": '<meta property="og:title" content="Swan Lake | American Ballet Theatre (ABT) - Metropolitan Opera House">',
+        "/events/onegin/": '<meta property="og:title" content="Onegin - Met - American Ballet Theatre">',
+        "/events/paquita/": '<meta property="og:title" content="Paquita - Koch - American Ballet Theatre">',
+    }
+    monkeypatch.setattr(L, "fetch_text", lambda url, *a, **k: next((v for k2, v in pages.items() if url.endswith(k2)), ""))
+    items = sorted(L.parse_abt(_ABT_SRC, "<index>"), key=lambda i: i["date_start"])
+    assert [i["title"] for i in items] == ["Swan Lake", "Onegin", "Paquita"]
+    swan, paquita = items[0], items[2]
     assert swan["date_start"] == "2026-06-19" and "–" in swan["date_label"]
     assert swan["venue_or_platform"] == "Metropolitan Opera House" and swan["category"] == "ballet"
+    assert paquita["venue_or_platform"] == "David H. Koch Theater"      # not fooled by the menu
 
 
 _SFTC_SRC = Source(id="summer_city", name="Summer for the City", category="music", type="html", url="x")

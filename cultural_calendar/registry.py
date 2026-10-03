@@ -39,7 +39,7 @@ _DEDICATED: dict[str, tuple[str, object, bool]] = {
     "joyce": ("html", legacy.import_joyce, False),
     "merkin": ("html", legacy.import_merkin, False),
     "alice_tully": ("html", legacy.import_alice_tully, False),
-    "jalc": ("html", legacy.import_jalc, False),
+    "jalc": ("json_api", legacy.import_jalc, False),
     "abt": ("html", legacy.import_abt, False),
     "summer_city": ("html", legacy.import_summer_city, False),
 }
