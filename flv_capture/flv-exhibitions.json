@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-10-03",
+  "capturedAt": "2026-10-04",
   "items": [
     {
       "title": "Gustave Fayet: Collector - Designer. Icons of Modern Art",
@@ -26,19 +26,6 @@
       "description": "Fondation Louis Vuitton, Paris",
       "importance_score": 15,
       "_misses": 0
-    },
-    {
-      "title": "Gustave Fayet, Collector - Designer. Icons of Modern Art",
-      "date_start": "2026-10-09",
-      "date_label": "Oct 9, 2026 – Mar 8, 2027",
-      "date_precision": "exact",
-      "venue_or_platform": "Fondation Louis Vuitton",
-      "city": "Paris",
-      "source_url": "https://www.fondationlouisvuitton.fr/en/events/gustave-fayet-collector-designer",
-      "external_id": "https://www.fondationlouisvuitton.fr/en/events/gustave-fayet-collector-designer",
-      "description": "Fondation Louis Vuitton, Paris",
-      "importance_score": 15,
-      "_misses": 1
     }
   ]
 }

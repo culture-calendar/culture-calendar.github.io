@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-10-03",
+  "capturedAt": "2026-10-04",
   "items": [
     {
       "title": "Wynton Marsalis Septet",
@@ -268,6 +268,20 @@
       "_misses": 0
     },
     {
+      "title": "Wynton Marsalis Quintet",
+      "category": "music",
+      "date_start": "2027-01-07",
+      "date_label": "Jan 7, 2027",
+      "date_precision": "exact",
+      "venue_or_platform": "Jazz at Lincoln Center",
+      "city": "New York",
+      "source_url": "https://jazz.org/concert/wynton-marsalis-quintet",
+      "external_id": "jalc:https://jazz.org/concert/wynton-marsalis-quintet",
+      "description": "Jazz at Lincoln Center (Rose Theater / The Appel Room)",
+      "importance_score": 15,
+      "_misses": 0
+    },
+    {
       "title": "Big Band Holidays The Jazz at Lincoln Center Orchestra",
       "category": "music",
       "date_start": "2026-12-15",
@@ -420,34 +434,6 @@
       "description": "Jazz at Lincoln Center (Rose Theater / The Appel Room)",
       "importance_score": 15,
       "_misses": 0
-    },
-    {
-      "title": "Unity Jazz Festival",
-      "category": "music",
-      "date_start": "2027-01-15",
-      "date_label": "Jan 15, 2027",
-      "date_precision": "exact",
-      "venue_or_platform": "Jazz at Lincoln Center",
-      "city": "New York",
-      "source_url": "https://jazz.org/concert/unity-jazz-festival",
-      "external_id": "jalc:https://jazz.org/concert/unity-jazz-festival",
-      "description": "Jazz at Lincoln Center (Rose Theater / The Appel Room)",
-      "importance_score": 15,
-      "_misses": 1
-    },
-    {
-      "title": "Wynton Marsalis Quintet",
-      "category": "music",
-      "date_start": "2027-01-07",
-      "date_label": "Jan 7, 2027",
-      "date_precision": "exact",
-      "venue_or_platform": "Jazz at Lincoln Center",
-      "city": "New York",
-      "source_url": "https://jazz.org/concert/wynton-marsalis-quintet",
-      "external_id": "jalc:https://jazz.org/concert/wynton-marsalis-quintet",
-      "description": "Jazz at Lincoln Center (Rose Theater / The Appel Room)",
-      "importance_score": 15,
-      "_misses": 1
     }
   ]
 }

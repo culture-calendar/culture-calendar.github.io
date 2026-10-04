@@ -1,21 +1,6 @@
 {
-  "capturedAt": "2026-10-03",
+  "capturedAt": "2026-10-04",
   "items": [
-    {
-      "title": "RESILIENCE: “Lost and Reclaimed Voices from the Holocaust” with Desirée Ruhstrat, Melissa Reardon, and Wendy Sutter",
-      "category": "music",
-      "date_start": "2026-10-03",
-      "date_end": null,
-      "date_label": "Oct 3, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Bargemusic",
-      "city": "New York",
-      "source_url": "https://www.bargemusic.org/concert/resilience-lost-and-reclaimed-voices-from-the-holocaust-with-desiree-ruhstrat-melissa-reardon-and-wendy-sutter/",
-      "external_id": "bargemusic:8040",
-      "description": "Bargemusic, Brooklyn",
-      "importance_score": 14,
-      "_misses": 0
-    },
     {
       "title": "Complete Beethoven Piano Sonatas with Conversation, Part 6: “Riding the Wave of Power and Fame”",
       "category": "music",
@@ -32,7 +17,7 @@
       "_misses": 0
     },
     {
-      "title": "“Happiness of Influence”: Mozart Quintets and Beethoven Opus 18 Quartets",
+      "title": "Solo violin, 2 violins, and violin/viola: selected works",
       "category": "music",
       "date_start": "2026-10-10",
       "date_end": null,
@@ -392,31 +377,16 @@
       "_misses": 0
     },
     {
-      "title": "Holiday Winter Here and Now Concert: ENSEMBLE DÉRIVE",
+      "title": "“Happiness of Influence”: Mozart Quintets and Beethoven Opus 18 Quartets",
       "category": "music",
-      "date_start": "2026-12-12",
+      "date_start": "2026-10-10",
       "date_end": null,
-      "date_label": "Dec 12, 2026",
+      "date_label": "Oct 10, 2026",
       "date_precision": "exact",
       "venue_or_platform": "Bargemusic",
       "city": "New York",
-      "source_url": "https://www.bargemusic.org/concert/winter-holiday-here-and-now-concert-ensemble-derive-2/",
-      "external_id": "bargemusic:7929",
-      "description": "Bargemusic, Brooklyn",
-      "importance_score": 14,
-      "_misses": 1
-    },
-    {
-      "title": "Holiday Winter Here and Now Concert: ENSEMBLE DÉRIVE",
-      "category": "music",
-      "date_start": "2026-12-13",
-      "date_end": null,
-      "date_label": "Dec 13, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Bargemusic",
-      "city": "New York",
-      "source_url": "https://www.bargemusic.org/concert/winter-holiday-here-and-now-concert-ensemble-derive/",
-      "external_id": "bargemusic:7897",
+      "source_url": "https://www.bargemusic.org/concert/a-happiness-of-influence-mozart-quintets-and-beethoven-opus-18-quartets/",
+      "external_id": "bargemusic:8045",
       "description": "Bargemusic, Brooklyn",
       "importance_score": 14,
       "_misses": 1
