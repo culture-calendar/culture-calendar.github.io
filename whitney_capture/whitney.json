@@ -1,18 +1,6 @@
 {
-  "capturedAt": "2026-10-04",
+  "capturedAt": "2026-10-11",
   "items": [
-    {
-      "title": "Roy Lichtenstein: Like New",
-      "venue_or_platform": "Whitney Museum",
-      "city": "New York",
-      "source_url": "https://whitney.org/exhibitions/lichtenstein",
-      "external_id": "https://whitney.org/exhibitions/lichtenstein",
-      "upcoming": true,
-      "date_start": "2026-10-11",
-      "date_end": "2027-05-10",
-      "date_label": "Oct 11, 2026",
-      "date_precision": "exact"
-    },
     {
       "title": "Charles Burchfield: Elemental",
       "venue_or_platform": "Whitney Museum",

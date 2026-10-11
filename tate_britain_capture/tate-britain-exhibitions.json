@@ -1,19 +1,6 @@
 {
-  "capturedAt": "2026-10-04",
+  "capturedAt": "2026-10-11",
   "items": [
-    {
-      "title": "The 90s: Art and Fashion",
-      "date_start": "2026-10-08",
-      "date_label": "8 Oct 2026 – 14 Feb 2027",
-      "date_precision": "exact",
-      "venue_or_platform": "Tate Britain",
-      "city": "London",
-      "source_url": "https://www.tate.org.uk/whats-on/tate-britain/the-90s",
-      "external_id": "https://www.tate.org.uk/whats-on/tate-britain/the-90s",
-      "description": "Tate Britain, London",
-      "importance_score": 14,
-      "_misses": 0
-    },
     {
       "title": "Vanessa Bell & Duncan Grant: Inside Bloomsbury",
       "date_start": "2026-11-12",
@@ -80,14 +67,27 @@
       "_misses": 0
     },
     {
-      "title": "Reissuing Alexey Brodovitch’s Ballet: Nina Holland in conversation with Katy Wan",
-      "date_start": "2026-10-09",
-      "date_label": "9 Oct 2026",
+      "title": "Show and Share: Avant-Garde Ambassadors",
+      "date_start": "2026-10-17",
+      "date_label": "17 Oct 2026",
       "date_precision": "exact",
       "venue_or_platform": "Tate Britain",
       "city": "London",
-      "source_url": "https://www.tate.org.uk/whats-on/tate-britain/nina-holland-in-conversation-with-katy-wan",
-      "external_id": "https://www.tate.org.uk/whats-on/tate-britain/nina-holland-in-conversation-with-katy-wan",
+      "source_url": "https://www.tate.org.uk/whats-on/tate-britain/show-and-share-avant-garde-ambassadors",
+      "external_id": "https://www.tate.org.uk/whats-on/tate-britain/show-and-share-avant-garde-ambassadors",
+      "description": "Tate Britain, London",
+      "importance_score": 14,
+      "_misses": 0
+    },
+    {
+      "title": "Tate Britain Architecture Tour",
+      "date_start": "2026-10-17",
+      "date_label": "17 Oct 2026",
+      "date_precision": "exact",
+      "venue_or_platform": "Tate Britain",
+      "city": "London",
+      "source_url": "https://www.tate.org.uk/whats-on/tate-britain/tate-britain-architecture-tour",
+      "external_id": "https://www.tate.org.uk/whats-on/tate-britain/tate-britain-architecture-tour",
       "description": "Tate Britain, London",
       "importance_score": 14,
       "_misses": 0

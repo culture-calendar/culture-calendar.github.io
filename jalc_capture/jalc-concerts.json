@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-10-04",
+  "capturedAt": "2026-10-11",
   "items": [
     {
       "title": "Wynton Marsalis Septet",
@@ -268,20 +268,6 @@
       "_misses": 0
     },
     {
-      "title": "Wynton Marsalis Quintet",
-      "category": "music",
-      "date_start": "2027-01-07",
-      "date_label": "Jan 7, 2027",
-      "date_precision": "exact",
-      "venue_or_platform": "Jazz at Lincoln Center",
-      "city": "New York",
-      "source_url": "https://jazz.org/concert/wynton-marsalis-quintet",
-      "external_id": "jalc:https://jazz.org/concert/wynton-marsalis-quintet",
-      "description": "Jazz at Lincoln Center (Rose Theater / The Appel Room)",
-      "importance_score": 15,
-      "_misses": 0
-    },
-    {
       "title": "Big Band Holidays The Jazz at Lincoln Center Orchestra",
       "category": "music",
       "date_start": "2026-12-15",
@@ -408,32 +394,18 @@
       "_misses": 0
     },
     {
-      "title": "Wycliffe Gordon: Welcome to Georgia Town",
+      "title": "Wynton Marsalis Quintet",
       "category": "music",
-      "date_start": "2026-10-09",
-      "date_label": "Oct 9, 2026",
+      "date_start": "2027-01-07",
+      "date_label": "Jan 7, 2027",
       "date_precision": "exact",
       "venue_or_platform": "Jazz at Lincoln Center",
       "city": "New York",
-      "source_url": "https://jazz.org/concert/wycliffe-gordon-welcome-to-georgia-town",
-      "external_id": "jalc:https://jazz.org/concert/wycliffe-gordon-welcome-to-georgia-town",
+      "source_url": "https://jazz.org/concert/wynton-marsalis-quintet",
+      "external_id": "jalc:https://jazz.org/concert/wynton-marsalis-quintet",
       "description": "Jazz at Lincoln Center (Rose Theater / The Appel Room)",
       "importance_score": 15,
-      "_misses": 0
-    },
-    {
-      "title": "Steve Miller",
-      "category": "music",
-      "date_start": "2026-10-09",
-      "date_label": "Oct 9, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Jazz at Lincoln Center",
-      "city": "New York",
-      "source_url": "https://jazz.org/concert/steve-miller",
-      "external_id": "jalc:https://jazz.org/concert/steve-miller",
-      "description": "Jazz at Lincoln Center (Rose Theater / The Appel Room)",
-      "importance_score": 15,
-      "_misses": 0
+      "_misses": 1
     }
   ]
 }

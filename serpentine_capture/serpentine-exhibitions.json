@@ -1,18 +1,6 @@
 {
-  "capturedAt": "2026-10-04",
+  "capturedAt": "2026-10-11",
   "items": [
-    {
-      "title": "Justin Caguiat: Change Ringing",
-      "date_start": "2026-10-08",
-      "date_label": "8 October 2026 – 10 January 2027 Free",
-      "date_precision": "exact",
-      "venue_or_platform": "Serpentine South Gallery",
-      "city": "London",
-      "source_url": "https://www.serpentinegalleries.org/whats-on/justin-caguiat-change-ringing/",
-      "external_id": "https://www.serpentinegalleries.org/whats-on/justin-caguiat-change-ringing/",
-      "description": "Serpentine Galleries, London",
-      "importance_score": 14
-    },
     {
       "title": "Saturday Talks: Chris Bayley on Amar Kanwar",
       "date_start": "2026-10-31",
@@ -26,14 +14,14 @@
       "importance_score": 14
     },
     {
-      "title": "Exhibition | Justin Caguiat: Change Ringing",
-      "date_start": "2026-10-08",
-      "date_label": "8 October 2026 –10 January 2027",
+      "title": "Saturday Talks: Kit Gurnos on Amar Kanwar",
+      "date_start": "2027-01-16",
+      "date_label": "Saturday 16 January 2027, 12:30pm Free",
       "date_precision": "exact",
-      "venue_or_platform": "Serpentine",
+      "venue_or_platform": "Serpentine North Gallery",
       "city": "London",
-      "source_url": "https://www.serpentinegalleries.org/about/press/exhibition-justin-caguiat-change-ringing/",
-      "external_id": "serpentine-press:exhibition-justin-caguiat-change-ringing",
+      "source_url": "https://www.serpentinegalleries.org/whats-on/saturday-talks-kit-gurnos-on-amar-kanwar/",
+      "external_id": "https://www.serpentinegalleries.org/whats-on/saturday-talks-kit-gurnos-on-amar-kanwar/",
       "description": "Serpentine Galleries, London",
       "importance_score": 14
     }
