@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-10-11",
+  "capturedAt": "2026-10-18",
   "items": [
     {
       "title": "Saturday Talks: Chris Bayley on Amar Kanwar",
@@ -22,6 +22,66 @@
       "city": "London",
       "source_url": "https://www.serpentinegalleries.org/whats-on/saturday-talks-kit-gurnos-on-amar-kanwar/",
       "external_id": "https://www.serpentinegalleries.org/whats-on/saturday-talks-kit-gurnos-on-amar-kanwar/",
+      "description": "Serpentine Galleries, London",
+      "importance_score": 14
+    },
+    {
+      "title": "Pierre Alechinksy",
+      "date_start": "2027-02-11",
+      "date_label": "11 February - 18 April 2027 Free",
+      "date_precision": "exact",
+      "venue_or_platform": "Serpentine South Gallery",
+      "city": "London",
+      "source_url": "https://www.serpentinegalleries.org/whats-on/pierre-alechinksy/",
+      "external_id": "https://www.serpentinegalleries.org/whats-on/pierre-alechinksy/",
+      "description": "Serpentine Galleries, London",
+      "importance_score": 14
+    },
+    {
+      "title": "Matt Copson",
+      "date_start": "2027-03-16",
+      "date_label": "16 March - 22 August 2027 Free",
+      "date_precision": "exact",
+      "venue_or_platform": "Serpentine North Gallery",
+      "city": "London",
+      "source_url": "https://www.serpentinegalleries.org/whats-on/matt-copson/",
+      "external_id": "https://www.serpentinegalleries.org/whats-on/matt-copson/",
+      "description": "Serpentine Galleries, London",
+      "importance_score": 14
+    },
+    {
+      "title": "Adrian Piper, I'm This Space: Selected Works 1967 - 2027",
+      "date_start": "2027-05-26",
+      "date_label": "26 May - 5 September 2027 Free",
+      "date_precision": "exact",
+      "venue_or_platform": "Serpentine South Gallery",
+      "city": "London",
+      "source_url": "https://www.serpentinegalleries.org/whats-on/adrian-piper-im-this-space-selected-works-1967-2027/",
+      "external_id": "https://www.serpentinegalleries.org/whats-on/adrian-piper-im-this-space-selected-works-1967-2027/",
+      "description": "Serpentine Galleries, London",
+      "importance_score": 14
+    },
+    {
+      "title": "Serpentine x The Flag Foundation Prize: Gozo Yoshimasu",
+      "date_start": "2027-09-24",
+      "date_label": "24 September 2027 - January 2028 Free",
+      "date_precision": "exact",
+      "venue_or_platform": "Serpentine North Gallery",
+      "city": "London",
+      "source_url": "https://www.serpentinegalleries.org/whats-on/serpentine-x-the-flag-foundation-prize-gozo-yoshimasu/",
+      "external_id": "https://www.serpentinegalleries.org/whats-on/serpentine-x-the-flag-foundation-prize-gozo-yoshimasu/",
+      "description": "Serpentine Galleries, London",
+      "importance_score": 14
+    },
+    {
+      "title": "Lisa Brice",
+      "date_start": "2027-10-08",
+      "date_label": "8 October 2027 - 6 February 2028 Free",
+      "date_precision": "exact",
+      "venue_or_platform": "Serpentine South Gallery",
+      "city": "London",
+      "source_url": "https://www.serpentinegalleries.org/whats-on/lisa-brice/",
+      "external_id": "https://www.serpentinegalleries.org/whats-on/lisa-brice/",
       "description": "Serpentine Galleries, London",
       "importance_score": 14
     }

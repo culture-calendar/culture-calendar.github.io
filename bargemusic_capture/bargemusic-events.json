@@ -1,36 +1,6 @@
 {
-  "capturedAt": "2026-10-11",
+  "capturedAt": "2026-10-18",
   "items": [
-    {
-      "title": "2PM: Beethoven: Contrasting Trios, with Mark Peskanov, Samuel Magill, and Beth Levin",
-      "category": "music",
-      "date_start": "2026-10-11",
-      "date_end": null,
-      "date_label": "Oct 11, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Bargemusic",
-      "city": "New York",
-      "source_url": "https://www.bargemusic.org/concert/beethoven-contrasting-trios-with-mark-peskanov-samuel-magill-and-beth-levin/",
-      "external_id": "bargemusic:7938",
-      "description": "Bargemusic, Brooklyn",
-      "importance_score": 14,
-      "_misses": 0
-    },
-    {
-      "title": "Harlem Chamber Players: Turina, Dvořak, D’Rivera",
-      "category": "music",
-      "date_start": "2026-10-17",
-      "date_end": null,
-      "date_label": "Oct 17, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Bargemusic",
-      "city": "New York",
-      "source_url": "https://www.bargemusic.org/concert/harlem-chamber-players-montgomery-marsalis-and-more/",
-      "external_id": "bargemusic:8052",
-      "description": "Bargemusic, Brooklyn",
-      "importance_score": 14,
-      "_misses": 0
-    },
     {
       "title": "“From Paris to Vermont: A Musical Lineage 75 Years in the Making” with Deborah Buck and Orli Shaham",
       "category": "music",
@@ -47,7 +17,7 @@
       "_misses": 0
     },
     {
-      "title": "Shadow and Light: Piano Trios of Beethoven and Brahms",
+      "title": "Bohemian Rhapsody, Viennese Grace: Romantic Piano Trios",
       "category": "music",
       "date_start": "2026-10-24",
       "date_end": null,
@@ -62,7 +32,7 @@
       "_misses": 0
     },
     {
-      "title": "Shadow and Light: Piano Trios of Beethoven and Brahms",
+      "title": "Bohemian Rhapsody, Viennese Grace: Romantic Piano Trios",
       "category": "music",
       "date_start": "2026-10-25",
       "date_end": null,
@@ -137,7 +107,7 @@
       "_misses": 0
     },
     {
-      "title": "Vienna Synergy: Quintets and Quartets of Mozart and Beethoven",
+      "title": "Bach, Bartok, LeClair and more for 2 violins, violin/viola, and solo violin",
       "category": "music",
       "date_start": "2026-11-14",
       "date_end": null,
@@ -345,6 +315,51 @@
       "description": "Bargemusic, Brooklyn",
       "importance_score": 14,
       "_misses": 0
+    },
+    {
+      "title": "Shadow and Light: Piano Trios of Beethoven and Brahms",
+      "category": "music",
+      "date_start": "2026-10-24",
+      "date_end": null,
+      "date_label": "Oct 24, 2026",
+      "date_precision": "exact",
+      "venue_or_platform": "Bargemusic",
+      "city": "New York",
+      "source_url": "https://www.bargemusic.org/concert/beethoven-and-brahms-trios-of-titans/",
+      "external_id": "bargemusic:8059",
+      "description": "Bargemusic, Brooklyn",
+      "importance_score": 14,
+      "_misses": 1
+    },
+    {
+      "title": "Shadow and Light: Piano Trios of Beethoven and Brahms",
+      "category": "music",
+      "date_start": "2026-10-25",
+      "date_end": null,
+      "date_label": "Oct 25, 2026",
+      "date_precision": "exact",
+      "venue_or_platform": "Bargemusic",
+      "city": "New York",
+      "source_url": "https://www.bargemusic.org/concert/shadow-and-light-piano-trios-of-beethoven-and-brahms/",
+      "external_id": "bargemusic:8062",
+      "description": "Bargemusic, Brooklyn",
+      "importance_score": 14,
+      "_misses": 1
+    },
+    {
+      "title": "Vienna Synergy: Quintets and Quartets of Mozart and Beethoven",
+      "category": "music",
+      "date_start": "2026-11-14",
+      "date_end": null,
+      "date_label": "Nov 14, 2026",
+      "date_precision": "exact",
+      "venue_or_platform": "Bargemusic",
+      "city": "New York",
+      "source_url": "https://www.bargemusic.org/concert/vienna-synergy-mozart-quintets-and-beethoven-quartets/",
+      "external_id": "bargemusic:8078",
+      "description": "Bargemusic, Brooklyn",
+      "importance_score": 14,
+      "_misses": 1
     }
   ]
 }

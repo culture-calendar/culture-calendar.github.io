@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-10-11",
+  "capturedAt": "2026-10-18",
   "items": [
     {
       "title": "Designing the Gilded Age: Drawings from the Studios of Louis C. Tiffany",
@@ -8,6 +8,26 @@
       "date_precision": "exact_or_range",
       "source_url": "https://www.metmuseum.org/exhibitions/designing-the-gilded-age-drawings-from-the-studios-of-louis-c-tiffany",
       "external_id": "https://www.metmuseum.org/exhibitions/designing-the-gilded-age-drawings-from-the-studios-of-louis-c-tiffany",
+      "venue_or_platform": "The Met",
+      "city": "New York"
+    },
+    {
+      "title": "Tapa: Art of the Gift in Polynesia",
+      "date_start": "2026-11-02",
+      "date_label": "November 2, 2026–December 12, 2027",
+      "date_precision": "exact_or_range",
+      "source_url": "https://www.metmuseum.org/exhibitions/tapa-art-of-the-gift-in-polynesia",
+      "external_id": "https://www.metmuseum.org/exhibitions/tapa-art-of-the-gift-in-polynesia",
+      "venue_or_platform": "The Met",
+      "city": "New York"
+    },
+    {
+      "title": "A Long Shadow: Postwar Japan Through the Lens",
+      "date_start": "2026-11-12",
+      "date_label": "November 12, 2026–May 2, 2027",
+      "date_precision": "exact_or_range",
+      "source_url": "https://www.metmuseum.org/exhibitions/a-long-shadow-postwar-japan-through-the-lens",
+      "external_id": "https://www.metmuseum.org/exhibitions/a-long-shadow-postwar-japan-through-the-lens",
       "venue_or_platform": "The Met",
       "city": "New York"
     },

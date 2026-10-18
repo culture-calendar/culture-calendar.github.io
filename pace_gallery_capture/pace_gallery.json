@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-10-11",
+  "capturedAt": "2026-10-18",
   "items": [
     {
       "title": "Li Hei Di: the year of mud",
@@ -35,14 +35,25 @@
       "date_precision": "exact"
     },
     {
-      "title": "Kylie Manning: The Mudlarkers",
+      "title": "Rothko/Gottlieb: The Surrealist Years",
       "venue_or_platform": "Pace Gallery",
       "city": "New York",
-      "source_url": "https://www.pacegallery.com/exhibitions/kylie-manning-the-mudlarkers",
-      "external_id": "https://www.pacegallery.com/exhibitions/kylie-manning-the-mudlarkers",
+      "source_url": "https://www.pacegallery.com/exhibitions/rothko-gottlieb-surrealist-years",
+      "external_id": "https://www.pacegallery.com/exhibitions/rothko-gottlieb-surrealist-years",
       "upcoming": false,
-      "date_start": "2026-10-13",
-      "date_label": "Oct 13 – Nov 14, 2026",
+      "date_start": "2026-11-13",
+      "date_label": "Nov 13, 2026 – Jan 9, 2027",
+      "date_precision": "exact"
+    },
+    {
+      "title": "Alicja Kwade: La Pêche miraculeuse",
+      "venue_or_platform": "Pace Gallery",
+      "city": "New York",
+      "source_url": "https://www.pacegallery.com/exhibitions/alicja-kwade-la-peche-miraculeuse",
+      "external_id": "https://www.pacegallery.com/exhibitions/alicja-kwade-la-peche-miraculeuse",
+      "upcoming": false,
+      "date_start": "2026-10-29",
+      "date_label": "Oct 29 – Dec 25, 2026",
       "date_precision": "exact"
     },
     {

@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-10-11",
+  "capturedAt": "2026-10-18",
   "items": [
     {
       "title": "Vanessa Bell & Duncan Grant: Inside Bloomsbury",
@@ -16,8 +16,8 @@
     },
     {
       "title": "Sonia Boyce",
-      "date_start": "2027-03-24",
-      "date_label": "24 Mar – 22 Aug 2027",
+      "date_start": "2027-03-26",
+      "date_label": "26 Mar – 22 Aug 2027",
       "date_precision": "exact",
       "venue_or_platform": "Tate Britain",
       "city": "London",
@@ -62,32 +62,6 @@
       "city": "London",
       "source_url": "https://www.tate.org.uk/whats-on/tate-britain/the-tudors",
       "external_id": "https://www.tate.org.uk/whats-on/tate-britain/the-tudors",
-      "description": "Tate Britain, London",
-      "importance_score": 14,
-      "_misses": 0
-    },
-    {
-      "title": "Show and Share: Avant-Garde Ambassadors",
-      "date_start": "2026-10-17",
-      "date_label": "17 Oct 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Tate Britain",
-      "city": "London",
-      "source_url": "https://www.tate.org.uk/whats-on/tate-britain/show-and-share-avant-garde-ambassadors",
-      "external_id": "https://www.tate.org.uk/whats-on/tate-britain/show-and-share-avant-garde-ambassadors",
-      "description": "Tate Britain, London",
-      "importance_score": 14,
-      "_misses": 0
-    },
-    {
-      "title": "Tate Britain Architecture Tour",
-      "date_start": "2026-10-17",
-      "date_label": "17 Oct 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Tate Britain",
-      "city": "London",
-      "source_url": "https://www.tate.org.uk/whats-on/tate-britain/tate-britain-architecture-tour",
-      "external_id": "https://www.tate.org.uk/whats-on/tate-britain/tate-britain-architecture-tour",
       "description": "Tate Britain, London",
       "importance_score": 14,
       "_misses": 0

@@ -1,62 +1,6 @@
 {
-  "capturedAt": "2026-10-04",
+  "capturedAt": "2026-10-18",
   "items": [
-    {
-      "title": "Orli Shaham: In Clara’s Hands",
-      "category": "music",
-      "date_start": "2026-10-06",
-      "date_label": "Oct 6, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Merkin Hall",
-      "city": "New York",
-      "source_url": "https://www.kaufmanmusiccenter.org/mch/event/orli-shaham-in-claras-hands",
-      "external_id": "merkin:/mch/event/orli-shaham-in-claras-hands",
-      "description": "KAUFMAN MUSIC CENTER PRESENTS · Merkin Hall, Kaufman Music Center",
-      "importance_score": 14,
-      "_misses": 0
-    },
-    {
-      "title": "Veronica Roth “The Sixth Faction” Book Launch",
-      "category": "music",
-      "date_start": "2026-10-07",
-      "date_label": "Oct 7, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Merkin Hall",
-      "city": "New York",
-      "source_url": "https://www.kaufmanmusiccenter.org/mch/event/veronica-roth-the-sixth-faction-book-launch",
-      "external_id": "merkin:/mch/event/veronica-roth-the-sixth-faction-book-launch",
-      "description": "Kaufman Music Center & The Strand co-present · Merkin Hall, Kaufman Music Center",
-      "importance_score": 14,
-      "_misses": 0
-    },
-    {
-      "title": "The Anthology of Art Song by Black Composers",
-      "category": "music",
-      "date_start": "2026-10-16",
-      "date_label": "Oct 16, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Merkin Hall",
-      "city": "New York",
-      "source_url": "https://www.kaufmanmusiccenter.org/mch/event/the-anthology-of-art-song-by-black-composers",
-      "external_id": "merkin:/mch/event/the-anthology-of-art-song-by-black-composers",
-      "description": "Kaufman Music Center & University of Rochester’s Eastman School of Music co-present · Merkin Hall, Kaufman Music Center",
-      "importance_score": 14,
-      "_misses": 0
-    },
-    {
-      "title": "PUBLIQuartet",
-      "category": "music",
-      "date_start": "2026-10-17",
-      "date_label": "Oct 17, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Merkin Hall",
-      "city": "New York",
-      "source_url": "https://www.kaufmanmusiccenter.org/mch/event/publiquartet",
-      "external_id": "merkin:/mch/event/publiquartet",
-      "description": "Kaufman Music Center & the John J. Cali School of Music co-present · Merkin Hall, Kaufman Music Center",
-      "importance_score": 14,
-      "_misses": 0
-    },
     {
       "title": "What Makes It Great? Tchaikovsky’s Violin Concerto",
       "category": "music",
