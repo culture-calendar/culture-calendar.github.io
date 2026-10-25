@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-10-18",
+  "capturedAt": "2026-10-25",
   "items": [
     {
       "title": "Wynton Marsalis Septet",
@@ -364,34 +364,6 @@
       "description": "Jazz at Lincoln Center (Rose Theater / The Appel Room)",
       "importance_score": 15,
       "_misses": 0
-    },
-    {
-      "title": "From Cuba to the Crescent City The Jazz at Lincoln Center Orchestra with Wynton Marsalis",
-      "category": "music",
-      "date_start": "2026-10-23",
-      "date_label": "Oct 23, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Jazz at Lincoln Center",
-      "city": "New York",
-      "source_url": "https://jazz.org/concert/from-cuba-to-the-crescent-city-the-jazz-at-lincoln-center-orchestra-with-wynton-marsalis",
-      "external_id": "jalc:https://jazz.org/concert/from-cuba-to-the-crescent-city-the-jazz-at-lincoln-center-orchestra-with-wynton-marsalis",
-      "description": "Jazz at Lincoln Center (Rose Theater / The Appel Room)",
-      "importance_score": 15,
-      "_misses": 0
-    },
-    {
-      "title": "Big Band Holidays The Jazz at Lincoln Center Orchestra",
-      "category": "music",
-      "date_start": "2026-12-15",
-      "date_label": "Dec 15, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Jazz at Lincoln Center",
-      "city": "New York",
-      "source_url": "https://jazz.org/concert/big-band-holidays-the-jazz-at-lincoln-center-orchestra",
-      "external_id": "jalc:https://jazz.org/concert/big-band-holidays-the-jazz-at-lincoln-center-orchestra",
-      "description": "Jazz at Lincoln Center (Rose Theater / The Appel Room)",
-      "importance_score": 15,
-      "_misses": 1
     }
   ]
 }

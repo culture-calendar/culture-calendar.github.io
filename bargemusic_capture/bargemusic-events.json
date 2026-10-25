@@ -1,36 +1,6 @@
 {
-  "capturedAt": "2026-10-18",
+  "capturedAt": "2026-10-25",
   "items": [
-    {
-      "title": "“From Paris to Vermont: A Musical Lineage 75 Years in the Making” with Deborah Buck and Orli Shaham",
-      "category": "music",
-      "date_start": "2026-10-18",
-      "date_end": null,
-      "date_label": "Oct 18, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Bargemusic",
-      "city": "New York",
-      "source_url": "https://www.bargemusic.org/concert/from-paris-to-vermont-a-musical-lineage-75-years-in-the-making-with-deborah-buck-and-orli-shaham/",
-      "external_id": "bargemusic:8055",
-      "description": "Bargemusic, Brooklyn",
-      "importance_score": 14,
-      "_misses": 0
-    },
-    {
-      "title": "Bohemian Rhapsody, Viennese Grace: Romantic Piano Trios",
-      "category": "music",
-      "date_start": "2026-10-24",
-      "date_end": null,
-      "date_label": "Oct 24, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Bargemusic",
-      "city": "New York",
-      "source_url": "https://www.bargemusic.org/concert/beethoven-and-brahms-trios-of-titans/",
-      "external_id": "bargemusic:8059",
-      "description": "Bargemusic, Brooklyn",
-      "importance_score": 14,
-      "_misses": 0
-    },
     {
       "title": "Bohemian Rhapsody, Viennese Grace: Romantic Piano Trios",
       "category": "music",
@@ -315,51 +285,6 @@
       "description": "Bargemusic, Brooklyn",
       "importance_score": 14,
       "_misses": 0
-    },
-    {
-      "title": "Shadow and Light: Piano Trios of Beethoven and Brahms",
-      "category": "music",
-      "date_start": "2026-10-24",
-      "date_end": null,
-      "date_label": "Oct 24, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Bargemusic",
-      "city": "New York",
-      "source_url": "https://www.bargemusic.org/concert/beethoven-and-brahms-trios-of-titans/",
-      "external_id": "bargemusic:8059",
-      "description": "Bargemusic, Brooklyn",
-      "importance_score": 14,
-      "_misses": 1
-    },
-    {
-      "title": "Shadow and Light: Piano Trios of Beethoven and Brahms",
-      "category": "music",
-      "date_start": "2026-10-25",
-      "date_end": null,
-      "date_label": "Oct 25, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Bargemusic",
-      "city": "New York",
-      "source_url": "https://www.bargemusic.org/concert/shadow-and-light-piano-trios-of-beethoven-and-brahms/",
-      "external_id": "bargemusic:8062",
-      "description": "Bargemusic, Brooklyn",
-      "importance_score": 14,
-      "_misses": 1
-    },
-    {
-      "title": "Vienna Synergy: Quintets and Quartets of Mozart and Beethoven",
-      "category": "music",
-      "date_start": "2026-11-14",
-      "date_end": null,
-      "date_label": "Nov 14, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Bargemusic",
-      "city": "New York",
-      "source_url": "https://www.bargemusic.org/concert/vienna-synergy-mozart-quintets-and-beethoven-quartets/",
-      "external_id": "bargemusic:8078",
-      "description": "Bargemusic, Brooklyn",
-      "importance_score": 14,
-      "_misses": 1
     }
   ]
 }

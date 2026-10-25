@@ -1,48 +1,6 @@
 {
-  "capturedAt": "2026-10-18",
+  "capturedAt": "2026-10-25",
   "items": [
-    {
-      "title": "What Makes It Great? Tchaikovsky’s Violin Concerto",
-      "category": "music",
-      "date_start": "2026-10-19",
-      "date_label": "Oct 19, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Merkin Hall",
-      "city": "New York",
-      "source_url": "https://www.kaufmanmusiccenter.org/mch/event/tchaikovskys-violin-concerto",
-      "external_id": "merkin:/mch/event/tchaikovskys-violin-concerto",
-      "description": "KAUFMAN MUSIC CENTER PRESENTS · Merkin Hall, Kaufman Music Center",
-      "importance_score": 14,
-      "_misses": 0
-    },
-    {
-      "title": "New York Festival of Song: First-Name Basis",
-      "category": "music",
-      "date_start": "2026-10-20",
-      "date_label": "Oct 20, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Merkin Hall",
-      "city": "New York",
-      "source_url": "https://www.kaufmanmusiccenter.org/mch/event/new-york-festival-of-song-first-name-basis",
-      "external_id": "merkin:/mch/event/new-york-festival-of-song-first-name-basis",
-      "description": "Kaufman Music Center & NYFOS Co-Present · Merkin Hall, Kaufman Music Center",
-      "importance_score": 14,
-      "_misses": 0
-    },
-    {
-      "title": "Evren Ozel, piano & Joshua Brown, violin",
-      "category": "music",
-      "date_start": "2026-10-22",
-      "date_label": "Oct 22, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Merkin Hall",
-      "city": "New York",
-      "source_url": "https://www.kaufmanmusiccenter.org/mch/event/evren-ozel-piano-joshua-brown-violin",
-      "external_id": "merkin:/mch/event/evren-ozel-piano-joshua-brown-violin",
-      "description": "Kaufman Music Center & Concert artists guild co-present · Merkin Hall, Kaufman Music Center",
-      "importance_score": 14,
-      "_misses": 0
-    },
     {
       "title": "Broadway Close Up: William Finn",
       "category": "music",
