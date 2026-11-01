@@ -1,18 +1,6 @@
 {
-  "capturedAt": "2026-10-25",
+  "capturedAt": "2026-11-01",
   "items": [
-    {
-      "title": "Saturday Talks: Chris Bayley on Amar Kanwar",
-      "date_start": "2026-10-31",
-      "date_label": "Saturday 31 October 2026, 12:30pm Free",
-      "date_precision": "exact",
-      "venue_or_platform": "Serpentine North Gallery",
-      "city": "London",
-      "source_url": "https://www.serpentinegalleries.org/whats-on/saturday-talks-chris-bayley-on-amar-kanwar/",
-      "external_id": "https://www.serpentinegalleries.org/whats-on/saturday-talks-chris-bayley-on-amar-kanwar/",
-      "description": "Serpentine Galleries, London",
-      "importance_score": 14
-    },
     {
       "title": "Saturday Talks: Kit Gurnos on Amar Kanwar",
       "date_start": "2027-01-16",
@@ -26,7 +14,7 @@
       "importance_score": 14
     },
     {
-      "title": "Pierre Alechinksy",
+      "title": "Pierre Alechinsky",
       "date_start": "2027-02-11",
       "date_label": "11 February - 18 April 2027 Free",
       "date_precision": "exact",
@@ -82,6 +70,18 @@
       "city": "London",
       "source_url": "https://www.serpentinegalleries.org/whats-on/lisa-brice/",
       "external_id": "https://www.serpentinegalleries.org/whats-on/lisa-brice/",
+      "description": "Serpentine Galleries, London",
+      "importance_score": 14
+    },
+    {
+      "title": "Pierre Alechinksy",
+      "date_start": "2027-02-11",
+      "date_label": "11 February - 18 April 2027 Free",
+      "date_precision": "exact",
+      "venue_or_platform": "Serpentine South Gallery",
+      "city": "London",
+      "source_url": "https://www.serpentinegalleries.org/whats-on/pierre-alechinksy/",
+      "external_id": "https://www.serpentinegalleries.org/whats-on/pierre-alechinksy/",
       "description": "Serpentine Galleries, London",
       "importance_score": 14
     }

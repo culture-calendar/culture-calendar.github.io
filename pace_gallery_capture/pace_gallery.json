@@ -1,17 +1,6 @@
 {
-  "capturedAt": "2026-10-25",
+  "capturedAt": "2026-11-01",
   "items": [
-    {
-      "title": "Elmgreen & Dragset: TRANSITION",
-      "venue_or_platform": "Pace Gallery",
-      "city": "New York",
-      "source_url": "https://www.pacegallery.com/exhibitions/elmgreen-dragset-transition",
-      "external_id": "https://www.pacegallery.com/exhibitions/elmgreen-dragset-transition",
-      "upcoming": false,
-      "date_start": "2026-11-06",
-      "date_label": "Nov 6, 2026 – Jan 16, 2027",
-      "date_precision": "exact"
-    },
     {
       "title": "Li Hei Di: the year of mud",
       "venue_or_platform": "Pace Gallery",
@@ -35,7 +24,18 @@
       "date_precision": "exact"
     },
     {
-      "title": "Rothko/Gottlieb: The Surrealist Years",
+      "title": "Elmgreen & Dragset: TRANSITION",
+      "venue_or_platform": "Pace Gallery",
+      "city": "New York",
+      "source_url": "https://www.pacegallery.com/exhibitions/elmgreen-dragset-transition",
+      "external_id": "https://www.pacegallery.com/exhibitions/elmgreen-dragset-transition",
+      "upcoming": false,
+      "date_start": "2026-11-06",
+      "date_label": "Nov 6, 2026 – Jan 16, 2027",
+      "date_precision": "exact"
+    },
+    {
+      "title": "Gottlieb/Rothko: The Surrealist Years",
       "venue_or_platform": "Pace Gallery",
       "city": "New York",
       "source_url": "https://www.pacegallery.com/exhibitions/rothko-gottlieb-surrealist-years",
@@ -54,28 +54,6 @@
       "upcoming": false,
       "date_start": "2026-11-12",
       "date_label": "Nov 12, 2026 – Jan 9, 2027",
-      "date_precision": "exact"
-    },
-    {
-      "title": "Alicja Kwade: La Pêche miraculeuse",
-      "venue_or_platform": "Pace Gallery",
-      "city": "New York",
-      "source_url": "https://www.pacegallery.com/exhibitions/alicja-kwade-la-peche-miraculeuse",
-      "external_id": "https://www.pacegallery.com/exhibitions/alicja-kwade-la-peche-miraculeuse",
-      "upcoming": false,
-      "date_start": "2026-10-29",
-      "date_label": "Oct 29 – Dec 25, 2026",
-      "date_precision": "exact"
-    },
-    {
-      "title": "Kiki Smith: Untethered Journey",
-      "venue_or_platform": "Pace Gallery",
-      "city": "New York",
-      "source_url": "https://www.pacegallery.com/exhibitions/kiki-smith-untethered-journey",
-      "external_id": "https://www.pacegallery.com/exhibitions/kiki-smith-untethered-journey",
-      "upcoming": false,
-      "date_start": "2026-10-30",
-      "date_label": "Oct 30, 2026 – Jan 23, 2027",
       "date_precision": "exact"
     }
   ]

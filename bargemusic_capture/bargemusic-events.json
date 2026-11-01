@@ -1,36 +1,6 @@
 {
-  "capturedAt": "2026-10-25",
+  "capturedAt": "2026-11-01",
   "items": [
-    {
-      "title": "Bohemian Rhapsody, Viennese Grace: Romantic Piano Trios",
-      "category": "music",
-      "date_start": "2026-10-25",
-      "date_end": null,
-      "date_label": "Oct 25, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Bargemusic",
-      "city": "New York",
-      "source_url": "https://www.bargemusic.org/concert/shadow-and-light-piano-trios-of-beethoven-and-brahms/",
-      "external_id": "bargemusic:8062",
-      "description": "Bargemusic, Brooklyn",
-      "importance_score": 14,
-      "_misses": 0
-    },
-    {
-      "title": "Special Solo Piano Concert for Halloween with Rob Schwimmer",
-      "category": "music",
-      "date_start": "2026-10-31",
-      "date_end": null,
-      "date_label": "Oct 31, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Bargemusic",
-      "city": "New York",
-      "source_url": "https://www.bargemusic.org/concert/special-halloween-concert-with-rob-schwimmer/",
-      "external_id": "bargemusic:8066",
-      "description": "Bargemusic, Brooklyn",
-      "importance_score": 14,
-      "_misses": 0
-    },
     {
       "title": "Complete Piano Sonatas of Beethoven with Conversation, Part 7: “Years of Pain and Struggle”",
       "category": "music",
@@ -122,7 +92,7 @@
       "_misses": 0
     },
     {
-      "title": "Candide Quartet Plays Beethoven, Bartok, and Vrebalov",
+      "title": "Candide Quartet Plays Bernstein, Marsalis, Mendelssohn, and Vrebalov",
       "category": "music",
       "date_start": "2026-11-22",
       "date_end": null,
@@ -285,6 +255,21 @@
       "description": "Bargemusic, Brooklyn",
       "importance_score": 14,
       "_misses": 0
+    },
+    {
+      "title": "Candide Quartet Plays Beethoven, Bartok, and Vrebalov",
+      "category": "music",
+      "date_start": "2026-11-22",
+      "date_end": null,
+      "date_label": "Nov 22, 2026",
+      "date_precision": "exact",
+      "venue_or_platform": "Bargemusic",
+      "city": "New York",
+      "source_url": "https://www.bargemusic.org/concert/candide-quartet-plays-beethoven-bartok-and-vrebalov/",
+      "external_id": "bargemusic:8090",
+      "description": "Bargemusic, Brooklyn",
+      "importance_score": 14,
+      "_misses": 1
     }
   ]
 }

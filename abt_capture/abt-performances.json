@@ -1,76 +1,6 @@
 {
-  "capturedAt": "2026-10-25",
+  "capturedAt": "2026-11-01",
   "items": [
-    {
-      "title": "Neoclassical Works",
-      "category": "ballet",
-      "date_start": "2026-10-25",
-      "date_label": "Oct 25, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "David H. Koch Theater",
-      "city": "New York",
-      "source_url": "https://www.abt.org/events/neoclassical-works/",
-      "external_id": "abt:neoclassical-works:2026-10-25",
-      "description": "American Ballet Theatre, David H. Koch Theater",
-      "importance_score": 15,
-      "_misses": 0
-    },
-    {
-      "title": "An Elegy and A Dream",
-      "category": "ballet",
-      "date_start": "2026-10-28",
-      "date_label": "Oct 28 – Oct 31, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "David H. Koch Theater",
-      "city": "New York",
-      "source_url": "https://www.abt.org/events/an-elegy-and-a-dream/",
-      "external_id": "abt:an-elegy-and-a-dream:2026-10-28",
-      "description": "American Ballet Theatre, David H. Koch Theater",
-      "importance_score": 15,
-      "_misses": 0
-    },
-    {
-      "title": "Fresh Visions and Timeless Classics",
-      "category": "ballet",
-      "date_start": "2026-10-25",
-      "date_label": "Oct 25 – Oct 27, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "David H. Koch Theater",
-      "city": "New York",
-      "source_url": "https://www.abt.org/events/fresh-visions-and-timeless-classics/",
-      "external_id": "abt:fresh-visions-and-timeless-classics:2026-10-25",
-      "description": "American Ballet Theatre, David H. Koch Theater",
-      "importance_score": 15,
-      "_misses": 0
-    },
-    {
-      "title": "Petal",
-      "category": "ballet",
-      "date_start": "2026-10-25",
-      "date_label": "Oct 25 – Oct 27, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "David H. Koch Theater",
-      "city": "New York",
-      "source_url": "https://www.abt.org/events/petal/",
-      "external_id": "abt:petal:2026-10-25",
-      "description": "American Ballet Theatre, David H. Koch Theater",
-      "importance_score": 15,
-      "_misses": 0
-    },
-    {
-      "title": "Petite Mort",
-      "category": "ballet",
-      "date_start": "2026-10-25",
-      "date_label": "Oct 25 – Oct 27, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "David H. Koch Theater",
-      "city": "New York",
-      "source_url": "https://www.abt.org/events/petite-mort/",
-      "external_id": "abt:petite-mort:2026-10-25",
-      "description": "American Ballet Theatre, David H. Koch Theater",
-      "importance_score": 15,
-      "_misses": 0
-    },
     {
       "title": "Masterworks",
       "category": "ballet",
@@ -83,7 +13,7 @@
       "external_id": "abt:masterworks:2027-03-19",
       "description": "American Ballet Theatre, David H. Koch Theater",
       "importance_score": 15,
-      "_misses": 1
+      "_misses": 0
     },
     {
       "title": "Icons of Modern Repertory",
@@ -97,7 +27,7 @@
       "external_id": "abt:icons-of-modern-repertory:2027-03-04",
       "description": "American Ballet Theatre, David H. Koch Theater",
       "importance_score": 15,
-      "_misses": 1
+      "_misses": 0
     },
     {
       "title": "Lady of the Camellias",
@@ -111,7 +41,7 @@
       "external_id": "abt:lady-of-the-camellias:2027-03-12",
       "description": "American Ballet Theatre, David H. Koch Theater",
       "importance_score": 15,
-      "_misses": 1
+      "_misses": 0
     }
   ]
 }
