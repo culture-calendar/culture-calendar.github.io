@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-11-01",
+  "capturedAt": "2026-11-08",
   "items": [
     {
       "title": "Wynton Marsalis Septet",
@@ -361,34 +361,6 @@
       "city": "New York",
       "source_url": "https://jazz.org/concert/the-eddie-palmieri-experience-an-all-star-celebration",
       "external_id": "jalc:https://jazz.org/concert/the-eddie-palmieri-experience-an-all-star-celebration",
-      "description": "Jazz at Lincoln Center (Rose Theater / The Appel Room)",
-      "importance_score": 15,
-      "_misses": 0
-    },
-    {
-      "title": "Marsalis’ Swinging Cities The Jazz at Lincoln Center Orchestra with Wynton Marsalis",
-      "category": "music",
-      "date_start": "2026-11-06",
-      "date_label": "Nov 6, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Jazz at Lincoln Center",
-      "city": "New York",
-      "source_url": "https://jazz.org/concert/marsalis-swinging-cities-the-jazz-at-lincoln-center-orchestra-with-wynton-marsalis",
-      "external_id": "jalc:https://jazz.org/concert/marsalis-swinging-cities-the-jazz-at-lincoln-center-orchestra-with-wynton-marsalis",
-      "description": "Jazz at Lincoln Center (Rose Theater / The Appel Room)",
-      "importance_score": 15,
-      "_misses": 0
-    },
-    {
-      "title": "Family Concert: Who Is Duke Ellington?",
-      "category": "music",
-      "date_start": "2026-11-07",
-      "date_label": "Nov 7, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Jazz at Lincoln Center",
-      "city": "New York",
-      "source_url": "https://jazz.org/concert/family-concert-who-is-duke-ellington",
-      "external_id": "jalc:https://jazz.org/concert/family-concert-who-is-duke-ellington",
       "description": "Jazz at Lincoln Center (Rose Theater / The Appel Room)",
       "importance_score": 15,
       "_misses": 0

@@ -1,20 +1,6 @@
 {
-  "capturedAt": "2026-11-01",
+  "capturedAt": "2026-11-08",
   "items": [
-    {
-      "title": "Gershwin's An American In Paris",
-      "category": "music",
-      "date_start": "2026-11-07",
-      "date_label": "Nov 7, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Alice Tully Hall",
-      "city": "New York",
-      "source_url": "https://www.chambermusicsociety.org/our-concerts/at-lincoln-center/events/26-27/gershwins-an-american-in-paris",
-      "external_id": "alicetully:/our-concerts/at-lincoln-center/events/26-27/gershwins-an-american-in-paris",
-      "description": "Alice Tully Hall, Lincoln Center (Chamber Music Society)",
-      "importance_score": 15,
-      "_misses": 0
-    },
     {
       "title": "The Schumann Quartett",
       "category": "music",

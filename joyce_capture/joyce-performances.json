@@ -1,21 +1,6 @@
 {
-  "capturedAt": "2026-11-01",
+  "capturedAt": "2026-11-08",
   "items": [
-    {
-      "title": "Garth Fagan Dance",
-      "category": "ballet",
-      "date_start": "2026-11-04",
-      "date_end": "2026-11-08",
-      "date_label": "Nov 4, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "The Joyce Theater",
-      "city": "New York",
-      "source_url": "https://www.joyce.org/performances/garth-fagan-dance-f2nq",
-      "external_id": "joyce:/performances/garth-fagan-dance-f2nq",
-      "description": "The Joyce Theater, New York",
-      "importance_score": 15,
-      "_misses": 0
-    },
     {
       "title": "GALLIM",
       "category": "ballet",

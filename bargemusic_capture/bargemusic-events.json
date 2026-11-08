@@ -1,36 +1,6 @@
 {
-  "capturedAt": "2026-11-01",
+  "capturedAt": "2026-11-08",
   "items": [
-    {
-      "title": "Complete Piano Sonatas of Beethoven with Conversation, Part 7: “Years of Pain and Struggle”",
-      "category": "music",
-      "date_start": "2026-11-01",
-      "date_end": null,
-      "date_label": "Nov 1, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Bargemusic",
-      "city": "New York",
-      "source_url": "https://www.bargemusic.org/concert/complete-piano-sonatas-of-beethoven-with-conversation-part-7-years-of-pain-and-struggle/",
-      "external_id": "bargemusic:8025",
-      "description": "Bargemusic, Brooklyn",
-      "importance_score": 14,
-      "_misses": 0
-    },
-    {
-      "title": "Complete Piano Sonatas of Beethoven with Conversation, Part 8: “A New Vision”",
-      "category": "music",
-      "date_start": "2026-11-07",
-      "date_end": null,
-      "date_label": "Nov 7, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Bargemusic",
-      "city": "New York",
-      "source_url": "https://www.bargemusic.org/concert/complete-piano-sonatas-of-beethoven-with-conversation-part-8-a-new-vision/",
-      "external_id": "bargemusic:8030",
-      "description": "Bargemusic, Brooklyn",
-      "importance_score": 14,
-      "_misses": 0
-    },
     {
       "title": "Ursula Oppens/Jerome Lowenthal Joint Piano Concert",
       "category": "music",
@@ -47,7 +17,7 @@
       "_misses": 0
     },
     {
-      "title": "Bach, Bartok, LeClair and more for 2 violins, violin/viola, and solo violin",
+      "title": "Bach, Bartok, LeClair, Shohl, and more for 2 violins, violin/viola, and solo violin",
       "category": "music",
       "date_start": "2026-11-14",
       "date_end": null,
@@ -167,7 +137,7 @@
       "_misses": 0
     },
     {
-      "title": "Holiday Concert: Opus 18, Beethoven and Brahms",
+      "title": "Holiday Concert: Brahms Sextet in B-flat and Mozart Quintet in B-flat",
       "category": "music",
       "date_start": "2026-12-12",
       "date_end": null,
@@ -182,7 +152,7 @@
       "_misses": 0
     },
     {
-      "title": "Holiday Concert: Opus 18, Beethoven and Brahms",
+      "title": "Holiday Concert: Brahms Sextet in B-flat and Mozart Quintet in B-flat",
       "category": "music",
       "date_start": "2026-12-13",
       "date_end": null,
@@ -257,16 +227,16 @@
       "_misses": 0
     },
     {
-      "title": "Candide Quartet Plays Beethoven, Bartok, and Vrebalov",
+      "title": "Bach, Bartok, LeClair and more for 2 violins, violin/viola, and solo violin",
       "category": "music",
-      "date_start": "2026-11-22",
+      "date_start": "2026-11-14",
       "date_end": null,
-      "date_label": "Nov 22, 2026",
+      "date_label": "Nov 14, 2026",
       "date_precision": "exact",
       "venue_or_platform": "Bargemusic",
       "city": "New York",
-      "source_url": "https://www.bargemusic.org/concert/candide-quartet-plays-beethoven-bartok-and-vrebalov/",
-      "external_id": "bargemusic:8090",
+      "source_url": "https://www.bargemusic.org/concert/vienna-synergy-mozart-quintets-and-beethoven-quartets/",
+      "external_id": "bargemusic:8078",
       "description": "Bargemusic, Brooklyn",
       "importance_score": 14,
       "_misses": 1
