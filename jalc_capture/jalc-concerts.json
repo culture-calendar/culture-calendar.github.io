@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-11-08",
+  "capturedAt": "2026-11-15",
   "items": [
     {
       "title": "Wynton Marsalis Septet",
@@ -296,15 +296,15 @@
       "_misses": 0
     },
     {
-      "title": "Big Band Holidays The Jazz at Lincoln Center Orchestra",
+      "title": "Big Band Holidays The Jazz at Lincoln Center Orchestra with vocalists Catherine Russell and Georgia Heers",
       "category": "music",
       "date_start": "2026-12-15",
       "date_label": "Dec 15, 2026",
       "date_precision": "exact",
       "venue_or_platform": "Jazz at Lincoln Center",
       "city": "New York",
-      "source_url": "https://jazz.org/concert/big-band-holidays-the-jazz-at-lincoln-center-orchestra",
-      "external_id": "jalc:https://jazz.org/concert/big-band-holidays-the-jazz-at-lincoln-center-orchestra",
+      "source_url": "https://jazz.org/concert/big-band-holidays-the-jazz-at-lincoln-center-orchestra-with-vocalists-catherine-russell-and-georgia-heers",
+      "external_id": "jalc:https://jazz.org/concert/big-band-holidays-the-jazz-at-lincoln-center-orchestra-with-vocalists-catherine-russell-and-georgia-heers",
       "description": "Jazz at Lincoln Center (Rose Theater / The Appel Room)",
       "importance_score": 15,
       "_misses": 0
@@ -352,18 +352,18 @@
       "_misses": 0
     },
     {
-      "title": "The Eddie Palmieri Experience: An All-Star Celebration",
+      "title": "Big Band Holidays The Jazz at Lincoln Center Orchestra",
       "category": "music",
-      "date_start": "2026-11-13",
-      "date_label": "Nov 13, 2026",
+      "date_start": "2026-12-15",
+      "date_label": "Dec 15, 2026",
       "date_precision": "exact",
       "venue_or_platform": "Jazz at Lincoln Center",
       "city": "New York",
-      "source_url": "https://jazz.org/concert/the-eddie-palmieri-experience-an-all-star-celebration",
-      "external_id": "jalc:https://jazz.org/concert/the-eddie-palmieri-experience-an-all-star-celebration",
+      "source_url": "https://jazz.org/concert/big-band-holidays-the-jazz-at-lincoln-center-orchestra",
+      "external_id": "jalc:https://jazz.org/concert/big-band-holidays-the-jazz-at-lincoln-center-orchestra",
       "description": "Jazz at Lincoln Center (Rose Theater / The Appel Room)",
       "importance_score": 15,
-      "_misses": 0
+      "_misses": 1
     }
   ]
 }

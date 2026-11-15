@@ -1,20 +1,8 @@
 {
-  "capturedAt": "2026-11-08",
+  "capturedAt": "2026-11-15",
   "items": [
     {
-      "title": "Saturday Talks: Kit Gurnos on Amar Kanwar",
-      "date_start": "2027-01-16",
-      "date_label": "Saturday 16 January 2027, 12:30pm Free",
-      "date_precision": "exact",
-      "venue_or_platform": "Serpentine North Gallery",
-      "city": "London",
-      "source_url": "https://www.serpentinegalleries.org/whats-on/saturday-talks-kit-gurnos-on-amar-kanwar/",
-      "external_id": "https://www.serpentinegalleries.org/whats-on/saturday-talks-kit-gurnos-on-amar-kanwar/",
-      "description": "Serpentine Galleries, London",
-      "importance_score": 14
-    },
-    {
-      "title": "Pierre Alechinsky",
+      "title": "Pierre Alechinsky: In Paperland",
       "date_start": "2027-02-11",
       "date_label": "11 February - 18 April 2027 Free",
       "date_precision": "exact",
@@ -70,6 +58,18 @@
       "city": "London",
       "source_url": "https://www.serpentinegalleries.org/whats-on/lisa-brice/",
       "external_id": "https://www.serpentinegalleries.org/whats-on/lisa-brice/",
+      "description": "Serpentine Galleries, London",
+      "importance_score": 14
+    },
+    {
+      "title": "Saturday Talks: Kit Gurnos on Amar Kanwar",
+      "date_start": "2027-01-16",
+      "date_label": "Saturday 16 January 2027, 12:30pm Free",
+      "date_precision": "exact",
+      "venue_or_platform": "Serpentine North Gallery",
+      "city": "London",
+      "source_url": "https://www.serpentinegalleries.org/whats-on/saturday-talks-kit-gurnos-on-amar-kanwar/",
+      "external_id": "https://www.serpentinegalleries.org/whats-on/saturday-talks-kit-gurnos-on-amar-kanwar/",
       "description": "Serpentine Galleries, London",
       "importance_score": 14
     },

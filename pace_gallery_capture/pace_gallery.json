@@ -1,26 +1,15 @@
 {
-  "capturedAt": "2026-11-08",
+  "capturedAt": "2026-11-15",
   "items": [
     {
-      "title": "Gottlieb/Rothko: The Surrealist Years",
+      "title": "Constantin Brancusi",
       "venue_or_platform": "Pace Gallery",
       "city": "New York",
-      "source_url": "https://www.pacegallery.com/exhibitions/rothko-gottlieb-surrealist-years",
-      "external_id": "https://www.pacegallery.com/exhibitions/rothko-gottlieb-surrealist-years",
+      "source_url": "https://www.pacegallery.com/exhibitions/constantin-brancusi",
+      "external_id": "https://www.pacegallery.com/exhibitions/constantin-brancusi",
       "upcoming": false,
-      "date_start": "2026-11-13",
-      "date_label": "Nov 13, 2026 – Jan 9, 2027",
-      "date_precision": "exact"
-    },
-    {
-      "title": "Pam Evelyn: The Wild Asphalt",
-      "venue_or_platform": "Pace Gallery",
-      "city": "New York",
-      "source_url": "https://www.pacegallery.com/exhibitions/pam-evelyn-the-wild-asphalt",
-      "external_id": "https://www.pacegallery.com/exhibitions/pam-evelyn-the-wild-asphalt",
-      "upcoming": false,
-      "date_start": "2026-11-12",
-      "date_label": "Nov 12, 2026 – Jan 9, 2027",
+      "date_start": "2026-11-25",
+      "date_label": "Nov 25, 2026 – Jan 30, 2027",
       "date_precision": "exact"
     }
   ]

@@ -1,21 +1,6 @@
 {
-  "capturedAt": "2026-11-08",
+  "capturedAt": "2026-11-15",
   "items": [
-    {
-      "title": "GALLIM",
-      "category": "ballet",
-      "date_start": "2026-11-11",
-      "date_end": "2026-11-15",
-      "date_label": "Nov 11, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "The Joyce Theater",
-      "city": "New York",
-      "source_url": "https://www.joyce.org/performances/gallim-rhr7",
-      "external_id": "joyce:/performances/gallim-rhr7",
-      "description": "The Joyce Theater, New York",
-      "importance_score": 15,
-      "_misses": 0
-    },
     {
       "title": "Complexions Contemporary Ballet",
       "category": "ballet",

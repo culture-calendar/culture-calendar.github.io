@@ -1,20 +1,6 @@
 {
-  "capturedAt": "2026-11-08",
+  "capturedAt": "2026-11-15",
   "items": [
-    {
-      "title": "Kurt Weill, Bertolt Brecht & Elisabeth Hauptmann's \"Happy End\"",
-      "category": "music",
-      "date_start": "2026-11-12",
-      "date_label": "Nov 12, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Merkin Hall",
-      "city": "New York",
-      "source_url": "https://www.kaufmanmusiccenter.org/mch/event/kurt-weill-and-bertolt-brechts-happy-end",
-      "external_id": "merkin:/mch/event/kurt-weill-and-bertolt-brechts-happy-end",
-      "description": "Kaufman Music Center, Glimmerglass Opera and Opera Saratoga co-present · Merkin Hall, Kaufman Music Center",
-      "importance_score": 14,
-      "_misses": 0
-    },
     {
       "title": "Broadway Close Up: Bound for Broadway",
       "category": "music",

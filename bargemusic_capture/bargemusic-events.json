@@ -1,36 +1,6 @@
 {
-  "capturedAt": "2026-11-08",
+  "capturedAt": "2026-11-15",
   "items": [
-    {
-      "title": "Ursula Oppens/Jerome Lowenthal Joint Piano Concert",
-      "category": "music",
-      "date_start": "2026-11-08",
-      "date_end": null,
-      "date_label": "Nov 8, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Bargemusic",
-      "city": "New York",
-      "source_url": "https://www.bargemusic.org/concert/ursula-oppens-jerome-lowenthal-joint-piano-concert/",
-      "external_id": "bargemusic:8075",
-      "description": "Bargemusic, Brooklyn",
-      "importance_score": 14,
-      "_misses": 0
-    },
-    {
-      "title": "Bach, Bartok, LeClair, Shohl, and more for 2 violins, violin/viola, and solo violin",
-      "category": "music",
-      "date_start": "2026-11-14",
-      "date_end": null,
-      "date_label": "Nov 14, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Bargemusic",
-      "city": "New York",
-      "source_url": "https://www.bargemusic.org/concert/vienna-synergy-mozart-quintets-and-beethoven-quartets/",
-      "external_id": "bargemusic:8078",
-      "description": "Bargemusic, Brooklyn",
-      "importance_score": 14,
-      "_misses": 0
-    },
     {
       "title": "Duo Piano Recital with Alexander Peskanov and Coady Green",
       "category": "music",
@@ -225,21 +195,6 @@
       "description": "Bargemusic, Brooklyn",
       "importance_score": 14,
       "_misses": 0
-    },
-    {
-      "title": "Bach, Bartok, LeClair and more for 2 violins, violin/viola, and solo violin",
-      "category": "music",
-      "date_start": "2026-11-14",
-      "date_end": null,
-      "date_label": "Nov 14, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Bargemusic",
-      "city": "New York",
-      "source_url": "https://www.bargemusic.org/concert/vienna-synergy-mozart-quintets-and-beethoven-quartets/",
-      "external_id": "bargemusic:8078",
-      "description": "Bargemusic, Brooklyn",
-      "importance_score": 14,
-      "_misses": 1
     }
   ]
 }
