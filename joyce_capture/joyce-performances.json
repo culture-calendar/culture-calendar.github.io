@@ -1,21 +1,6 @@
 {
-  "capturedAt": "2026-11-15",
+  "capturedAt": "2026-11-22",
   "items": [
-    {
-      "title": "Complexions Contemporary Ballet",
-      "category": "ballet",
-      "date_start": "2026-11-17",
-      "date_end": "2026-11-29",
-      "date_label": "Nov 17, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "The Joyce Theater",
-      "city": "New York",
-      "source_url": "https://www.joyce.org/performances/complexions-contemporary-ballet-zb34",
-      "external_id": "joyce:/performances/complexions-contemporary-ballet-zb34",
-      "description": "The Joyce Theater, New York",
-      "importance_score": 15,
-      "_misses": 0
-    },
     {
       "title": "A Very SW!NG OUT Holiday",
       "category": "ballet",

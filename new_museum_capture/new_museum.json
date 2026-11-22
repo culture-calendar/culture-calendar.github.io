@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-11-15",
+  "capturedAt": "2026-11-22",
   "items": [
     {
       "title": "Sixth New Museum Triennial: The Outside Expands",
@@ -10,6 +10,16 @@
       "city": "New York",
       "source_url": "https://www.newmuseum.org/exhibition/sixth-new-museum-triennial-the-outside-expands",
       "external_id": "https://www.newmuseum.org/exhibition/sixth-new-museum-triennial-the-outside-expands"
+    },
+    {
+      "title": "Korakrit Arunanondchai: The movie inside you has no end",
+      "date_start": "2027-02-25",
+      "date_label": "Feb 25, 2027",
+      "date_precision": "exact",
+      "venue_or_platform": "New Museum",
+      "city": "New York",
+      "source_url": "https://www.newmuseum.org/exhibition/korakrit-arunanondchai-the-movie-inside-you-has-no-end",
+      "external_id": "https://www.newmuseum.org/exhibition/korakrit-arunanondchai-the-movie-inside-you-has-no-end"
     }
   ]
 }

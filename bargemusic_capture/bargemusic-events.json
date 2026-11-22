@@ -1,36 +1,6 @@
 {
-  "capturedAt": "2026-11-15",
+  "capturedAt": "2026-11-22",
   "items": [
-    {
-      "title": "Duo Piano Recital with Alexander Peskanov and Coady Green",
-      "category": "music",
-      "date_start": "2026-11-15",
-      "date_end": null,
-      "date_label": "Nov 15, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Bargemusic",
-      "city": "New York",
-      "source_url": "https://www.bargemusic.org/concert/vienna-synergy-quintets-and-quartets-of-mozart-and-beethoven/",
-      "external_id": "bargemusic:8081",
-      "description": "Bargemusic, Brooklyn",
-      "importance_score": 14,
-      "_misses": 0
-    },
-    {
-      "title": "“A Kaleidoscope of Favorites”: piano recital with Asiya Korepanova",
-      "category": "music",
-      "date_start": "2026-11-21",
-      "date_end": null,
-      "date_label": "Nov 21, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Bargemusic",
-      "city": "New York",
-      "source_url": "https://www.bargemusic.org/concert/a-kaleidoscope-of-favorites-piano-recital-with-asiya-korepanova/",
-      "external_id": "bargemusic:8087",
-      "description": "Bargemusic, Brooklyn",
-      "importance_score": 14,
-      "_misses": 0
-    },
     {
       "title": "Candide Quartet Plays Bernstein, Marsalis, Mendelssohn, and Vrebalov",
       "category": "music",

@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-11-15",
+  "capturedAt": "2026-11-22",
   "items": [
     {
       "title": "Punk to Pop",
@@ -10,6 +10,32 @@
       "city": "London",
       "source_url": "https://www.vam.ac.uk/exhibitions/punk-to-pop",
       "external_id": "https://www.vam.ac.uk/exhibitions/punk-to-pop",
+      "description": "V&A, South Kensington, London",
+      "importance_score": 13,
+      "_misses": 0
+    },
+    {
+      "title": "South Asia Now: Fashion. Art. Design.",
+      "date_start": "2027-04-24",
+      "date_label": "Apr 24, 2027 – Jan 23, 2028",
+      "date_precision": "exact",
+      "venue_or_platform": "Victoria and Albert Museum",
+      "city": "London",
+      "source_url": "https://www.vam.ac.uk/exhibitions/south-asia-now-fashion-art-design",
+      "external_id": "https://www.vam.ac.uk/exhibitions/south-asia-now-fashion-art-design",
+      "description": "V&A, South Kensington, London",
+      "importance_score": 13,
+      "_misses": 0
+    },
+    {
+      "title": "Sculpture in Clay",
+      "date_start": "2027-05-29",
+      "date_label": "May 29, 2027 – Feb 6, 2028",
+      "date_precision": "exact",
+      "venue_or_platform": "Victoria and Albert Museum",
+      "city": "London",
+      "source_url": "https://www.vam.ac.uk/exhibitions/sculpture-in-clay",
+      "external_id": "https://www.vam.ac.uk/exhibitions/sculpture-in-clay",
       "description": "V&A, South Kensington, London",
       "importance_score": 13,
       "_misses": 0

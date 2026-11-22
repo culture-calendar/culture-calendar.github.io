@@ -1,34 +1,6 @@
 {
-  "capturedAt": "2026-11-15",
+  "capturedAt": "2026-11-22",
   "items": [
-    {
-      "title": "The Schumann Quartett",
-      "category": "music",
-      "date_start": "2026-11-15",
-      "date_label": "Nov 15, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Alice Tully Hall",
-      "city": "New York",
-      "source_url": "https://www.chambermusicsociety.org/our-concerts/at-lincoln-center/events/26-27/the-schumann-quartett",
-      "external_id": "alicetully:/our-concerts/at-lincoln-center/events/26-27/the-schumann-quartett",
-      "description": "Alice Tully Hall, Lincoln Center (Chamber Music Society)",
-      "importance_score": 15,
-      "_misses": 0
-    },
-    {
-      "title": "Fauré's Second Piano Quartet",
-      "category": "music",
-      "date_start": "2026-11-17",
-      "date_label": "Nov 17, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Alice Tully Hall",
-      "city": "New York",
-      "source_url": "https://www.chambermusicsociety.org/our-concerts/at-lincoln-center/events/26-27/faures-second-piano-quartet",
-      "external_id": "alicetully:/our-concerts/at-lincoln-center/events/26-27/faures-second-piano-quartet",
-      "description": "Alice Tully Hall, Lincoln Center (Chamber Music Society)",
-      "importance_score": 15,
-      "_misses": 0
-    },
     {
       "title": "Baroque Wind Concertos",
       "category": "music",

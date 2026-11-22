@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-11-15",
+  "capturedAt": "2026-11-22",
   "items": [
     {
       "title": "Wynton Marsalis Septet",
@@ -336,34 +336,6 @@
       "description": "Jazz at Lincoln Center (Rose Theater / The Appel Room)",
       "importance_score": 15,
       "_misses": 0
-    },
-    {
-      "title": "Journey Through Jazz: The Great American Songbook The Jazz at Lincoln Center Orchestra",
-      "category": "music",
-      "date_start": "2026-11-20",
-      "date_label": "Nov 20, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Jazz at Lincoln Center",
-      "city": "New York",
-      "source_url": "https://jazz.org/concert/journey-through-jazz-the-great-american-songbook-the-jazz-at-lincoln-center-orchestra",
-      "external_id": "jalc:https://jazz.org/concert/journey-through-jazz-the-great-american-songbook-the-jazz-at-lincoln-center-orchestra",
-      "description": "Jazz at Lincoln Center (Rose Theater / The Appel Room)",
-      "importance_score": 15,
-      "_misses": 0
-    },
-    {
-      "title": "Big Band Holidays The Jazz at Lincoln Center Orchestra",
-      "category": "music",
-      "date_start": "2026-12-15",
-      "date_label": "Dec 15, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Jazz at Lincoln Center",
-      "city": "New York",
-      "source_url": "https://jazz.org/concert/big-band-holidays-the-jazz-at-lincoln-center-orchestra",
-      "external_id": "jalc:https://jazz.org/concert/big-band-holidays-the-jazz-at-lincoln-center-orchestra",
-      "description": "Jazz at Lincoln Center (Rose Theater / The Appel Room)",
-      "importance_score": 15,
-      "_misses": 1
     }
   ]
 }

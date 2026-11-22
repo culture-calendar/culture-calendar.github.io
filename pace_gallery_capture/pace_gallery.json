@@ -1,6 +1,17 @@
 {
-  "capturedAt": "2026-11-15",
+  "capturedAt": "2026-11-22",
   "items": [
+    {
+      "title": "Amedeo Modigliani",
+      "venue_or_platform": "Pace Gallery",
+      "city": "New York",
+      "source_url": "https://www.pacegallery.com/exhibitions/amedeo-modigliani",
+      "external_id": "https://www.pacegallery.com/exhibitions/amedeo-modigliani",
+      "upcoming": false,
+      "date_start": "2027-05-10",
+      "date_label": "May 10 – Aug 6, 2027",
+      "date_precision": "exact"
+    },
     {
       "title": "Constantin Brancusi",
       "venue_or_platform": "Pace Gallery",

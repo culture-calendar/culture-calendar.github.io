@@ -1,18 +1,6 @@
 {
-  "capturedAt": "2026-11-15",
+  "capturedAt": "2026-11-22",
   "items": [
-    {
-      "title": "artport: A History of Internet Art",
-      "venue_or_platform": "Whitney Museum",
-      "city": "New York",
-      "source_url": "https://whitney.org/exhibitions/artport-25",
-      "external_id": "https://whitney.org/exhibitions/artport-25",
-      "upcoming": true,
-      "date_start": "2026-11-21",
-      "date_end": "2027-03-28",
-      "date_label": "Nov 21, 2026",
-      "date_precision": "exact"
-    },
     {
       "title": "Farah Al Qasimi: TAILSPIN",
       "venue_or_platform": "Whitney Museum",
