@@ -32,6 +32,9 @@ over volume.
 - `toy_calendar.py` — back-compat shim for `python3 -m cultural_calendar`.
 
 Run: `python3 -m cultural_calendar [--source ID] [--reset]`. Tests: `python3 -m pytest`.
+Needs Python 3.10+ (macOS's `/usr/bin/python3` is 3.9). Both iMacs are Apple silicon. On Tribeca use
+the repo's `.venv` (`.venv/bin/python -m pytest -q`). A Mac migrated from Intel keeps a dead x86
+Homebrew in `/usr/local` ("Bad CPU type in executable"): use native `/opt/homebrew`.
 
 ## Architecture and automation
 
@@ -100,6 +103,8 @@ breakage: six parsers broke silently for weeks behind their caches. So:
 - **Empty vs broken.** On an empty parse `import_with_cache` re-parses with the future filter off
   (`_count_listed`): records recognized → `ok`, "0 upcoming, page lists N" (a quiet venue);
   none → `stale`, "page fetched but nothing recognizable" (the site changed — fix the parser).
+  A quiet fetch re-dates the existing cache even when every cached show has opened (it loads
+  empty). Otherwise a quiet venue looks overdue indefinitely, which is what happened to Lisson in Nov 2026.
 - **Judge a source by its run status, never its row count** — counts include cached rows.
 - **Who refreshes what.** GitHub weekly; `registry.MAC_REFRESHED` (sites that refuse GitHub's
   runners) by the Sunday launchd job on the Pennington iMac (`tools/mac_refresh.sh`);
@@ -112,7 +117,12 @@ breakage: six parsers broke silently for weeks behind their caches. So:
   something genuinely needs refreshing, and matches the alert.
 - **Alarm.** `tools/refresh_alert.py` (in the workflow) keeps one `refresh-alert` GitHub issue for
   unreadable pages, unexpected failures, and overdue caches (`capturedAt` > 15 / 45 days).
-- **Diagnose a stale source** by running it from the Mac: works there → GitHub is refused (add to
+- **"Overdue Mac refresh" ≠ Mac job down.** `git log` the "Weekly Mac refresh" commits and see which
+  `*_capture` files each touched. If the job runs but one cache never changes, that source fails on
+  the Mac too.
+- **Diagnose a stale source** by first opening it in a browser and seeing where it lands. Sites
+  move: `lissongallery.com` → `lisson.com` (Nov 2026), and the old domain served scripts a
+  Cloudflare challenge instead of a redirect. Then run it from the Mac: works there → GitHub is refused (add to
   `MAC_REFRESHED`); fails there too → look at the page — usually a site change (new link format,
   redesigned cards, a JS-rendered list with a WordPress REST feed behind it), occasionally a
   season ending or a bot wall for everyone (→ `BROWSER_CAPTURED`).
@@ -200,8 +210,11 @@ section-aware, and list **newly-opening shows only** (never currently-on-view).
     `/exhibitions/` listing is server-rendered; NY-only, future-opening, cache-backed).
   - Wired via the **Ocula** browser-capture aggregator (`import_ocula`; NY major-gallery
     allowlist that excludes Gagosian/Pace since those are scraped directly, so no dedup):
-    White Cube, Gladstone, Lehmann Maupin, David Zwirner, Hauser & Wirth, Lisson, Sean Kelly,
-    etc. — the JS/RSC gallery sites that resist direct scripting. Ocula Cloudflare-walls
+    White Cube, Gladstone, Lehmann Maupin, David Zwirner, Hauser & Wirth, Sprüth Magers, Sean Kelly,
+    etc. — the JS/RSC gallery sites that resist direct scripting. (Lisson and Tanya Bonakdar are
+    scraped directly instead: `import_lisson` reads `lisson.com/exhibitions`.) Allowlist keys must
+    match Ocula's **`gallery_slug`** exactly. `sprueth-magers` vs Ocula's `spruth-magers` silently
+    dropped Sprüth Magers until Nov 2026. If a major gallery is missing, compare the slugs. Ocula Cloudflare-walls
     scripts, so it's a browser-capture fixture (`ocula_capture/`, refresh via Claude-in-Chrome).
 - **International art (London/Paris)** — a deliberate scope expansion beyond NY.
   - **Live (scriptable):** V&A (schema.org microdata; `import_va`), Tate Modern and Tate Britain
@@ -239,12 +252,13 @@ Two lanes, NYC-first / nationally-notable, never a firehose. The render splits t
     `facility` to a specific hall — "Stern Auditorium, Carnegie Hall" / "Zankel Hall, Carnegie
     Hall" (Weill Recital Hall stays excluded — it's almost all rentals).
   - `bargemusic` — Bargemusic via its WordPress **Tribe Events** REST API (`json_api`,
-    fully scriptable).
+    scriptable, but GitHub's runners are refused since Nov 2026, so it is `MAC_REFRESHED`).
   - `merkin` — Merkin Hall / Kaufman Music Center. Parse the **paginated buy-tickets list**
     record-by-record (`/mch/buy-tickets/`, then `/mch/buy-tickets-default/P20`,`/P40`… until a
     page is empty or past the horizon), dates inline per `<div class="event">`. **Filtered to
     Kaufman-presented** (presenter contains "Kaufman Music Center", incl. co-presentations) —
     Merkin's calendar is mostly external rentals, dropped (same call as Carnegie's Weill).
+    GitHub's runners are refused since Nov 2026, so it is `MAC_REFRESHED`.
   - `alice_tully` — Alice Tully Hall via the **Chamber Music Society of Lincoln Center**
     at-Lincoln-Center season; event pages carry `swiftype` metas (`internal_title`,
     `start_date`, `venue`), filtered to `venue == "Alice Tully Hall"`. (LC's own venue page is
