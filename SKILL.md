@@ -138,8 +138,9 @@ the platform lives on `webChannel`. `is_relevant_tv_episode` admits non-US shows
 TVmaze renamed Apple's service "Apple TV+" → "Apple TV" (Apple's 2025 rebrand), which silently
 dropped every Apple premiere until the allowlist was updated. If a marquee streamer's shows
 vanish, check the live `webChannel.name` against the allowlist *and* the `major_platforms`
-score map first. The gate also requires English (`language in {None, "English"}`) — a scope
-limit that excludes non-English originals (e.g. Netflix's *One Hundred Years of Solitude*).
+score map first. Non-English shows pass only as **prestige globals**: on a `major_global_streamers` service,
+type Scripted or Documentary, and `tv_importance_score` ≥ `NON_ENGLISH_MIN_SCORE` (90) — so
+Netflix's *One Hundred Years of Solitude* gets in; foreign reality and broadcast TV stay out.
 
 ## Theatre
 
@@ -204,9 +205,9 @@ section-aware, and list **newly-opening shows only** (never currently-on-view).
     scripts, so it's a browser-capture fixture (`ocula_capture/`, refresh via Claude-in-Chrome).
 - **International art (London/Paris)** — a deliberate scope expansion beyond NY.
   - **Live (scriptable):** V&A (schema.org microdata; `import_va`), Tate Modern and Tate Britain
-    (whats-on cards, UK day-first dates; `import_tate`), Fondation Louis Vuitton (`import_flv` —
-    the rest of FLV is an Akamai-gated SPA, but `/en/programme/a-venir` server-renders the cards
-    with European DD.MM.YYYY dates; use only that surface, never the bot-walled APIs). `fetch_text`
+    (whats-on cards, UK day-first dates; `import_tate`), Fondation Louis Vuitton — **now browser-captured** (Nov 2026:
+    `/en/programme/a-venir`, the last server-rendered surface, became the same Akamai SPA shell as
+    the rest of the site; `import_flv` still tries it and serves `flv_capture/` when walled). `fetch_text`
     retries a 403 with a plainer UA before curl, since Tate's WAF blocks the Chrome/125 UA.
     Serpentine (`import_serpentine`) crawls /whats-on/ + /whats-on/page/N/ teaser cards (future
     exhibitions can sit on page 2+), filtering to the "Exhibitions" category.

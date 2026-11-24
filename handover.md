@@ -14,8 +14,8 @@ breakage. Now there are three refresh paths and an alarm:
 | Path | Sources | Cadence | How |
 |---|---|---|---|
 | GitHub Actions | everything it can still reach | Mondays 6:37 AM ET | `.github/workflows/weekly-refresh.yml` |
-| Pennington iMac, unattended | `registry.MAC_REFRESHED`: Lisson, MOCA, Brooklyn, The Met, Serpentine (+ refreshes all others too) | Sundays 6:50 PM (runs at the iMac's own 6:55 PM weekend wake) | `tools/mac_refresh.sh` via launchd; own clone at `~/.cultural-calendar/repo`; log `~/Library/Logs/cultural-calendar-refresh.log`; see `tools/README-mac-refresh.md` |
-| Monthly Claude-in-Chrome session | `registry.BROWSER_CAPTURED`: MoMA, Frick, Ocula, Armory, Met Opera | first Saturday (calendar reminder) | `cultural_calendar/capture/README.md` |
+| Pennington iMac, unattended | `registry.MAC_REFRESHED`: Lisson, MOCA, Brooklyn, The Met, Serpentine, Merkin (+ refreshes all others too) | Sundays 6:50 PM (runs at the iMac's own 6:55 PM weekend wake) | `tools/mac_refresh.sh` via launchd; own clone at `~/.cultural-calendar/repo`; log `~/Library/Logs/cultural-calendar-refresh.log`; see `tools/README-mac-refresh.md` |
+| Monthly Claude-in-Chrome session | `registry.BROWSER_CAPTURED`: MoMA, Frick, Ocula, Armory, Met Opera, Fondation Louis Vuitton | first Saturday (calendar reminder) | `cultural_calendar/capture/README.md` |
 
 **Alarm:** `tools/refresh_alert.py` runs after each GitHub refresh and keeps one GitHub issue
 (label `refresh-alert`, mentions @hdfinder-tech) listing: pages a parser can no longer read;

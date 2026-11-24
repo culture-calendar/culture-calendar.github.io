@@ -12,8 +12,9 @@ refreshed by hand through a real browser (Claude-in-Chrome):
 | Ocula  | Cloudflare-walls scripts (curl/requests 403); a real browser passes. Aggregates major-gallery NY shows + fairs. | `ocula_capture/ocula-ny.json` |
 | Park Avenue Armory | Cloudflare bot wall. Hand-maintained items; re-check the current-season page and bump `capturedAt`. | `armory_capture/armory-events.json` |
 | Met Opera | Since Sept 2026 metopera.org serves a JavaScript bot check to every script, home IP included; the season index `/season/2026-27-season/` was also removed (404). | `met_opera_capture/met-opera-season.json` |
+| Fondation Louis Vuitton | Since Nov 2026 `/en/programme/a-venir` (once server-rendered) is the same Akamai SPA shell as the rest of the site; no feed or API. `import_flv` still tries the page and serves the fixture when walled. | `flv_capture/flv-exhibitions.json` |
 
-**Cadence and alerting.** These five are refreshed in the monthly Claude-in-Chrome session (first
+**Cadence and alerting.** These six are refreshed in the monthly Claude-in-Chrome session (first
 Saturday). `registry.BROWSER_CAPTURED` lists them; if any fixture's `capturedAt` is more than 45
 days old, the weekly GitHub run opens a `refresh-alert` issue. Sources that only refuse GitHub's
 runners are refreshed unattended by the Sunday Mac job instead (`tools/README-mac-refresh.md`).
@@ -102,6 +103,16 @@ await (async () => {
 Hand-maintained items. Dated headings on the listing give the big productions; recital and
 Artists Studio dates are on each event's own page (fetch them in-browser as for Met Opera).
 If nothing changed, bump `capturedAt`.
+
+### Fondation Louis Vuitton — `https://www.fondationlouisvuitton.fr/en/programme/a-venir`
+Let the page render, then read each upcoming card (title, link, "From DD.MM.YYYY to DD.MM.YYYY";
+European day-first dates). Write `flv_capture/flv-exhibitions.json` as `{capturedAt, items:[...]}`
+with each item shaped like the existing ones: `title`, `date_start` (ISO), `date_label`
+("Oct 9, 2026 – Mar 8, 2027"), `date_precision: "exact"`, `venue_or_platform: "Fondation Louis
+Vuitton"`, `city: "Paris"`, `source_url` = `external_id` = the card's `/en/events/…` link (no
+query string), `description: "Fondation Louis Vuitton, Paris"`, `importance_score: 15`. Shows
+already open can stay; the importer drops past openings. If nothing new is announced, bump
+`capturedAt`.
 
 ### When Cloudflare asks for a human
 Ocula sometimes holds the tab on "Just a moment..." with a "verify you are human" checkbox.

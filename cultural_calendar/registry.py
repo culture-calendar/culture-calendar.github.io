@@ -98,6 +98,7 @@ MAC_REFRESHED: dict[str, "Path"] = {
     "brooklyn_museum": legacy.museum_cache_path("brooklyn_museum"),
     "met_exhibitions": legacy.MET_CAPTURE,
     "serpentine": legacy.SERPENTINE_CAPTURE,
+    "merkin": legacy.MERKIN_CACHE,          # GitHub runners refused since Nov 2026; home IP fine
 }
 MAC_REFRESH_MAX_DAYS = 15
 
@@ -109,6 +110,7 @@ BROWSER_CAPTURED: dict[str, "Path"] = {
     "ocula": legacy.OCULA_CAPTURE,
     "armory": legacy.ARMORY_CAPTURE,
     "met_opera_2026_27": legacy.MET_OPERA_CAPTURE,
+    "fondation_lv": legacy.FLV_CACHE,           # /en/programme/a-venir became an Akamai SPA shell, Nov 2026
 }
 BROWSER_CAPTURE_MAX_DAYS = 45
 
