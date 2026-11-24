@@ -15,7 +15,8 @@
 
 main() {
   set -u
-  export PATH="/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+  # Native Homebrew first: a Mac migrated from Intel keeps a dead x86 python3 in /usr/local/bin.
+  export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
   local repo="$HOME/.cultural-calendar/repo"
   echo "=== $(date '+%Y-%m-%d %H:%M:%S %Z') weekly Mac refresh ==="
   cd "$repo" || { echo "FAIL: no clone at $repo"; return 1; }
