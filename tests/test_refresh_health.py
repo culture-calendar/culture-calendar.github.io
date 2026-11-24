@@ -169,3 +169,21 @@ def test_relabel_says_one_entry_not_one_entries(monkeypatch, tmp_path):
     L.record_run(conn, src, "stale", "fetch blocked/invalid (stale)")
     R.relabel_by_capture_age(conn, src, 1, today=TODAY)
     assert conn.execute("select message from source_runs order by id desc limit 1").fetchone()[0].startswith("1 entry —")
+
+
+def test_quiet_page_redates_cache_even_when_every_cached_show_has_opened(monkeypatch, tmp_path):
+    """Lisson, Nov 2026: both cached shows had opened, so the future-only cache loaded empty and
+    a clean, quiet fetch never bumped capturedAt; the alert called it overdue for weeks."""
+    import json
+    monkeypatch.setattr(L, "today", lambda: TODAY)
+    monkeypatch.setattr(L, "DB_PATH", tmp_path / "t.db")
+    monkeypatch.setattr(L, "save_raw", lambda *a, **k: None)
+    monkeypatch.setattr(L, "fetch_valid_page", lambda *a, **k: "<html>a page</html>")
+    cache = tmp_path / "cache.json"
+    cache.write_text(json.dumps({"capturedAt": "2026-09-01", "items": [_row("Opened Show", "2026-09-10")]}))
+
+    def quiet(source, text):   # the page still lists the open show; nothing upcoming
+        return [r for r in [_row("Opened Show", "2026-09-10")]
+                if dt.date.fromisoformat(r["date_start"]) >= L.today()]
+    L.import_with_cache(L.connect(), _SRC, cache, quiet)
+    assert json.loads(cache.read_text())["capturedAt"] == TODAY.isoformat()

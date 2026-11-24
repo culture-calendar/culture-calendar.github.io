@@ -1443,7 +1443,7 @@ def parse_lisson(source: Source, text: str) -> list[dict[str, Any]]:
             "title": normalize_space(html.unescape(name)), "category": "art", "date_start": start_iso,
             "date_end": end_iso, "date_label": label, "date_precision": precision,
             "venue_or_platform": "Lisson Gallery", "city": "New York",
-            "source_url": "https://www.lissongallery.com" + href,
+            "source_url": "https://lisson.com" + href,
             "external_id": ext, "description": "Lisson Gallery, New York", "importance_score": 14,
         })
     return items
@@ -3179,8 +3179,10 @@ def import_with_cache(conn: sqlite3.Connection, source: Source, cache_path: Path
             listed = 0 if parse_error else _count_listed(parser, source, text)
             items = cache  # serve the cache either way; don't age it on an empty parse
             if listed:
-                if cache:
-                    save_capture_fixture(cache_path, cache)  # re-verified today: bump capturedAt
+                # Re-verified today: bump capturedAt even when every cached show has opened (an
+                # empty cache), or a quiet venue reads as an overdue refresh forever (Lisson, Nov 2026).
+                if cache or cache_path.exists():
+                    save_capture_fixture(cache_path, cache)
                 status, note = "ok", f"0 upcoming — page lists {listed} current or past, none upcoming yet"
             else:
                 reason = (f"parser error: {parse_error}" if parse_error
