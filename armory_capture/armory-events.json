@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-10-03",
+  "capturedAt": "2026-11-23",
   "note": "Park Avenue Armory is Cloudflare-bot-walled, so it can't be fetched by the project's scraper or in CI. This is a hand-maintained capture fixture; refresh it each season from the live current-season page (https://www.armoryonpark.org/season-events/current-season/) via a browser. Future-opening events only; companion artist talks and the already-running clinamen installation omitted.",
   "items": [
     {
@@ -18,8 +18,8 @@
     {
       "title": "The Cherry Orchard",
       "category": "theatre",
-      "date_start": "2026-09-14",
-      "date_label": "Sep 14–26, 2026",
+      "date_start": "2026-09-16",
+      "date_label": "Sep 16–26, 2026",
       "date_precision": "exact",
       "venue_or_platform": "Park Avenue Armory",
       "city": "New York",

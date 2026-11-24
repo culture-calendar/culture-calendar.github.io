@@ -1,64 +1,72 @@
 {
-  "capturedAt": "2026-10-03",
+  "capturedAt": "2026-11-23",
   "note": "Cloudflare-walled to scripts; captured via Claude-in-Chrome.",
   "exhibitions_url": "https://ocula.com/cities/usa/new-york-art-galleries/exhibitions/?gallery-type=gallery&date=upcoming",
   "fairs_url": "https://ocula.com/art-fairs/",
   "exhibitions": [
     {
-      "gallery_slug": "white-cube",
-      "href": "/my-ocula/exhibition-previews/white-cube/georg-baselitz-2/",
-      "text": "GEORG BASELITZ Back Again White Cube 10 June–30 August 2026 Bermondsey, London"
+      "href": "/art-galleries/dep-art/exhibitions/dep-art-gallery-20-anni/",
+      "gallery_slug": "dep-art",
+      "text": "Group Exhibition 20 Years Dep Art Gallery 24 June–19 December 2026 Milan"
     },
     {
+      "href": "/art-galleries/galeria-nara-roesler/exhibitions/the-other/",
+      "gallery_slug": "galeria-nara-roesler",
+      "text": "Group Exhibition the other Galeria Nara Roesler 5 November 2026–9 January 2027 New York"
+    },
+    {
+      "href": "/art-galleries/victoria-miro-gallery/exhibitions/alchemies/",
+      "gallery_slug": "victoria-miro-gallery",
+      "text": "Group Exhibition Alchemies: May Cockcroft, Nour Malas, Sarah Martin-Nuss Victoria Miro 13 November 2026–23 January 2027 Wharf Road, London"
+    },
+    {
+      "href": "/art-galleries/almine-rech-gallery/exhibitions/tom-wesselmann-the-greatness-of-the-everyday/",
+      "gallery_slug": "almine-rech-gallery",
+      "text": "Tom Wesselmann The Greatness of the Everyday Almine Rech 9 November 2026–9 January 2027 Shanghai"
+    },
+    {
+      "href": "/art-galleries/hauser-wirth/exhibitions/cristina-iglesias-possible-matter/",
       "gallery_slug": "hauser-wirth",
-      "href": "/art-galleries/hauser-wirth/exhibitions/george-rouy-reprise/",
-      "text": "GEORGE ROUY Reprise Hauser & Wirth 10 September–17 October 2026 New York, 22nd Street"
+      "text": "Cristina Iglesias Possible Matter Hauser & Wirth 5 November 2026–23 January 2027 New York, 22nd Street"
     },
     {
-      "gallery_slug": "hauser-wirth",
-      "href": "/art-galleries/hauser-wirth/exhibitions/anna-maria-maiolino-annaand-the-infinite-line/",
-      "text": "ANNA MARIA MAIOLINO ANNA—And the infinite line Hauser & Wirth 10 September–31 October 2026 New York"
+      "href": "/art-galleries/pace-gallery/exhibitions/amedeo-modigliani/",
+      "gallery_slug": "pace-gallery",
+      "text": "Amedeo Modigliani Pace Gallery 10 May–6 August 2027 540 West 25th Street, New York"
     },
     {
-      "gallery_slug": "hauser-wirth",
-      "href": "/art-galleries/hauser-wirth/exhibitions/lucio-fontana-spatialism-pioneering-the-conte/",
-      "text": "LUCIO FONTANA Spatialism. Pioneering the Contemporary Hauser & Wirth 17 September–19 December 2026"
+      "href": "/art-galleries/spruth-magers/exhibitions/frank-stella-2/",
+      "gallery_slug": "spruth-magers",
+      "text": "Frank Stella Sprüth Magers 1–30 April 2027 New York"
     },
     {
-      "gallery_slug": "white-cube",
-      "href": "/art-galleries/white-cube/exhibitions/doris-salcedo/",
-      "text": "Doris Salcedo White Cube 13 November 2026–16 January 2027 New York"
+      "href": "/art-galleries/galerie-buchholz/exhibitions/matt-browning/",
+      "gallery_slug": "galerie-buchholz",
+      "text": "Matt Browning Galerie Buchholz 1–28 February 2027 New York"
     },
     {
-      "gallery_slug": "david-zwirner",
-      "href": "/art-galleries/david-zwirner/exhibitions/jem-perucchini-sospiro/",
-      "text": "Jem Perucchini Sospiro David Zwirner 6 November–19 December 2026 New York: 52 Walker"
+      "href": "/art-galleries/perrotin/exhibitions/thilo-heinzmann-(1)/",
+      "gallery_slug": "perrotin",
+      "text": "Thilo HEINZMANN Perrotin 15 January–20 February 2027 New York"
+    },
+    {
+      "href": "/art-galleries/spruth-magers/exhibitions/oliver-bak/",
+      "gallery_slug": "spruth-magers",
+      "text": "Oliver Bak Sprüth Magers 15 January–13 March 2027 New York"
     }
   ],
   "fairs": [
-    {
-      "slug": "adaa-the-art-show",
-      "text": "ADAA Fair 2026 12–16 November 2026 New York"
-    },
     {
       "slug": "the-armory-show",
       "text": "The Armory Show 2026 24–27 September 2026 New York"
     },
     {
+      "slug": "adaa-the-art-show",
+      "text": "ADAA Fair 2026 12–16 November 2026 New York"
+    },
+    {
       "slug": "tefaf-new-york",
       "text": "TEFAF New York 2026 15–19 May 2026 New York"
-    },
-    {
-      "slug": "independent-new-york",
-      "text": "Independent New York 2026 14–17 May 2026 New York"
-    },
-    {
-      "slug": "frieze-new-york",
-      "text": "Frieze New York 2026 13–17 May 2026 New York"
-    },
-    {
-      "slug": "nada-new-york",
-      "text": "NADA New York 2026 13–17 May 2026 New York"
     }
   ]
 }

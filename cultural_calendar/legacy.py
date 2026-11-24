@@ -1166,7 +1166,7 @@ OCULA_MAJOR_GALLERIES = {
     "lehmann-maupin": "Lehmann Maupin", "gladstone-gallery": "Gladstone",
     "matthew-marks-gallery": "Matthew Marks",
     "paula-cooper-gallery": "Paula Cooper", "303-gallery": "303 Gallery", "petzel": "Petzel",
-    "sean-kelly": "Sean Kelly", "sprueth-magers": "Sprüth Magers",
+    "sean-kelly": "Sean Kelly", "sprueth-magers": "Sprüth Magers", "spruth-magers": "Sprüth Magers",  # Ocula's actual slug
     "kasmin-gallery": "Kasmin", "luhring-augustine": "Luhring Augustine", "casey-kaplan": "Casey Kaplan",
     "andrew-kreps-gallery": "Andrew Kreps",
     # Lisson and Tanya Bonakdar are scraped directly (import_lisson / import_tanya_bonakdar).
