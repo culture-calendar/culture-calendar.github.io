@@ -1,10 +1,68 @@
 # Cultural Calendar Handover
 
-Last updated: 2026-10-03
+Last updated: 2026-11-24
 
 ---
 
-## CURRENT STATE — 2026-10-03 (read this first)
+## CURRENT STATE — 2026-11-24 (read this first; the 2026-10-03 section below still holds)
+
+**Status:** all sources healthy. The `refresh-alert` issue (#2) closed itself after the Nov 24
+GitHub run, and the site redeployed. 90 tests pass.
+
+### Machines
+- **Tribeca iMac** is now Apple silicon (a 2027 iMac, migrated in Nov 2026 from a 2017 Intel
+  iMac). Migration carried over the Intel Homebrew in `/usr/local`. With no Rosetta, its
+  `python3` and `gh` fail with "Bad CPU type in executable". Native Homebrew is now in
+  `/opt/homebrew` (Python 3.15, `gh` logged in as `hdfinder-tech`), and `~/.bash_profile` loads it
+  (the old profile is saved as `~/.bash_profile.intel-backup`). The repo's `.venv` has
+  requests + pytest: `.venv/bin/python -m pytest -q`, `.venv/bin/python -m cultural_calendar --source <id>`.
+  Apple's `/usr/bin/python3` is 3.9, too old (the project needs 3.10 or newer).
+- **Pennington iMac** (also Apple silicon): the Sunday job works and has committed every week.
+  `tools/mac_refresh.sh` now puts `/opt/homebrew/bin` ahead of `/usr/local/bin` on PATH, so a
+  migrated Mac's dead Intel Python can't shadow the native one.
+
+### Diagnosing an alert: lessons from November
+- **"Overdue Mac refresh" doesn't mean the Mac job is down.** Check `git log` for the
+  "Weekly Mac refresh" commits and which `*_capture` files each one touched. If the job runs
+  but one source's cache never changes, that source's fetch is failing on the Mac too.
+- **Lisson moved to `lisson.com`.** The old `lissongallery.com` shows scripts a Cloudflare
+  challenge instead of redirecting them, so the fetch failed from every IP after Nov 1. The source
+  URL and the `source_url` prefix now use lisson.com. When a fetch dies, open the page in a
+  browser and see where it lands before assuming a bot wall.
+- **Quiet venues now re-date their cache.** `import_with_cache` used to bump `capturedAt` on a
+  clean "page lists N, none upcoming" fetch only if the (future-only) cache was non-empty. Once
+  every cached show had opened, a quiet gallery looked overdue indefinitely. It now re-dates any
+  existing cache (test: `test_quiet_page_redates_cache_even_when_every_cached_show_has_opened`).
+- **Reclassified sources:**
+  - **Merkin and Bargemusic** are refused by GitHub's runners but fine from home, so they joined
+    `MAC_REFRESHED`.
+  - **Fondation Louis Vuitton**'s last server-rendered page (`/en/programme/a-venir`) became an
+    Akamai SPA shell, so it joined `BROWSER_CAPTURED`. Its capture procedure is in
+    `capture/README.md`.
+  - Rule of thumb: if a source works from home, add it to `MAC_REFRESHED`. If it fails
+    everywhere but renders in Chrome, add it to `BROWSER_CAPTURED`.
+- **Ocula slug bug:** the allowlist had `sprueth-magers`, but Ocula's slug is `spruth-magers`, so
+  Sprüth Magers shows were dropped. Both spellings are now accepted. When a major gallery is
+  missing from Ocula output, compare `gallery_slug` in the capture against
+  `OCULA_MAJOR_GALLERIES`.
+
+### TV (June 24, not previously recorded here)
+- TVmaze renamed "Apple TV+" to "Apple TV", which silently dropped every Apple premiere at the
+  country gate. Both names are now in `major_global_streamers`. Watch for streamer name drift.
+- Non-English shows are admitted only as prestige globals: on a major global streamer, of type
+  Scripted or Documentary, and with `tv_importance_score` ≥ `NON_ENGLISH_MIN_SCORE` (90).
+  Reality shows and non-US broadcasters stay out. Film remains theatrical/limited only (TMDb
+  release types 2|3).
+
+### Open items
+- No 2027 New York art-fair dates are posted on Ocula yet. Re-check at the next monthly capture.
+- FLV and the Armory have announced nothing new. Recheck both monthly.
+- Merkin missed the Mac's Nov 1 and Nov 22 refreshes but works from Tribeca. Watch for repeat
+  misses; if they continue, look at the Pennington log.
+
+---
+
+## CURRENT STATE — 2026-10-03
 
 ### Refresh health: who refreshes what (new — the key operational change)
 Six parsers broke silently between August and October (site changes), and several sites began
@@ -56,6 +114,15 @@ count — counts include cached rows** (this misled me once on MOCA).
 ---
 
 ## MONTHLY CAPTURE REFRESH LOG
+- **2026-11-23** (from Tribeca, Claude-in-Chrome):
+  - **MoMA (5):** Bold Is Better, Mondrian, Freedom and Futures, Eva Hesse, Ana Mendieta.
+  - **Frick (5):** adds Alison Watt (Apr 28, 2027); Siena now closes Jan 17.
+  - **Ocula:** 10 exhibitions; no upcoming New York fairs listed yet.
+  - **Met Opera:** all 21 runs verified unchanged.
+  - **Armory:** no 2027 season yet; The Cherry Orchard corrected to Sep 16.
+  - **FLV:** nothing coming soon.
+  - All six were committed and deployed.
+- **2026-10-03**: MoMA, Frick, Armory and Met Opera recaptured (commit c60e1ad).
 - **2026-08-01** — ran the monthly refresh from the Pennington Mac (residential IP + Claude-in-Chrome).
   Browser-recaptured MoMA (8), Frick (3), Ocula (9), Armory (9, unchanged — verified); live-refreshed
   the IP-blocked Met (8), Met Opera (21), Brooklyn (4), Serpentine (2). All fixtures committed + deployed.
