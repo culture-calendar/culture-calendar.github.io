@@ -99,6 +99,7 @@ MAC_REFRESHED: dict[str, "Path"] = {
     "met_exhibitions": legacy.MET_CAPTURE,
     "serpentine": legacy.SERPENTINE_CAPTURE,
     "merkin": legacy.MERKIN_CACHE,          # GitHub runners refused since Nov 2026; home IP fine
+    "bargemusic": legacy.BARGEMUSIC_CACHE,  # GitHub runners refused since Nov 24, 2026; home IP fine
 }
 MAC_REFRESH_MAX_DAYS = 15
 

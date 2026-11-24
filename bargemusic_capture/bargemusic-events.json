@@ -1,21 +1,6 @@
 {
-  "capturedAt": "2026-11-22",
+  "capturedAt": "2026-11-24",
   "items": [
-    {
-      "title": "Candide Quartet Plays Bernstein, Marsalis, Mendelssohn, and Vrebalov",
-      "category": "music",
-      "date_start": "2026-11-22",
-      "date_end": null,
-      "date_label": "Nov 22, 2026",
-      "date_precision": "exact",
-      "venue_or_platform": "Bargemusic",
-      "city": "New York",
-      "source_url": "https://www.bargemusic.org/concert/candide-quartet-plays-beethoven-bartok-and-vrebalov/",
-      "external_id": "bargemusic:8090",
-      "description": "Bargemusic, Brooklyn",
-      "importance_score": 14,
-      "_misses": 0
-    },
     {
       "title": "“Divertimento”: string trios by Mozart and Beethoven",
       "category": "music",
